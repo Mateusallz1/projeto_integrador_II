@@ -1,7 +1,7 @@
 # Projeto Integrador II
 
 ## Integrantes: 
-- Mateus Alves.
+- Mateus Alves
 - Aroldo Jales
 - Gustavo Albert
 

@@ -15,4 +15,9 @@
 - Banco de Dados, Storage e Autenticação
 
 ### Engenharia de Software III
-- 
+- Clean Code
+- Principios Solid
+
+### Análise e Projeto de Sistemas
+- Diagrama de Classes UML
+- A definir

@@ -1,6 +1,6 @@
 # Projeto Integrador II
 
-Integrantes: Aroldo Jales, Gustavo Albert e Mateus Alves.
+### Integrantes: Aroldo Jales, Gustavo Albert e Mateus Alves.
 
 Tema central do projeto
 

@@ -6,7 +6,7 @@
 - Gustavo Albert
 
 ## Tema Central:
-  Aplicação mobile com os frameworks Flutter e Django para que o usuário possa efetuar consultas e compras de passagens e hospedagens.
+  Aplicação mobile com Flutter e Django, para que o usuário possa efetuar consultas e compras de passagens e hospedagens.
 
 ## Tecnologias/Metodologias:
 

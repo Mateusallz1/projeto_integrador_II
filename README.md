@@ -23,5 +23,4 @@
 - 
 
 ### Redes de Computadores
-- 
--
+- Não utilizaremos nada mais específico de rede de computadores do que o programa ser 'online'.

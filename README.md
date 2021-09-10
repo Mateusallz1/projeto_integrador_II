@@ -26,4 +26,4 @@
 - A definir
 
 ## Prototipagem:
-*[Figma Projeto Integrador II](https://www.figma.com/file/uYre2hhxC0BmayaVN8OjnS/Protótipo-Projeto-II?node-id=0%3A1)
+[Figma Projeto Integrador II](https://www.figma.com/file/uYre2hhxC0BmayaVN8OjnS/Protótipo-Projeto-II?node-id=0%3A1)

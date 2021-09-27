@@ -12,7 +12,7 @@
 
 ### Programação para Internet II
 - REST API
-- Banco de Dados, Storage e Autenticação
+- Banco de Dados(Firebase), Storage e Autenticação
 
 ### Engenharia de Software III
 - Clean Code

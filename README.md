@@ -11,7 +11,6 @@
 ## Tecnologias/Metodologias:
 
 ### Programação para Internet II
-- REST API
 - Banco de Dados(Firebase), Storage e Autenticação
 
 ### Engenharia de Software III

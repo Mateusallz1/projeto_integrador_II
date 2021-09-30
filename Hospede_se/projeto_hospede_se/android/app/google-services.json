@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "695541507857",
+    "firebase_url": "https://hospedagens-bd-default-rtdb.firebaseio.com",
+    "project_id": "hospedagens-bd",
+    "storage_bucket": "hospedagens-bd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:695541507857:android:7dd02fcc5fa7d1785a8eb0",
+        "android_client_info": {
+          "package_name": "com.example.projeto_hospede_se"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "695541507857-gl3h74obele2n51a93k1vok6faksjbtu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBIUiQDjk6p5JwcHbDcIej8yRFdmIC0q0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "695541507857-gl3h74obele2n51a93k1vok6faksjbtu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

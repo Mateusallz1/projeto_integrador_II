@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:projeto_hospede_se/welcome.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
   runApp(MyApp());
 }
 

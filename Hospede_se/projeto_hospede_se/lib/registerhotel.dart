@@ -51,14 +51,14 @@ class _RegisterHotel extends State<RegisterHotel> {
                         style: elevatedButton,
                       ),
                     ),
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: onStepContinue,
-                        child: const Text('Próximo'),
-                        style: elevatedButton,
-                      ),
+                  Container(
+                    child: ElevatedButton(
+                      onPressed: onStepContinue,
+                      child: const Text('Próximo'),
+                      style: elevatedButton,
                     ),
-                  ],
+                  ),
+                ],
                 ),
               );
             },

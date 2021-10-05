@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:projeto_hospede_se/styles/style.dart';
 
 class RegisterHotel extends StatefulWidget {
+  const RegisterHotel({Key? key}) : super(key: key);
+
   @override
   _RegisterHotel createState() => _RegisterHotel();
 }
@@ -40,17 +42,16 @@ class _RegisterHotel extends State<RegisterHotel> {
               }
             },
             controlsBuilder: (context, {onStepContinue, onStepCancel}) {
-              return Container(
-                margin: const EdgeInsets.all(10),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: onStepCancel,
-                        child: const Text('Voltar'),
-                        style: elevatedButton,
-                      ),
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    child: ElevatedButton(
+                      onPressed: onStepCancel,
+                      child: const Text('Voltar'),
+                      style: elevatedButton,
                     ),
+                  ),
                   Container(
                     child: ElevatedButton(
                       onPressed: onStepContinue,
@@ -59,7 +60,6 @@ class _RegisterHotel extends State<RegisterHotel> {
                     ),
                   ),
                 ],
-                ),
               );
             },
           ),
@@ -146,10 +146,6 @@ class _RegisterHotel extends State<RegisterHotel> {
           title: Row(
             children: const [
               Text('Endereço'),
-              // Icon(
-              //   Icons.ac_unit_sharp,
-              //   color: Colors.grey,
-              // )
             ],
           ),
           content: Container(

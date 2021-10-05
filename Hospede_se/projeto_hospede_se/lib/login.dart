@@ -41,34 +41,21 @@ class _LoginPageState extends State<LoginPage> {
                   'Hospede-se',
                   style: titleText,
                 ),
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    labelStyle: TextStyle(
-                      color: Colors.green,
-                    ),
+                Container(
+                  margin: const EdgeInsets.all(5),
+                  child: TextField(
+                    decoration: inputDecorationRadius('Email'),
+                  ),
                     icon: Icon(
                       Icons.email,
                       color: Colors.green,
-                    ),
-                    enabledBorder: inputBorderGreen,
-                    focusedBorder: inputFocusedBorderGreen,
-                  ),
                 ),
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Senha',
-                    labelStyle: TextStyle(
-                      color: Colors.green,
-                    ),
-                    icon: Icon(
-                      Icons.password,
-                      color: Colors.green,
-                    ),
-                    enabledBorder: inputBorderGreen,
-                    focusedBorder: inputFocusedBorderGreen,
+                Container(
+                  margin: const EdgeInsets.all(5),
+                  child: TextField(
+                    decoration: inputDecorationRadius('Senha'),
+                    obscureText: true,
                   ),
-                  obscureText: true,
                 ),
                 Container(
                   margin: const EdgeInsets.all(10),

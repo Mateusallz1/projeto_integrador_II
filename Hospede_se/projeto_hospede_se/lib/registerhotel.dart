@@ -144,8 +144,7 @@ class _RegisterHotel extends State<RegisterHotel> {
           state: c_step > 2 ? StepState.complete : StepState.disabled,
           isActive: c_step >= 2,
           title: Row(
-            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+            children: const [
               Text('Endereço'),
               // Icon(
               //   Icons.ac_unit_sharp,

@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            margin: EdgeInsets.all(20),
+            margin: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -71,17 +71,17 @@ class _LoginPageState extends State<LoginPage> {
                   obscureText: true,
                 ),
                 Container(
-                  margin: EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
                   child: ElevatedButton.icon(
                     onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => RegisterHotel()),
+                            builder: (context) => const RegisterHotel()),
                       );
                     },
-                    icon: Icon(Icons.login),
-                    label: Text('Login'),
+                    icon: const Icon(Icons.login),
+                    label: const Text('Login'),
                     style: elevatedButton,
                   ),
                 ),

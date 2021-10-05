@@ -6,7 +6,7 @@ import 'package:projeto_hospede_se/signup/signup_screen.dart';
 import 'package:projeto_hospede_se/welcome.dart';
 
 void main() async {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -17,11 +17,11 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/login':
-            return MaterialPageRoute(builder: (_) => LoginPage());
+            return MaterialPageRoute(builder: (_) => const LoginPage());
           case '/signup':
             return MaterialPageRoute(builder: (_) => SignUpPage());
           default:
-            return MaterialPageRoute(builder: (_) => WelcomeScreen());
+            return MaterialPageRoute(builder: (_) => const WelcomeScreen());
         }
       },
     );

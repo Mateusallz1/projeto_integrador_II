@@ -3,6 +3,8 @@ import 'package:projeto_hospede_se/styles/style.dart';
 import 'package:projeto_hospede_se/registerhotel.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }

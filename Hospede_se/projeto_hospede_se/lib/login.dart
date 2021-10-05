@@ -18,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
       key: scaffoldKey,
       appBar: AppBar(
         actions: <Widget>[
-          FlatButton(
+          ElevatedButton(
             onPressed: () {
               Navigator.of(context).pushNamed('/signup');
             },

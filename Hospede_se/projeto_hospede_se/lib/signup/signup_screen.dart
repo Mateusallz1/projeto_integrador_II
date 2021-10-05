@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_hospede_se/helpers/validators.dart';
 import 'package:projeto_hospede_se/models/user.dart';
@@ -36,10 +37,11 @@ class SignUpPage extends StatelessWidget {
                 TextFormField(
                   decoration: const InputDecoration(hintText: 'Nome Completo'),
                   validator: (name) {
-                    if (name!.isEmpty)
+                    if (name!.isEmpty) {
                       return 'Campo obrigatório';
-                    else if (name.trim().split(' ').length <= 1)
+                    } else if (name.trim().split(' ').length <= 1) {
                       return 'Preencha seu nome completo';
+                    }
                     return null;
                   },
                   onSaved: (name) {},
@@ -51,9 +53,11 @@ class SignUpPage extends StatelessWidget {
                   decoration: const InputDecoration(hintText: 'E-mail'),
                   keyboardType: TextInputType.emailAddress,
                   validator: (email) {
-                    if (email!.isEmpty)
+                    if (email!.isEmpty) {
                       return 'Campo obrigatório';
-                    else if (!emailValid(email)) return 'E-mail inválido';
+                    } else if (!emailValid(email)) {
+                      return 'E-mail inválido';
+                    }
                     return null;
                   },
                   onSaved: (email) => user.email = email,
@@ -65,10 +69,11 @@ class SignUpPage extends StatelessWidget {
                   decoration: const InputDecoration(hintText: 'Senha'),
                   obscureText: true,
                   validator: (pass) {
-                    if (pass!.isEmpty)
+                    if (pass!.isEmpty) {
                       return 'Campo obrigatório';
-                    else if (pass.length < 8)
+                    } else if (pass.length < 8) {
                       return 'Senha muito curta. Mínimo 8 caracteres';
+                    }
                     return null;
                   },
                 ),
@@ -80,14 +85,15 @@ class SignUpPage extends StatelessWidget {
                       const InputDecoration(hintText: 'Confirmar Senha'),
                   obscureText: true,
                   validator: (pass) {
-                    if (pass!.isEmpty)
+                    if (pass!.isEmpty) {
                       return 'Campo obrigatório';
-                    else if (pass.length < 8)
+                    } else if (pass.length < 8) {
                       return 'Senha muito curta. Mínimo 8 caracteres';
+                    }
                     return null;
                   },
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 ElevatedButton(

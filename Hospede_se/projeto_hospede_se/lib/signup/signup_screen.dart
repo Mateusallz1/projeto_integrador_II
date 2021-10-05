@@ -5,7 +5,7 @@ import 'package:projeto_hospede_se/models/user.dart';
 class SignUpPage extends StatelessWidget {
   final ButtonStyle style = ElevatedButton.styleFrom(
       primary: Colors.green,
-      padding: EdgeInsets.symmetric(vertical: 12),
+      padding: const EdgeInsets.symmetric(vertical: 12),
       textStyle: const TextStyle(
         fontSize: 20,
       ));
@@ -13,7 +13,7 @@ class SignUpPage extends StatelessWidget {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final User user = User();
+  User user = User(email: null, password: null);
 
   @override
   Widget build(BuildContext context) {

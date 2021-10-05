@@ -22,7 +22,6 @@ class _LoginPageState extends State<LoginPage> {
             onPressed: () {
               Navigator.of(context).pushNamed('/signup');
             },
-            textColor: Colors.white,
             child: const Text(
               'CRIAR CONTA',
               style: TextStyle(fontSize: 14),
@@ -48,9 +47,6 @@ class _LoginPageState extends State<LoginPage> {
                   child: TextField(
                     decoration: inputDecorationRadius('Email'),
                   ),
-                    icon: Icon(
-                      Icons.email,
-                      color: Colors.green,
                 ),
                 Container(
                   margin: const EdgeInsets.all(5),

@@ -14,7 +14,7 @@ class SignUpPage extends StatelessWidget {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final User user = User(email: null, password: null);
+  final UserApp user = UserApp(email: '', password: '');
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +60,7 @@ class SignUpPage extends StatelessWidget {
                     }
                     return null;
                   },
-                  onSaved: (email) => user.email = email,
+                  onSaved: (email) => user.email = email!,
                 ),
                 const SizedBox(
                   height: 16,

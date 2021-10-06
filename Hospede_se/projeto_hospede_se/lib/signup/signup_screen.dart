@@ -14,7 +14,7 @@ class SignUpPage extends StatelessWidget {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  User user = User(email: null, password: null);
+  final User user = User(email: null, password: null);
 
   @override
   Widget build(BuildContext context) {
@@ -111,11 +111,5 @@ class SignUpPage extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<User>('user', user));
   }
 }

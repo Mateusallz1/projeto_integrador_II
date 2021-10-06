@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:projeto_hospede_se/login.dart';
 import 'package:projeto_hospede_se/signup/signup_screen.dart';
 import 'package:projeto_hospede_se/welcome.dart';
+import 'package:projeto_hospede_se/models/user_manager.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -15,19 +16,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      initialRoute: '/welcome',
-      onGenerateRoute: (settings) {
-        switch (settings.name) {
-          case '/login':
-            return MaterialPageRoute(builder: (_) => LoginPage());
-          case '/signup':
-            return MaterialPageRoute(builder: (_) => SignUpPage());
-          default:
-            return MaterialPageRoute(builder: (_) => const WelcomeScreen());
-        }
-      },
+    return ChangeNotifierProvider(
+      create: (_) => UserManager(),
+      child: MaterialApp(
+        initialRoute: '/welcome',
+        onGenerateRoute: (settings) {
+          switch (settings.name) {
+            case '/login':
+              return MaterialPageRoute(builder: (_) => LoginPage());
+            case '/signup':
+              return MaterialPageRoute(builder: (_) => SignUpPage());
+            default:
+              return MaterialPageRoute(builder: (_) => const WelcomeScreen());
+          }
+        },
+      ),
     );
-    //home: LoginPage());
   }
 }

@@ -34,16 +34,16 @@ class WelcomeScreen extends StatelessWidget {
                         label: const Text('Hóspede'),
                         style: elevatedButton),
                     ElevatedButton.icon(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const LoginPage()),
-                          );
-                        },
-                        icon: const Icon(Icons.business),
-                        label: const Text('Anfitrião'),
-                        style: elevatedButton),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => LoginPage()),
+                        );
+                      },
+                      icon: const Icon(Icons.business),
+                      label: const Text('Anfitrião'),
+                      style: elevatedButton,
+                    ),
                   ],
                 ),
               ],

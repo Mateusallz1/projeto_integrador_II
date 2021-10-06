@@ -31,7 +31,7 @@ class SignUpPage extends StatelessWidget {
           child: Form(
             key: formKey,
             child: ListView(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               shrinkWrap: true,
               children: <Widget>[
                 TextFormField(

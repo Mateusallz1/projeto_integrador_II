@@ -11,7 +11,8 @@ class UserManager extends ChangeNotifier {
   FirebaseAuth auth = FirebaseAuth.instance;
   bool isLoading = false;
   User? user;
-  UserApp? localeUser;
+  UserApp localeUser =
+      UserApp(id: '', name: '', email: '', password: '', confirmPassword: '');
 
   Future<void> signIn(UserLogin _user) async {
     setLoading(true);
@@ -35,8 +36,8 @@ class UserManager extends ChangeNotifier {
       UserCredential usercredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: _user.email, password: _user.password);
-      localeUser!.id = usercredential.user!.uid;
-      await localeUser!.saveData();
+      localeUser.id = usercredential.user!.uid;
+      await localeUser.saveData();
       onSuccess();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {

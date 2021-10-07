@@ -78,7 +78,7 @@ class LoginPage extends StatelessWidget {
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
                           context.read<UserManager>().signIn(
-                                UserApp(
+                                UserLogin(
                                     email: emailController.text,
                                     password: passController.text),
                               );

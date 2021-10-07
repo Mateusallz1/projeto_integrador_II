@@ -16,7 +16,7 @@ class SignUpPage extends StatelessWidget {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final UserApp user =
+  UserApp user =
       UserApp(id: '', name: '', email: '', password: '', confirmPassword: '');
 
   @override
@@ -107,8 +107,9 @@ class SignUpPage extends StatelessWidget {
                     if (formKey.currentState!.validate()) {
                       formKey.currentState!.save();
                       if (user.password != user.confirmPassword) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: const Text('Senhas não coincidem'),
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          content: Text('Senhas não coincidem'),
                           backgroundColor: Colors.red,
                         ));
                         return;

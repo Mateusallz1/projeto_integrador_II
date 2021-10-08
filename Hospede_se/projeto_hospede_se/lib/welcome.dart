@@ -40,17 +40,6 @@ class WelcomeScreen extends StatelessWidget {
                     ElevatedButton.icon(
                       onPressed: () {
                         Navigator.push(
-<<<<<<< HEAD
-                           context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginPage()
-                          ),
-                        );
-                       },
-                       icon: const Icon(Icons.business),
-                       label: const Text('Anfitrião'),
-                       style: elevatedButton
-=======
                           context,
                           MaterialPageRoute(builder: (context) => LoginPage()),
                         );
@@ -58,7 +47,6 @@ class WelcomeScreen extends StatelessWidget {
                       icon: const Icon(Icons.business),
                       label: const Text('Anfitrião'),
                       style: elevatedButton,
->>>>>>> 79cba8860fb84e81d60a4ff57801a369b4a3cd6a
                     ),
                   ],
                 ),

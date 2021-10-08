@@ -5,11 +5,12 @@ import 'package:projeto_hospede_se/models/user.dart';
 
 class SignUpPage extends StatelessWidget {
   final ButtonStyle style = ElevatedButton.styleFrom(
-      primary: Colors.green,
+      primary: Colors.green.shade800,
       padding: const EdgeInsets.symmetric(vertical: 12),
       textStyle: const TextStyle(
         fontSize: 20,
-      ));
+      )
+    );
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -19,8 +20,10 @@ class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //backgroundColor: Colors.green.shade200,
       key: scaffoldKey,
       appBar: AppBar(
+        backgroundColor: Colors.green.shade800,
         title: const Text('Criar Conta'),
         centerTitle: true,
         elevation: 0,

@@ -15,16 +15,23 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //backgroundColor: Colors.green.shade200,
       key: scaffoldKey,
       appBar: AppBar(
+        backgroundColor: Colors.green.shade800,
         actions: <Widget>[
-          ElevatedButton(
+          TextButton(
+            
             onPressed: () {
               Navigator.of(context).pushNamed('/signup');
             },
             child: const Text(
-              'CRIAR CONTA',
-              style: TextStyle(fontSize: 14),
+              'Registre-se',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.white, 
+                fontSize: 16
+              ),
             ),
           )
         ],
@@ -38,18 +45,23 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  'Hospede-se',
-                  style: titleText,
+                const Text(
+                  'Login',
+                    style: TextStyle( //mesma configuração da tela de Welcome      
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold, 
+                    height: 2, 
+                    fontSize: 35,
+                  ),
                 ),
                 Container(
-                  margin: const EdgeInsets.all(5),
+                  margin: const EdgeInsets.all(1),
                   child: TextField(
                     decoration: inputDecorationRadius('Email'),
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.all(5),
+                  margin: const EdgeInsets.all(1),
                   child: TextField(
                     decoration: inputDecorationRadius('Senha'),
                     obscureText: true,
@@ -58,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                 Container(
                   margin: const EdgeInsets.all(10),
                   child: ElevatedButton.icon(
-                    onPressed: () {
+                    onPressed: () { // tem que ter um if
                       Navigator.push(
                         context,
                         MaterialPageRoute(

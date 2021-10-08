@@ -16,12 +16,16 @@ class WelcomeScreen extends StatelessWidget {
             margin: const EdgeInsets.all(20),
             child: Column(
               children: [
-                Text(
-                  'Bem Vindo',
-                  style: titleText,
+                const Text(
+                  'Bem-Vindo!',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold, 
+                    height: 2, 
+                    fontSize: 35,
+                    ),
                 ),
                 Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+                  'Você está em um aplicativo de hospedagem de Hotel!',
                   style: descText,
                   textAlign: TextAlign.center,
                 ),
@@ -29,21 +33,23 @@ class WelcomeScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     ElevatedButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(Icons.person),
-                        label: const Text('Hóspede'),
-                        style: elevatedButton),
+                      onPressed: () {},
+                      icon: const Icon(Icons.person),
+                      label: const Text('Hóspede'),
+                      style: elevatedButton),
                     ElevatedButton.icon(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const LoginPage()),
-                          );
-                        },
-                        icon: const Icon(Icons.business),
-                        label: const Text('Anfitrião'),
-                        style: elevatedButton),
+                      onPressed: () {
+                        Navigator.push(
+                           context,
+                          MaterialPageRoute(
+                              builder: (context) => const LoginPage()
+                          ),
+                        );
+                       },
+                       icon: const Icon(Icons.business),
+                       label: const Text('Anfitrião'),
+                       style: elevatedButton
+                    ),
                   ],
                 ),
               ],

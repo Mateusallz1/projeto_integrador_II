@@ -2,25 +2,31 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_hospede_se/helpers/validators.dart';
 import 'package:projeto_hospede_se/models/user.dart';
+import 'package:projeto_hospede_se/models/user_manager.dart';
+import 'package:provider/provider.dart';
 
 class SignUpPage extends StatelessWidget {
   final ButtonStyle style = ElevatedButton.styleFrom(
-      primary: Colors.green,
+      primary: Colors.green.shade800,
       padding: const EdgeInsets.symmetric(vertical: 12),
       textStyle: const TextStyle(
         fontSize: 20,
-      ));
+      )
+    );
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final UserApp user = UserApp(email: '', password: '');
+  UserApp user =
+      UserApp(id: '', name: '', email: '', password: '', confirmPassword: '');
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //backgroundColor: Colors.green.shade200,
       key: scaffoldKey,
       appBar: AppBar(
+        backgroundColor: Colors.green.shade800,
         title: const Text('Criar Conta'),
         centerTitle: true,
         elevation: 0,
@@ -44,7 +50,7 @@ class SignUpPage extends StatelessWidget {
                     }
                     return null;
                   },
-                  onSaved: (name) {},
+                  onSaved: (name) => user.name = name!,
                 ),
                 const SizedBox(
                   height: 16,
@@ -76,6 +82,7 @@ class SignUpPage extends StatelessWidget {
                     }
                     return null;
                   },
+                  onSaved: (pass) => user.password = pass!,
                 ),
                 const SizedBox(
                   height: 16,
@@ -92,6 +99,7 @@ class SignUpPage extends StatelessWidget {
                     }
                     return null;
                   },
+                  onSaved: (pass) => user.confirmPassword = pass!,
                 ),
                 const SizedBox(
                   height: 30,
@@ -101,6 +109,22 @@ class SignUpPage extends StatelessWidget {
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
                       formKey.currentState!.save();
+                      if (user.password != user.confirmPassword) {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          content: Text('Senhas não coincidem'),
+                          backgroundColor: Colors.red,
+                        ));
+                        return;
+                      }
+                      context.read<UserManager>().signUp(user, () {
+                        Navigator.of(context).pop();
+                      }, (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text('Falha no cadastro: $e'),
+                          backgroundColor: Colors.red,
+                        ));
+                      });
                     }
                   },
                   child: const Text('Criar Conta'),

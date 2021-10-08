@@ -14,9 +14,9 @@ class _RegisterHotel extends State<RegisterHotel> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text('Cadastro'),
+          title: const Text('Cadastro do Hotel'),
           centerTitle: true,
-          backgroundColor: Colors.green,
+          backgroundColor: Colors.green.shade800,
         ),
         body: Theme(
           data: Theme.of(context).copyWith(
@@ -41,7 +41,7 @@ class _RegisterHotel extends State<RegisterHotel> {
                 setState(() => c_step--);
               }
             },
-            controlsBuilder: (context, {onStepContinue, onStepCancel}) {
+            controlsBuilder: (BuildContext context, {VoidCallback? onStepContinue, VoidCallback? onStepCancel}) {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -60,7 +60,7 @@ class _RegisterHotel extends State<RegisterHotel> {
                     ),
                   ),
                 ],
-              );
+              ); 
             },
           ),
         ),
@@ -75,7 +75,7 @@ class _RegisterHotel extends State<RegisterHotel> {
               children: [
                 TextField(
                   decoration: InputDecoration(
-                    labelText: 'Nome Hotel',
+                    labelText: 'Nome do Hotel',
                     icon: const Icon(
                       Icons.business,
                       color: Colors.green,

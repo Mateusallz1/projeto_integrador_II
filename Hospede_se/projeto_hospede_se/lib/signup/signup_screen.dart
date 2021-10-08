@@ -115,7 +115,7 @@ class SignUpPage extends StatelessWidget {
                         return;
                       }
                       context.read<UserManager>().signUp(user, () {
-                        // TODO: POP
+                        Navigator.of(context).pop();
                       }, (e) {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text('Falha no cadastro: $e'),

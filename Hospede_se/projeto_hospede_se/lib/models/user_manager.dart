@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_hospede_se/helpers/firebase_errors.dart';
@@ -11,8 +10,6 @@ class UserManager extends ChangeNotifier {
   FirebaseAuth auth = FirebaseAuth.instance;
   bool isLoading = false;
   User? user;
-  UserApp localeUser =
-      UserApp(id: '', name: '', email: '', password: '', confirmPassword: '');
 
   Future<void> signIn(UserLogin _user) async {
     setLoading(true);
@@ -21,9 +18,9 @@ class UserManager extends ChangeNotifier {
           .signInWithEmailAndPassword(
               email: _user.email, password: _user.password);
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
+      if (e.code == 'ERROR-USER-NOT-FOUND') {
         //
-      } else if (e.code == 'wrong-password') {
+      } else if (e.code == 'ERROR-WRONG-PASSWORD') {
         //
       }
     }
@@ -36,13 +33,13 @@ class UserManager extends ChangeNotifier {
       UserCredential usercredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: _user.email, password: _user.password);
-      localeUser.id = usercredential.user!.uid;
-      await localeUser.saveData();
+      _user.id = usercredential.user!.uid;
+      await _user.saveData();
       onSuccess();
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
+      if (e.code == 'ERROR-WEAK-PASSWORD') {
         onFail(getErrorString(e.code));
-      } else if (e.code == 'email-already-in-use') {
+      } else if (e.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
         onFail(getErrorString(e.code));
       }
     }

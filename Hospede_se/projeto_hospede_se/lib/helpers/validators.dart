@@ -19,4 +19,8 @@ class Validators {
             ? 'Sua senha deve ter no mínimo 8 caracteres'
             : null;
   }
+
+  static bool comparePassword(String password1, String password2) {
+    return password1 == password2 ? true : false;
+  }
 }

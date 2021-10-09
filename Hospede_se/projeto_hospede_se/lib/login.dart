@@ -7,31 +7,26 @@ import 'package:projeto_hospede_se/helpers/validators.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
-  final emailController = TextEditingController();
-  final passController = TextEditingController();
+  final email = TextEditingController();
+  final passwd = TextEditingController();
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(s
+    return Scaffold(
       //backgroundColor: Colors.green.shade200,
       key: scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.green.shade800,
-        actions: <Widget>[
+        actions: [
           TextButton(
-            
             onPressed: () {
               Navigator.of(context).pushNamed('/signup');
             },
-            child: const Text(
+            child: Text(
               'Registre-se',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.white, 
-                fontSize: 16
-              ),
+              style: titleText2,
             ),
           )
         ],
@@ -41,45 +36,75 @@ class LoginPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            margin: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const Text(
                   'Login',
-                    style: TextStyle( //mesma configuração da tela de Welcome      
+                  style: TextStyle(
                     color: Colors.black,
-                    fontWeight: FontWeight.bold, 
-                    height: 2, 
+                    fontWeight: FontWeight.bold,
+                    height: 2,
                     fontSize: 35,
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.all(1),
-                  child: TextField(
-                    decoration: inputDecorationRadius('Email'),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.all(1),
-                  child: TextField(
-                    decoration: inputDecorationRadius('Senha'),
-                    obscureText: true,
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.all(10),
-                  child: ElevatedButton.icon(
-                    onPressed: () { // tem que ter um if
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const RegisterHotel()),
-                      );
-                    },
-                    icon: const Icon(Icons.login),
-                    label: const Text('Login'),
-                    style: elevatedButton,
+                  child: Form(
+                    key: formKey,
+                    child: ListView(
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.all(20),
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.all(20),
+                          child: TextFormField(
+                            controller: email,
+                            decoration: inputDecorationRadius('Email'),
+                            keyboardType: TextInputType.emailAddress,
+                            autocorrect: false,
+                            validator: (email) => Validators.validateEmail(email!),
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.all(20),
+                          child: TextFormField(
+                            controller: passwd,
+                            decoration: inputDecorationRadius('Senha'),
+                            autocorrect: false,
+                            obscureText: true,
+                            validator: (password) => Validators.validatePassword(password!),
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.all(5),
+                          padding: const EdgeInsets.all(5),
+                          width: MediaQuery.of(context).size.width * 0.83,
+                          height: 70,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              if (formKey.currentState!.validate()) {
+                                context.read<UserManager>().signIn(
+                                  UserLogin(email: email.text, password: passwd.text),
+                                  () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  (e) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(e.message),
+                                      ),
+                                    );
+                                  },
+                                );
+                              }
+                            },
+                            child: const Text('Login'),
+                            style: elevatedButton,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

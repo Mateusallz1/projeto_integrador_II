@@ -8,31 +8,27 @@ final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
 class UserManager extends ChangeNotifier {
   FirebaseAuth auth = FirebaseAuth.instance;
-  bool isLoading = false;
   User? user;
+  bool isLoading = false;
 
-  Future<void> signIn(UserLogin _user) async {
+  Future<void> signIn(UserLogin _user, Function onSucess, Function onFail) async {
     setLoading(true);
     try {
-      UserCredential usercredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-              email: _user.email, password: _user.password);
+      UserCredential usercredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: _user.email, password: _user.password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'ERROR-USER-NOT-FOUND') {
         //
       } else if (e.code == 'ERROR-WRONG-PASSWORD') {
         //
       }
+      setLoading(false);
     }
   }
 
-  Future<void> signUp(
-      UserApp _user, Function onSuccess, Function onFail) async {
+  Future<void> signUp(UserApp _user, Function onSuccess, Function onFail) async {
     setLoading(true);
     try {
-      UserCredential usercredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-              email: _user.email, password: _user.password);
+      UserCredential usercredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _user.email, password: _user.password);
       _user.id = usercredential.user!.uid;
       await _user.saveData();
       onSuccess();
@@ -59,4 +55,9 @@ class UserManager extends ChangeNotifier {
     isLoading = value;
     notifyListeners();
   }
+}
+
+class AuthException implements Exception {
+  String message;
+  AuthException(this.message);
 }

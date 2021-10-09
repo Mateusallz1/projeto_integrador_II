@@ -1,37 +1,28 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:projeto_hospede_se/styles/style.dart';
 import 'package:projeto_hospede_se/helpers/validators.dart';
 import 'package:projeto_hospede_se/models/user.dart';
 import 'package:projeto_hospede_se/models/user_manager.dart';
-import 'package:provider/provider.dart';
 
 class SignUpPage extends StatelessWidget {
-  final ButtonStyle style = ElevatedButton.styleFrom(
-      primary: Colors.green.shade800,
-      padding: const EdgeInsets.symmetric(vertical: 12),
-      textStyle: const TextStyle(
-        fontSize: 20,
-      )
-    );
-
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  UserApp user =
-      UserApp(id: '', name: '', email: '', password: '', confirmPassword: '');
+  UserApp user = UserApp(id: '', name: '', email: '', password: '', confirmPassword: '');
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: Colors.green.shade200,
       key: scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.green.shade800,
         title: const Text('Criar Conta'),
         centerTitle: true,
-        elevation: 0,
+        elevation: 5,
       ),
       body: Center(
+        // FORM CADASTRO
         child: Card(
           margin: const EdgeInsets.symmetric(horizontal: 16),
           child: Form(
@@ -40,16 +31,10 @@ class SignUpPage extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               shrinkWrap: true,
               children: <Widget>[
+                //NOME COMPLETO
                 TextFormField(
                   decoration: const InputDecoration(hintText: 'Nome Completo'),
-                  validator: (name) {
-                    if (name!.isEmpty) {
-                      return 'Campo obrigatório';
-                    } else if (name.trim().split(' ').length <= 1) {
-                      return 'Preencha seu nome completo';
-                    }
-                    return null;
-                  },
+                  validator: (name) => Validators.validateName(name!),
                   onSaved: (name) => user.name = name!,
                 ),
                 const SizedBox(
@@ -58,14 +43,6 @@ class SignUpPage extends StatelessWidget {
                 TextFormField(
                   decoration: const InputDecoration(hintText: 'E-mail'),
                   keyboardType: TextInputType.emailAddress,
-                  validator: (email) {
-                    if (email!.isEmpty) {
-                      return 'Campo obrigatório';
-                    } else if (!emailValid(email)) {
-                      return 'E-mail inválido';
-                    }
-                    return null;
-                  },
                   onSaved: (email) => user.email = email!,
                 ),
                 const SizedBox(
@@ -74,57 +51,48 @@ class SignUpPage extends StatelessWidget {
                 TextFormField(
                   decoration: const InputDecoration(hintText: 'Senha'),
                   obscureText: true,
-                  validator: (pass) {
-                    if (pass!.isEmpty) {
-                      return 'Campo obrigatório';
-                    } else if (pass.length < 8) {
-                      return 'Senha muito curta. Mínimo 8 caracteres';
-                    }
-                    return null;
-                  },
+                  validator: (pass) => Validators.validatePassword(pass!),
                   onSaved: (pass) => user.password = pass!,
                 ),
                 const SizedBox(
                   height: 16,
                 ),
                 TextFormField(
-                  decoration:
-                      const InputDecoration(hintText: 'Confirmar Senha'),
+                  decoration: const InputDecoration(hintText: 'Confirmar Senha'),
                   obscureText: true,
-                  validator: (pass) {
-                    if (pass!.isEmpty) {
-                      return 'Campo obrigatório';
-                    } else if (pass.length < 8) {
-                      return 'Senha muito curta. Mínimo 8 caracteres';
-                    }
-                    return null;
-                  },
+                  validator: (pass) => Validators.validatePassword(pass!),
                   onSaved: (pass) => user.confirmPassword = pass!,
                 ),
                 const SizedBox(
                   height: 30,
                 ),
                 ElevatedButton(
-                  style: style,
+                  style: elevatedButtonConfirm,
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
                       formKey.currentState!.save();
-                      if (user.password != user.confirmPassword) {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(
-                          content: Text('Senhas não coincidem'),
-                          backgroundColor: Colors.red,
-                        ));
-                        return;
+                      if (!Validators.comparePassword(user.password, user.confirmPassword)) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Senhas não coincidem'),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
                       }
-                      context.read<UserManager>().signUp(user, () {
-                        Navigator.of(context).pop();
-                      }, (e) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text('Falha no cadastro: $e'),
-                          backgroundColor: Colors.red,
-                        ));
-                      });
+                      context.read<UserManager>().signUp(
+                        user,
+                        () {
+                          Navigator.of(context).pop();
+                        },
+                        (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Falha no cadastro: $e'),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                        },
+                      );
                     }
                   },
                   child: const Text('Criar Conta'),

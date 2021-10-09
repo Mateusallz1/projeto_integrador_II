@@ -17,6 +17,7 @@ class _RegisterHotel extends State<RegisterHotel> {
           title: const Text('Cadastro do Hotel'),
           centerTitle: true,
           backgroundColor: Colors.green.shade800,
+          elevation: 5,
         ),
         body: Theme(
           data: Theme.of(context).copyWith(
@@ -60,7 +61,7 @@ class _RegisterHotel extends State<RegisterHotel> {
                     ),
                   ),
                 ],
-              ); 
+              );
             },
           ),
         ),

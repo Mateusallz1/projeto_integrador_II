@@ -5,6 +5,13 @@ var titleText = const TextStyle(
   fontWeight: FontWeight.normal,
 );
 
+var titleText2 = const TextStyle(
+  color: Colors.black,
+  fontWeight: FontWeight.bold,
+  height: 2,
+  fontSize: 35,
+);
+
 var descText = const TextStyle(
   fontSize: 15,
   color: Colors.grey,
@@ -12,9 +19,17 @@ var descText = const TextStyle(
 );
 
 var elevatedButton = ElevatedButton.styleFrom(
-  primary: Colors.green,
+  primary: Colors.green.shade800,
   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
   shape: const StadiumBorder(),
+);
+
+var elevatedButtonConfirm = ElevatedButton.styleFrom(
+  primary: Colors.green.shade800,
+  padding: const EdgeInsets.symmetric(vertical: 12),
+  textStyle: const TextStyle(
+    fontSize: 20,
+  ),
 );
 
 var inputBorderGreen = const UnderlineInputBorder(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_hospede_se/services/auth_service.dart';
 import 'package:provider/provider.dart';
 import 'package:projeto_hospede_se/styles/style.dart';
 import 'package:projeto_hospede_se/helpers/validators.dart';
 import 'package:projeto_hospede_se/models/user.dart';
-import 'package:projeto_hospede_se/models/user_manager.dart';
 
 class SignUpPage extends StatelessWidget {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -79,20 +79,7 @@ class SignUpPage extends StatelessWidget {
                           ),
                         );
                       }
-                      context.read<UserManager>().signUp(
-                        user,
-                        () {
-                          Navigator.of(context).pop();
-                        },
-                        (e) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Falha no cadastro: $e'),
-                              backgroundColor: Colors.red,
-                            ),
-                          );
-                        },
-                      );
+                      context.read<AuthService>().signUp(user);
                     }
                   },
                   child: const Text('Criar Conta'),

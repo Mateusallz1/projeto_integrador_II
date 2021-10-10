@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_hospede_se/models/user.dart';
-import 'package:projeto_hospede_se/models/user_manager.dart';
-import 'package:projeto_hospede_se/registerhotel.dart';
+import 'package:projeto_hospede_se/pages/signup/signup.dart';
+import 'package:projeto_hospede_se/services/auth_service.dart';
 import 'package:projeto_hospede_se/styles/style.dart';
 import 'package:projeto_hospede_se/helpers/validators.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +11,7 @@ class LoginPage extends StatelessWidget {
   final passwd = TextEditingController();
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,10 @@ class LoginPage extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.of(context).pushNamed('/signup');
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SignUpPage()),
+              );
             },
             child: Text(
               'Registre-se',
@@ -84,19 +88,9 @@ class LoginPage extends StatelessWidget {
                           child: ElevatedButton(
                             onPressed: () {
                               if (formKey.currentState!.validate()) {
-                                context.read<UserManager>().signIn(
-                                  UserLogin(email: email.text, password: passwd.text),
-                                  () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  (e) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(e.message),
-                                      ),
+                                context.read<AuthService>().signIn(
+                                      UserLogin(email: email.text, password: passwd.text),
                                     );
-                                  },
-                                );
                               }
                             },
                             child: const Text('Login'),

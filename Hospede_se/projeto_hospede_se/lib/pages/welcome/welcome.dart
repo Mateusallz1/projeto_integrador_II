@@ -1,9 +1,9 @@
-import 'package:projeto_hospede_se/login.dart';
+import 'package:projeto_hospede_se/pages/login/login.dart';
 import 'package:projeto_hospede_se/styles/style.dart';
 import 'package:flutter/material.dart';
 
-class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({Key? key}) : super(key: key);
+class WelcomePage extends StatelessWidget {
+  const WelcomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +19,10 @@ class WelcomeScreen extends StatelessWidget {
                 const Text(
                   'Bem-Vindo!',
                   style: TextStyle(
-                    fontWeight: FontWeight.bold, 
-                    height: 2, 
+                    fontWeight: FontWeight.bold,
+                    height: 2,
                     fontSize: 35,
-                    ),
+                  ),
                 ),
                 Text(
                   'Você está em um aplicativo de hospedagem de Hotel!',
@@ -32,11 +32,7 @@ class WelcomeScreen extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    ElevatedButton.icon(
-                      onPressed: () {},
-                      icon: const Icon(Icons.person),
-                      label: const Text('Hóspede'),
-                      style: elevatedButton),
+                    ElevatedButton.icon(onPressed: () {}, icon: const Icon(Icons.person), label: const Text('Hóspede'), style: elevatedButton),
                     ElevatedButton.icon(
                       onPressed: () {
                         Navigator.push(

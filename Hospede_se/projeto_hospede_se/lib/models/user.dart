@@ -7,17 +7,11 @@ class UserApp {
   String password;
   String confirmPassword;
 
-  UserApp(
-      {required this.id,
-      required this.name,
-      required this.email,
-      required this.password,
-      required this.confirmPassword});
+  UserApp({required this.id, required this.name, required this.email, required this.password, required this.confirmPassword});
 
-  DocumentReference get firestoreRef =>
-      FirebaseFirestore.instance.doc('users/$id');
+  DocumentReference get firestoreRef => FirebaseFirestore.instance.doc('users/$id');
 
-  Future<void> saveData() async {
+  void saveData() async {
     await firestoreRef.set(toMap());
   }
 

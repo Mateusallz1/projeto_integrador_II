@@ -26,7 +26,7 @@ class WelcomePage extends StatelessWidget {
                 ),
                 Text(
                   'Você está em um aplicativo de hospedagem de Hotel!',
-                  style: descText,
+                  style: descTextGrey,
                   textAlign: TextAlign.center,
                 ),
                 Column(
@@ -37,7 +37,7 @@ class WelcomePage extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => LoginPage()),
+                          MaterialPageRoute(builder: (context) => const LoginPage()),
                         );
                       },
                       icon: const Icon(Icons.business),

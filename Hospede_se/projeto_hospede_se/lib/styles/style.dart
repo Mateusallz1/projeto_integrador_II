@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
 
-var titleText = const TextStyle(
+var titleTextBlack = const TextStyle(
   fontSize: 30,
   fontWeight: FontWeight.normal,
 );
 
-var titleText2 = const TextStyle(
+var titleText2Black = const TextStyle(
   color: Colors.black,
   fontWeight: FontWeight.bold,
   height: 2,
   fontSize: 35,
 );
 
-var descText = const TextStyle(
+var descTextGrey = const TextStyle(
   fontSize: 15,
   color: Colors.grey,
+  fontWeight: FontWeight.normal,
+);
+
+var labelTextWhite = const TextStyle(
+  fontSize: 15,
+  color: Colors.white,
   fontWeight: FontWeight.normal,
 );
 

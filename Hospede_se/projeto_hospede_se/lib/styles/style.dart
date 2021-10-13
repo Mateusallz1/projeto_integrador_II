@@ -8,7 +8,6 @@ var titleTextBlack = const TextStyle(
 var titleText2Black = const TextStyle(
   color: Colors.black,
   fontWeight: FontWeight.bold,
-  height: 2,
   fontSize: 35,
 );
 

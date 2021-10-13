@@ -13,6 +13,7 @@ class _RegisterHotel extends State<RegisterHotel> {
   int c_step = 0;
   @override
   Widget build(BuildContext context) => Scaffold(
+    backgroundColor: Colors.green,
         appBar: AppBar(
           title: const Text('Cadastro do Hotel'),
           centerTitle: true,

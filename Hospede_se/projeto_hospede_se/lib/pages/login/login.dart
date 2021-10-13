@@ -37,44 +37,54 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.green.shade300,
       appBar: AppBar(
         backgroundColor: Colors.green.shade800,
         actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const SignUpPage()),
-              );
-            },
-            child: Text(
-              'Registre-se',
-              style: labelTextWhite,
+          Container(
+            child: TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SignUpPage()),
+                );
+              },
+
+              child: const Text(
+                'Registre-se',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           )
         ],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        //crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            'Login',
-            style: titleText2Black,
-          ),
           Container(
-            margin: const EdgeInsets.all(10),
+            color: Colors.white,
+            padding: const EdgeInsets.all(10),
+            margin: const EdgeInsets.all(15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                const Text(
+                      'Login',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 35,
+                      ), 
+                    ),
                 Form(
                   key: formKey,
                   child: ListView(
                     shrinkWrap: true,
-                    padding: const EdgeInsets.all(20),
+                    //padding: const EdgeInsets.all(1),
                     children: [
                       Container(
-                        margin: const EdgeInsets.only(bottom: 10),
+                        margin: const EdgeInsets.only(bottom: 10, top: 10),
                         child: TextFormField(
                           controller: email,
                           decoration: inputDecorationRadius('Email'),
@@ -103,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                             }
                           },
                           child: const Text('Login'),
-                          style: elevatedButton,
+                          style: elevatedButtonConfirm
                         ),
                       ),
                     ],

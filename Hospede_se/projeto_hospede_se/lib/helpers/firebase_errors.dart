@@ -38,6 +38,8 @@ String getErrorString(String code) {
       return '';
     case 'web-storage-unsupported':
       return 'Este navegador não é suportado ou cookies e dados de terceiros podem ser desabilitados.';
+    case 'email-already-in-use':
+      return 'Este email de usuário já está em uso. Tente outro.';
     default:
       return 'Um erro indefinido ocorreu.';
   }

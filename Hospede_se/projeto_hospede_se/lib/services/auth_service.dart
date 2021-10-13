@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:projeto_hospede_se/helpers/firebase_errors.dart';
 import 'package:projeto_hospede_se/models/user.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +24,8 @@ class AuthService extends ChangeNotifier {
       user = (user == null) ? null : user;
       setLoading(false);
       notifyListeners();
-    });
+      }
+    );
   }
 
   void getUser() {

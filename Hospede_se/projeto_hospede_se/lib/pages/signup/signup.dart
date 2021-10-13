@@ -69,7 +69,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   controller: email,
                   decoration: inputDecorationRadius('Email'),
                   keyboardType: TextInputType.emailAddress,
-                  validator: (email) => Validators.validateName(email!),
+                  validator: (email) => Validators.validateEmail(email!),
                 ),
                 TextFormField(
                   controller: passwd,

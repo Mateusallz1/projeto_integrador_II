@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_hospede_se/pages/home/home.dart';
 import 'package:projeto_hospede_se/services/auth_service.dart';
 import 'package:projeto_hospede_se/widgets/auth_check.dart';
 import 'package:provider/provider.dart';
@@ -26,11 +25,10 @@ class _SignUpPageState extends State<SignUpPage> {
   void signUp() async {
     try {
       await context.read<AuthService>().signUp(UserApp(name: name.text, email: email.text, password: passwd.text, confirmPassword: cpasswd.text));
-      //MaterialPageRoute(builder: (context) => const AuthCheck());
       Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const AuthCheck()),
-              );
+        context,
+        MaterialPageRoute(builder: (context) => const AuthCheck()),
+      );
     } on AuthException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(e.message),
@@ -56,52 +54,56 @@ class _SignUpPageState extends State<SignUpPage> {
           margin: const EdgeInsets.symmetric(horizontal: 16),
           child: Form(
             key: formKey,
-            child: ListView(
-              padding: const EdgeInsets.all(16),
-              shrinkWrap: true,
-              children: [
-                TextFormField(
-                controller: name,
-                decoration: inputDecorationRadius('Nome Completo'),
-                validator: (name) => Validators.validateName(name!),
-                ),
-                TextFormField(
-                  controller: email,
-                  decoration: inputDecorationRadius('Email'),
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (email) => Validators.validateEmail(email!),
-                ),
-                TextFormField(
-                  controller: passwd,
-                  decoration: inputDecorationRadius('Senha'),
-                  obscureText: true,
-                  validator: (passwd) => Validators.validatePassword(passwd!),
-                ),
-                TextFormField(
-                  controller: cpasswd,
-                  decoration: inputDecorationRadius('Confirme sua Senha'),
-                  obscureText: true,
-                  validator: (passwd) => Validators.validatePassword(passwd!),
-                ),
-                ElevatedButton(
-                      style: elevatedButtonConfirm,
-                      onPressed: () {
-                        if (formKey.currentState!.validate()) {
-                          formKey.currentState!.save();
-                          if (!Validators.comparePassword(passwd.text, cpasswd.text)) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Senhas não coincidem'),
-                                backgroundColor: Colors.red,
-                              ),
-                            );
-                          }
-                          signUp();
+            child: Container(
+              height: 400,
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  TextFormField(
+                    controller: name,
+                    decoration: inputDecorationRadius('Nome Completo'),
+                    validator: (name) => Validators.validateName(name!),
+                  ),
+                  TextFormField(
+                    controller: email,
+                    decoration: inputDecorationRadius('Email'),
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (email) => Validators.validateEmail(email!),
+                  ),
+                  TextFormField(
+                    controller: passwd,
+                    decoration: inputDecorationRadius('Senha'),
+                    obscureText: true,
+                    validator: (passwd) => Validators.validatePassword(passwd!),
+                  ),
+                  TextFormField(
+                    controller: cpasswd,
+                    decoration: inputDecorationRadius('Confirme sua Senha'),
+                    obscureText: true,
+                    validator: (passwd) => Validators.validatePassword(passwd!),
+                  ),
+                  ElevatedButton(
+                    style: elevatedButtonConfirm,
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        formKey.currentState!.save();
+                        if (!Validators.comparePassword(passwd.text, cpasswd.text)) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Senhas não coincidem'),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
                         }
-                      },
-                      child: const Text('Criar Conta'),
-                ),
-              ],
+                        signUp();
+                      }
+                    },
+                    child: const Text('Criar Conta'),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

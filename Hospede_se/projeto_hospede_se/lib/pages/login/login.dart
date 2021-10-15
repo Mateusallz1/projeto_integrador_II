@@ -25,7 +25,6 @@ class _LoginPageState extends State<LoginPage> {
     try {
       await context.read<AuthService>().signIn(UserLogin(email: email.text, password: passwd.text));
       Navigator.pop(context);
-      //MaterialPageRoute(builder: (context) => const HomePage());
     } on AuthException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(e.message),
@@ -49,7 +48,6 @@ class _LoginPageState extends State<LoginPage> {
                   MaterialPageRoute(builder: (context) => const SignUpPage()),
                 );
               },
-
               child: const Text(
                 'Registre-se',
                 style: TextStyle(color: Colors.white),
@@ -60,7 +58,6 @@ class _LoginPageState extends State<LoginPage> {
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        //crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
             color: Colors.white,
@@ -70,18 +67,17 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const Text(
-                      'Login',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 35,
-                      ), 
-                    ),
+                  'Login',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 35,
+                  ),
+                ),
                 Form(
                   key: formKey,
                   child: ListView(
                     shrinkWrap: true,
-                    //padding: const EdgeInsets.all(1),
                     children: [
                       Container(
                         margin: const EdgeInsets.only(bottom: 10, top: 10),
@@ -107,14 +103,13 @@ class _LoginPageState extends State<LoginPage> {
                         width: MediaQuery.of(context).size.width * 0.83,
                         height: 70,
                         child: ElevatedButton(
-                          onPressed: () {
-                            if (formKey.currentState!.validate()) {
-                              SignIn();
-                            }
-                          },
-                          child: const Text('Login'),
-                          style: elevatedButtonConfirm
-                        ),
+                            onPressed: () {
+                              if (formKey.currentState!.validate()) {
+                                SignIn();
+                              }
+                            },
+                            child: const Text('Login'),
+                            style: elevatedButtonConfirm),
                       ),
                     ],
                   ),
@@ -127,4 +122,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-

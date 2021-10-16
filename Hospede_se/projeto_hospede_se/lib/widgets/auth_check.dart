@@ -18,7 +18,7 @@ class _AuthCheckState extends State<AuthCheck> {
 
     if (auth.isLoading) {
       return loading();
-    } else if (auth.userApp == null) {
+    } else if (!auth.isLogged()) {
       return const WelcomePage();
     } else {
       return HomePage();

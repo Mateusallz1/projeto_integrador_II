@@ -14,7 +14,7 @@ class AuthException implements Exception {
 class AuthService extends ChangeNotifier {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  UserApp? userApp;
+  UserApp? _user;
   bool isLoading = true;
 
   AuthService() {
@@ -27,6 +27,13 @@ class AuthService extends ChangeNotifier {
       setLoading(false);
       notifyListeners();
     });
+  }
+
+  bool isLogged() {
+    if (_user != null) {
+      return true;
+    }
+    return false;
   }
 
   Future<void> signUp(UserApp _user) async {
@@ -49,16 +56,20 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  Future<void> loadCurrentUser({User? user}) async {
+  Future<void> loadCurrentUser() async {
     final User? currentUser = auth.currentUser;
     if (currentUser != null) {
       DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('users').doc(currentUser.uid).get();
-      userApp = UserApp.fromDocument(snapshot);
-      print(userApp!.id);
-      print(userApp!.name);
-      print(userApp!.email);
+      _user = UserApp.fromDocument(snapshot);
+      print(_user!.id);
+      print(_user!.name);
+      print(_user!.email);
       notifyListeners();
     }
+  }
+
+  UserApp getUser() {
+    return _user!;
   }
 
   void signOut() async {

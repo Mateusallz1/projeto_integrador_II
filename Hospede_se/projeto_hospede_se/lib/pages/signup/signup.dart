@@ -83,7 +83,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     decoration: inputDecorationRadius('Confirme sua Senha'),
                     obscureText: true,
                     validator: (passwd) => Validators.validatePassword(passwd!),
-                  ),
+                  ), 
                   ElevatedButton(
                     style: elevatedButtonConfirm,
                     onPressed: () {

@@ -44,22 +44,3 @@ var inputBorderGreen = const UnderlineInputBorder(
 var inputFocusedBorderGreen = const UnderlineInputBorder(
   borderSide: BorderSide(color: Colors.green),
 );
-
-InputDecoration inputDecorationRadius(txt) {
-  return InputDecoration(
-    labelText: txt,
-    labelStyle: const TextStyle(color: Colors.grey),
-    focusedBorder: const OutlineInputBorder(
-      borderSide: BorderSide(color: Colors.green),
-      borderRadius: BorderRadius.all(
-        Radius.circular(5),
-      ),
-    ),
-    enabledBorder: const OutlineInputBorder(
-      borderSide: BorderSide(color: Colors.green),
-      borderRadius: BorderRadius.all(
-        Radius.circular(5),
-      ),
-    ),
-  );
-}

@@ -8,18 +8,21 @@ class CustomDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
-        children: [
+        children: const [
           DrawerTile(
             icondata: Icons.home,
             title: 'Início',
+            page: 0,
           ),
           DrawerTile(
             icondata: Icons.list,
             title: 'Quartos',
+            page: 1,
           ),
           DrawerTile(
             icondata: Icons.playlist_add_check,
             title: 'Estadias',
+            page: 2,
           ),
         ],
       ),

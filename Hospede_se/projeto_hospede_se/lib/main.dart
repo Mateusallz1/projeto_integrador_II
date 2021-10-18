@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_hospede_se/app.dart';
+import 'package:projeto_hospede_se/pages/rooms/room_manager.dart';
 import 'package:projeto_hospede_se/services/auth_service.dart';
 import 'package:provider/provider.dart';
 
@@ -11,7 +12,14 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => AuthService()),
+        ChangeNotifierProvider(
+          create: (context) => AuthService(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider(
+          create: (context) => RoomManager(),
+          lazy: false,
+        )
       ],
       child: const App(),
     ),

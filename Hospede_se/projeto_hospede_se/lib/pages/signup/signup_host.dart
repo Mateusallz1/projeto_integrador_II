@@ -120,12 +120,12 @@ class _SignUpHostPage extends State<SignUpHostPage> {
               children: [
                 TextFormField(
                   controller: nameHotel,
-                  validator: (name) => Validators.validateText(name!),
+                  validator: (name) => Validators.validateName(name!),
                   decoration: inputDecorationSignUp('Nome Hotel', const Icon(Icons.business)),
                 ),
                 TextFormField(
                   controller: phone,
-                  validator: (phone) => Validators.validateText(phone!),
+                  validator: (phone) => Validators.validatePhone(phone!),
                   decoration: inputDecorationSignUp('Fone', const Icon(Icons.call)),
                 ),
               ],

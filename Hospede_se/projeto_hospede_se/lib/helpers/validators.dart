@@ -31,4 +31,15 @@ class Validators {
   static String? validateText(String text) {
     return text.isEmpty ? 'Campo Obrigatório' : null;
   }
+
+  static String? validatePhone(String phonenumber) {
+    const pattern = r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$';
+    final regExp = RegExp(pattern);
+
+    return phonenumber.isEmpty 
+        ? 'Campo Obrigatório' 
+        : !regExp.hasMatch(phonenumber) 
+            ? 'Telefone inválido'
+            : null;
+  }
 }

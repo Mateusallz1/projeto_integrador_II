@@ -1,4 +1,5 @@
 import 'package:projeto_hospede_se/pages/login/login.dart';
+import 'package:projeto_hospede_se/pages/signup/signup.dart';
 import 'package:projeto_hospede_se/styles/style.dart';
 import 'package:flutter/material.dart';
 
@@ -32,20 +33,23 @@ class WelcomePage extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    ElevatedButton.icon(onPressed: () {}, icon: const Icon(Icons.person), label: const Text('Hóspede'), style: elevatedButton),
+                    ElevatedButton.icon(
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage()));
+                        },
+                        icon: const Icon(Icons.login),
+                        label: const Text('Login'),
+                        style: elevatedButton),
                     ElevatedButton.icon(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const LoginPage()),
-                        );
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpPage()));
                       },
-                      icon: const Icon(Icons.business),
-                      label: const Text('Anfitrião'),
+                      icon: const Icon(Icons.app_registration),
+                      label: const Text('Registre-se'),
                       style: elevatedButton,
                     ),
                   ],
-                ),
+                )
               ],
             ),
           ),

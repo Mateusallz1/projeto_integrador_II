@@ -27,4 +27,8 @@ class Validators {
   static bool comparePassword(String password1, String password2) {
     return password1 == password2 ? true : false;
   }
+
+  static String? validateText(String text) {
+    return text.isEmpty ? 'Campo Obrigatório' : null;
+  }
 }

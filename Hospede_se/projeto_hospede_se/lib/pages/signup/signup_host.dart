@@ -1,19 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_hospede_se/helpers/validators.dart';
 import 'package:projeto_hospede_se/styles/style.dart';
 
-class RegisterHotel extends StatefulWidget {
-  const RegisterHotel({Key? key}) : super(key: key);
+class SignUpHostPage extends StatefulWidget {
+  const SignUpHostPage({Key? key}) : super(key: key);
 
   @override
-  _RegisterHotel createState() => _RegisterHotel();
+  _SignUpHostPage createState() => _SignUpHostPage();
 }
 
-class _RegisterHotel extends State<RegisterHotel> {
-  double value = 5;
+//FORM PARA VALIDAR OS CAMPOS
+//CONTROLLER PRA O FIELD
+//CRIA UM OBJETO USER E UM OBJETO HOTEL
+class _SignUpHostPage extends State<SignUpHostPage> {
+  final name = TextEditingController();
+  final email = TextEditingController();
+  final passwd = TextEditingController();
+  final cpasswd = TextEditingController();
+  final nameHotel = TextEditingController();
+  final phone = TextEditingController();
+
+  double value = 5; // RATING HOTEL
   int c_step = 0;
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: Colors.green,
         appBar: AppBar(
           title: const Text('Cadastro do Hotel'),
           centerTitle: true,
@@ -71,42 +81,31 @@ class _RegisterHotel extends State<RegisterHotel> {
         Step(
           state: c_step > 0 ? StepState.complete : StepState.disabled,
           isActive: c_step >= 0,
-          title: const Text('Informações Gerais'),
+          title: const Text('Usuário'),
           content: Container(
             child: Column(
               children: [
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Nome do Hotel',
-                    icon: const Icon(
-                      Icons.business,
-                      color: Colors.green,
-                    ),
-                    enabledBorder: inputBorderGreen,
-                    focusedBorder: inputFocusedBorderGreen,
-                  ),
+                TextFormField(
+                  controller: name,
+                  validator: (name) => Validators.validateName(name!),
+                  decoration: inputDecorationSignUp('Nome Completo', const Icon(Icons.person)),
                 ),
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    icon: const Icon(
-                      Icons.email,
-                      color: Colors.green,
-                    ),
-                    enabledBorder: inputBorderGreen,
-                    focusedBorder: inputFocusedBorderGreen,
-                  ),
+                TextFormField(
+                  controller: email,
+                  validator: (email) => Validators.validateEmail(email!),
+                  decoration: inputDecorationSignUp('Email', const Icon(Icons.email)),
                 ),
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Fone',
-                    icon: const Icon(
-                      Icons.phone,
-                      color: Colors.green,
-                    ),
-                    enabledBorder: inputBorderGreen,
-                    focusedBorder: inputFocusedBorderGreen,
-                  ),
+                TextFormField(
+                  controller: passwd,
+                  obscureText: true,
+                  validator: (passwd) => Validators.validatePassword(passwd!),
+                  decoration: inputDecorationSignUp('Senha', const Icon(Icons.password)),
+                ),
+                TextFormField(
+                  controller: cpasswd,
+                  obscureText: true,
+                  validator: (passwd) => Validators.validatePassword(passwd!),
+                  decoration: inputDecorationSignUp('Senha', const Icon(Icons.password_sharp)),
                 ),
               ],
             ),
@@ -115,6 +114,27 @@ class _RegisterHotel extends State<RegisterHotel> {
         Step(
           state: c_step > 1 ? StepState.complete : StepState.disabled,
           isActive: c_step >= 1,
+          title: const Text('Informações Hotel'),
+          content: Container(
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: nameHotel,
+                  validator: (name) => Validators.validateText(name!),
+                  decoration: inputDecorationSignUp('Nome Hotel', const Icon(Icons.business)),
+                ),
+                TextFormField(
+                  controller: phone,
+                  validator: (phone) => Validators.validateText(phone!),
+                  decoration: inputDecorationSignUp('Fone', const Icon(Icons.call)),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Step(
+          state: c_step > 2 ? StepState.complete : StepState.disabled,
+          isActive: c_step >= 2,
           title: const Text('Classificação'),
           content: Container(
             child: Column(
@@ -143,8 +163,8 @@ class _RegisterHotel extends State<RegisterHotel> {
           ),
         ),
         Step(
-          state: c_step > 2 ? StepState.complete : StepState.disabled,
-          isActive: c_step >= 2,
+          state: c_step > 3 ? StepState.complete : StepState.disabled,
+          isActive: c_step >= 3,
           title: Row(
             children: const [
               Text('Endereço'),
@@ -154,27 +174,25 @@ class _RegisterHotel extends State<RegisterHotel> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Endereco',
-                    icon: const Icon(
-                      Icons.edit_location,
-                      color: Colors.green,
-                    ),
-                    enabledBorder: inputBorderGreen,
-                    focusedBorder: inputFocusedBorderGreen,
-                  ),
+                TextFormField(
+                  validator: (address) => Validators.validateText(address!),
+                  decoration: inputDecorationSignUp('Endereço', const Icon(Icons.password)),
                 ),
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Número',
-                    icon: const Icon(
-                      Icons.markunread_mailbox,
-                      color: Colors.green,
-                    ),
-                    enabledBorder: inputBorderGreen,
-                    focusedBorder: inputFocusedBorderGreen,
-                  ),
+                TextFormField(
+                  validator: (number) => Validators.validateText(number!),
+                  decoration: inputDecorationSignUp('Número', const Icon(Icons.markunread_mailbox)),
+                ),
+                TextFormField(
+                  validator: (city) => Validators.validateText(city!),
+                  decoration: inputDecorationSignUp('Cidade', const Icon(Icons.add_location_alt)),
+                ),
+                TextFormField(
+                  validator: (state) => Validators.validateText(state!),
+                  decoration: inputDecorationSignUp('Estado', const Icon(Icons.add_location_alt)),
+                ),
+                TextFormField(
+                  validator: (country) => Validators.validateText(country!),
+                  decoration: inputDecorationSignUp('Estado', const Icon(Icons.add_location_alt)),
                 ),
                 ElevatedButton.icon(
                   onPressed: null,

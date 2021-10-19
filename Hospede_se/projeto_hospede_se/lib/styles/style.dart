@@ -63,3 +63,12 @@ InputDecoration inputDecorationRadius(txt) {
     ),
   );
 }
+
+InputDecoration inputDecorationSignUp(txt, icon) {
+  return InputDecoration(
+    labelText: txt,
+    icon: icon,
+    enabledBorder: inputBorderGreen,
+    focusedBorder: inputFocusedBorderGreen,
+  );
+}

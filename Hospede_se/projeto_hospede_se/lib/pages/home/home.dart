@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_hospede_se/pages/home/page_manager.dart';
+import 'package:projeto_hospede_se/pages/rooms/room_manager.dart';
 import 'package:projeto_hospede_se/widgets/drawer.dart';
 import 'package:provider/provider.dart';
 
@@ -12,7 +13,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final PageController pageController = PageController();
-
   @override
   Widget build(BuildContext context) {
     return Provider(

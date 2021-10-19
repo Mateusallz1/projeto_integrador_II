@@ -20,6 +20,7 @@ class _AuthCheckState extends State<AuthCheck> {
       return loading();
     } else if (!auth.isLogged()) {
       return const WelcomePage();
+      //return const RegisterHotel();
     } else {
       return HomePage();
     }

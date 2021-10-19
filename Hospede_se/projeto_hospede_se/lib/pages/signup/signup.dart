@@ -50,10 +50,11 @@ class _SignUpPageState extends State<SignUpPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const Text(
-              'Você deseja procurar por hotéis ou pussui um hotel?',
+              'Você deseja procurar por hotéis ou possuir um hotel?',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                height: 2,
+                //height: 2,
                 fontSize: 25,
               ),
             ),

@@ -105,7 +105,7 @@ class _SignUpHostPage extends State<SignUpHostPage> {
                   controller: cpasswd,
                   obscureText: true,
                   validator: (passwd) => Validators.validatePassword(passwd!),
-                  decoration: inputDecorationSignUp('Senha', const Icon(Icons.password_sharp)),
+                  decoration: inputDecorationSignUp('Confirmar Senha', const Icon(Icons.password_sharp)),
                 ),
               ],
             ),
@@ -188,10 +188,6 @@ class _SignUpHostPage extends State<SignUpHostPage> {
                 ),
                 TextFormField(
                   validator: (state) => Validators.validateText(state!),
-                  decoration: inputDecorationSignUp('Estado', const Icon(Icons.add_location_alt)),
-                ),
-                TextFormField(
-                  validator: (country) => Validators.validateText(country!),
                   decoration: inputDecorationSignUp('Estado', const Icon(Icons.add_location_alt)),
                 ),
                 ElevatedButton.icon(

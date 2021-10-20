@@ -1,10 +1,12 @@
-// ignore_for_file: avoid_print
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:projeto_hospede_se/models/hotel.dart';
-import 'package:projeto_hospede_se/services/auth_service.dart';
+
+class SignUpException implements Exception {
+  String message;
+  SignUpException(this.message);
+}
 
 class HotelManager extends ChangeNotifier {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -18,22 +20,18 @@ class HotelManager extends ChangeNotifier {
       _hotel.id = hotelId;
       _hotel.saveData();
     } on FirebaseException catch (e) {
-      //
+      throw SignUpException(e.message!);
     }
   }
 
   Future<void> loadHotel(UserId) async {
     String hotelId = '';
     await firestore.collection('hotel').where('user', isEqualTo: UserId).get().then((QuerySnapshot query) {
-      query.docs.forEach((doc) {
+      for (var doc in query.docs) {
         hotelId = doc.id;
-      });
+      }
     });
-
-    print(hotelId);
-
     DocumentSnapshot snapshotdoc = await FirebaseFirestore.instance.collection('hotel').doc(hotelId).get();
-    print(snapshotdoc.data().toString());
     _hotel = Hotel.fromDocument(snapshotdoc);
   }
 

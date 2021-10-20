@@ -37,8 +37,7 @@ class _SignUpHostPage extends State<SignUpHostPage> {
   void save() async {
     try {
       await context.read<AuthService>().signUp(UserApp(host: true, name: name.text, email: email.text, password: passwd.text, confirmPassword: cpasswd.text));
-      final usersRef = FirebaseFirestore.instance.collection('users').doc();
-      String userId = usersRef.id;
+      String? userId = context.read<AuthService>().getUser().id;
       await context.read<HotelManager>().signUpHotel(Hotel(userId: userId, name: nameHotel.text, phone: phone.text, address: address.text, number: number.text, city: city.text, state: state.text, country: country.text, rating: value.toInt()));
 
       Navigator.push(

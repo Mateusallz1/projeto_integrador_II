@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:projeto_hospede_se/pages/home/page_manager.dart';
 import 'package:projeto_hospede_se/pages/rooms/room_manager.dart';
 import 'package:projeto_hospede_se/widgets/drawer.dart';
+import 'package:projeto_hospede_se/widgets/room_list_tile.dart';
 import 'package:provider/provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -50,8 +51,22 @@ class _HomeHostPageState extends State<HomeHostPage> {
                         elevation: 10,
                         color: Colors.white,
                         child: Row(
-                          children: const [Expanded(child: Text('Card para lista de Quartos '))],
-                        )),
+                          children: [
+                            Expanded(
+                              child: Consumer<RoomManager>(
+                                builder: (_, roomManager, __) { 
+                                  return ListView.builder(
+                                    itemCount: roomManager.allRooms.length,
+                                    itemBuilder: (_, index) {
+                                      return RoomListTile(roomManager.allRooms[index]);
+                                    },
+                                  ); 
+                               },
+                              )
+                            )
+                          ],
+                        )
+                      ),
                   ),
                 ),
               ],

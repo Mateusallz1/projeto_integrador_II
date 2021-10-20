@@ -74,6 +74,7 @@ class AuthService extends ChangeNotifier {
 
   void signOut() async {
     await auth.signOut();
+    _user = null;
   }
 
   void setLoading(bool value) {

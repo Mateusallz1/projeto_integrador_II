@@ -37,16 +37,23 @@ class CustomDrawerHeader extends StatelessWidget {
                 onTap: () {
                   if (auth.isLogged()) {
                     auth.signOut();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const AuthCheck()),
+                    );
                   } else {
                     MaterialPageRoute(builder: (context) => const AuthCheck());
                   }
                 },
-                child: Text(
-                  'Sair',
-                  style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                child: Container(
+                  margin: const EdgeInsets.only(bottom: 30),
+                  child: Text(
+                    'Sair',
+                    style: TextStyle(
+                      color: Colors.green.shade800,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),

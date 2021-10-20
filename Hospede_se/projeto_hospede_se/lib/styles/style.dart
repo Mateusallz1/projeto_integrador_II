@@ -26,7 +26,6 @@ var labelTextWhite = const TextStyle(
 var elevatedButton = ElevatedButton.styleFrom(
   primary: Colors.green.shade800,
   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-  shape: const StadiumBorder(),
 );
 
 var elevatedButtonConfirm = ElevatedButton.styleFrom(

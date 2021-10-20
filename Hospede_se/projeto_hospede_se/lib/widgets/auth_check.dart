@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_hospede_se/pages/home/home.dart';
+import 'package:projeto_hospede_se/pages/home/home_host.dart';
 import 'package:projeto_hospede_se/pages/welcome/welcome.dart';
 import 'package:projeto_hospede_se/services/auth_service.dart';
 import 'package:provider/provider.dart';
@@ -20,9 +20,8 @@ class _AuthCheckState extends State<AuthCheck> {
       return loading();
     } else if (!auth.isLogged()) {
       return const WelcomePage();
-      //return const RegisterHotel();
     } else {
-      return HomePage();
+      return HomeHostPage();
     }
   }
 

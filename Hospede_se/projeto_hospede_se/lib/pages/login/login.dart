@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_hospede_se/models/user.dart';
-import 'package:projeto_hospede_se/pages/home/home.dart';
+import 'package:projeto_hospede_se/pages/home/home_host.dart';
 import 'package:projeto_hospede_se/pages/signup/signup.dart';
 import 'package:projeto_hospede_se/services/auth_service.dart';
 import 'package:projeto_hospede_se/styles/style.dart';

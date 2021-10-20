@@ -6,20 +6,22 @@ class Hotel {
   String? name;
   String? phone;
   String? address;
+  String? number;
   String? city;
   String? state;
   String? country;
   int? rating;
   //List<String>? images;
 
-  Hotel({required userId, required name, required address, required city, required state, required country, required rating});
+  Hotel({required this.userId, required this.name, required this.phone, required this.address, required this.number, required this.city, required this.state, required this.country, required this.rating});
 
   Hotel.fromDocument(DocumentSnapshot document) {
     id = document.id;
-    name = document['name'] as String;
     userId = document['userId'] as String;
+    name = document['name'] as String;
     phone = document['fone'] as String;
     address = document['adress'] as String;
+    number = document['number'] as String;
     city = document['city'] as String;
     state = document['state'] as String;
     country = document['country'] as String;
@@ -39,6 +41,7 @@ class Hotel {
       'name': name,
       'phone': phone,
       'address': address,
+      'number': number,
       'city': city,
       'state': state,
       'country': country,

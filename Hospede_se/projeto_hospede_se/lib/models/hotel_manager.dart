@@ -1,13 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:projeto_hospede_se/models/user.dart';
-import 'package:projeto_hospede_se/services/auth_service.dart';
+import 'package:projeto_hospede_se/models/hotel.dart';
 
 class HotelManager extends ChangeNotifier {
-  UserApp? user;
+  Hotel? _hotel;
 
-  void updateUser(AuthService authService) {
-    user = authService.getUser();
+  Future<void> signUpHotel(Hotel _hotel) async {
+    try {
+      final hotelRef = FirebaseFirestore.instance.collection('hotel').doc();
+      final hotelId = hotelRef.id;
+      _hotel.id = hotelId;
+      _hotel.saveData();
+    } on FirebaseException catch (e) {
+      //
+    }
   }
+
+  Future<void> loadHotel() async {}
 }

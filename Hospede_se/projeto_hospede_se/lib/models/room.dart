@@ -4,6 +4,7 @@ class Room {
   String? id;
   String? hotelId;
   int? number;
+  int? quantity;
   String? title;
   String? description;
   bool? status;
@@ -17,6 +18,7 @@ class Room {
     id = document.id;
     hotelId = document['hotel_id'] as String;
     number = document['number'] as int;
+    quantity = document['quantity'] as int;
     title = document['title'] as String;
     description = document['description'] as String;
     status = document['status'] as bool;

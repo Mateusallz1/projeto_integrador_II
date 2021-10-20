@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:projeto_hospede_se/pages/login/login.dart';
 import 'package:projeto_hospede_se/pages/signup/signup.dart';
 import 'package:projeto_hospede_se/styles/style.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -16,13 +18,16 @@ class WelcomePage extends StatelessWidget {
           Container(
             margin: const EdgeInsets.all(20),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Bem-Vindo!',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    height: 2,
-                    fontSize: 35,
+                  style: GoogleFonts.ubuntu(
+                    textStyle: const TextStyle(
+                      fontWeight: FontWeight.w900,
+                      height: 2,
+                      fontSize: 35,
+                    ),
                   ),
                 ),
                 Text(

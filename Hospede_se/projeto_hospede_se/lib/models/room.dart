@@ -9,7 +9,7 @@ class Room {
   String? title;
   String? description;
   bool? status;
-  Double? price;
+  num? price;
   int? guestCount;
   int? bedCount;
   int? bathCount;
@@ -17,12 +17,12 @@ class Room {
 
   Room.fromDocument(DocumentSnapshot document) {
     id = document.id;
-    hotelId = document['hotelId'] as String;
+    hotelId = document['hotel_id'] as String;
     number = document['number'] as int;
     title = document['title'] as String;
     description = document['description'] as String;
     status = document['status'] as bool;
-    price = document['price'] as Double;
+    price = document['price'] as num;
     guestCount = document['guest_count'] as int;
     bedCount = document['bed_count'] as int;
     bathCount = document['bath_count'] as int;

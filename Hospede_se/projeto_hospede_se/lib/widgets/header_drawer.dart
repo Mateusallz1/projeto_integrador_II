@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_hospede_se/models/hotel_manager.dart';
 import 'package:projeto_hospede_se/services/auth_service.dart';
 import 'package:projeto_hospede_se/widgets/auth_check.dart';
 import 'package:provider/provider.dart';
 
 class CustomDrawerHeader extends StatelessWidget {
   const CustomDrawerHeader({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
+    final hotelManager = context.read<HotelManager>();
     return Container(
       padding: const EdgeInsets.fromLTRB(32, 24, 16, 8),
       height: 180,
       child: Consumer<AuthService>(
         builder: (_, auth, __) {
+          hotelManager.loadHotel(auth.getUser().id);
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -25,7 +27,8 @@ class CustomDrawerHeader extends StatelessWidget {
                 ),
               ),
               Text(
-                'Olá, ${auth.getUser().name}',
+                'Olá, ${auth.getUser().name}\n'
+                'Dono do hotel ${hotelManager.getHotel().name}',
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
                 style: const TextStyle(

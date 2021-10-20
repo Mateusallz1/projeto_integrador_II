@@ -59,8 +59,8 @@ class AuthService extends ChangeNotifier {
   Future<void> loadCurrentUser() async {
     final User? currentUser = auth.currentUser;
     if (currentUser != null) {
-      DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('users').doc(currentUser.uid).get();
-      _user = UserApp.fromDocument(snapshot);
+      DocumentSnapshot snapshotdoc = await FirebaseFirestore.instance.collection('users').doc(currentUser.uid).get();
+      _user = UserApp.fromDocument(snapshotdoc);
       print(_user!.id);
       print(_user!.name);
       print(_user!.email);

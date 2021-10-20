@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Room {
@@ -13,7 +11,7 @@ class Room {
   int? guestCount;
   int? bedCount;
   int? bathCount;
-  List<String>? images;
+  //List<String>? images;
 
   Room.fromDocument(DocumentSnapshot document) {
     id = document.id;
@@ -26,6 +24,6 @@ class Room {
     guestCount = document['guest_count'] as int;
     bedCount = document['bed_count'] as int;
     bathCount = document['bath_count'] as int;
-    images = List<String>.from(document['images'] as List<dynamic>);
+    //images = List<String>.from(document['images'] as List<dynamic>);
   }
 }

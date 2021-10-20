@@ -9,7 +9,7 @@ class RoomManager extends ChangeNotifier {
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  List<Room> _allRooms = [];
+  List<Room> allRooms = [];
 
   Future<void> _loadAllRooms() async {
     // final QuerySnapshot snapRoom = await firestore.collection('rooms').get();
@@ -18,7 +18,7 @@ class RoomManager extends ChangeNotifier {
 
     final QuerySnapshot snapRoom = await firestore.collection('rooms').get();
 
-    _allRooms = snapRoom.docs.map((d) => Room.fromDocument(d)).toList();
+    allRooms = snapRoom.docs.map((d) => Room.fromDocument(d)).toList();
 
     notifyListeners();
   }

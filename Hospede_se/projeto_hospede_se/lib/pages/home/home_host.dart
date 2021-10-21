@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_hospede_se/models/hotel_manager.dart';
 import 'package:projeto_hospede_se/pages/home/page_manager.dart';
 import 'package:projeto_hospede_se/pages/rooms/room_manager.dart';
+import 'package:projeto_hospede_se/services/auth_service.dart';
 import 'package:projeto_hospede_se/widgets/drawer.dart';
 import 'package:projeto_hospede_se/widgets/room_list_tile.dart';
 import 'package:provider/provider.dart';
@@ -13,10 +15,16 @@ class HomeHostPage extends StatefulWidget {
 
 class _HomeHostPageState extends State<HomeHostPage> {
   final GlobalKey<ScaffoldState> scaffoldKeyRooms = GlobalKey<ScaffoldState>();
-
   final PageController pageController = PageController();
+  
+
   @override
   Widget build(BuildContext context) {
+    AuthService authService = context.read<AuthService>();
+    HotelManager hotelManager = context.read<HotelManager>();
+
+    hotelManager.loadHotel(authService.getUser().id.toString());
+    
     return Provider(
       create: (_) => PageManager(pageController),
       child: PageView(

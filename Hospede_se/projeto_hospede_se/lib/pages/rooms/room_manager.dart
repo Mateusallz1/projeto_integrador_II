@@ -17,7 +17,6 @@ class RoomManager extends ChangeNotifier {
     // _allRooms = snapRoom.docs.map((d) => Room.fromDocument(d)).toList();
 
     final QuerySnapshot snapRoom = await firestore.collection('rooms').get();
-
     allRooms = snapRoom.docs.map((d) => Room.fromDocument(d)).toList();
 
     notifyListeners();

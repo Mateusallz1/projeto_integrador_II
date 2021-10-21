@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  void SignIn() async {
+  void signIn() async {
     try {
       await context.read<AuthService>().signIn(UserLogin(email: email.text, password: passwd.text));
       Navigator.pop(context);
@@ -105,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: ElevatedButton(
                             onPressed: () {
                               if (formKey.currentState!.validate()) {
-                                SignIn();
+                                signIn();
                               }
                             },
                             child: const Text('Login'),

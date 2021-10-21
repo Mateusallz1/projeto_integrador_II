@@ -1,6 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:projeto_hospede_se/models/room.dart';
+
+class SignUpRoomException implements Exception {
+  String message;
+  SignUpRoomException(this.message);
+}
 
 class RoomManager extends ChangeNotifier {
   RoomManager() {
@@ -10,6 +16,17 @@ class RoomManager extends ChangeNotifier {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   List<Room> allRooms = [];
+
+  Future<void> signUpRoom(Room _room) async {
+    try {
+      final roomRef = FirebaseFirestore.instance.collection('room').doc();
+      final roomId = roomRef.id;
+      _room.id = roomId;
+      _room.saveData();
+    } on FirebaseException catch (e) {
+      throw SignUpRoomException(e.message!);
+    }
+  }
 
   Future<void> _loadAllRooms() async {
     // final QuerySnapshot snapRoom = await firestore.collection('rooms').get();

@@ -3,9 +3,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:projeto_hospede_se/models/hotel.dart';
 
-class SignUpException implements Exception {
+class SignUpHotelException implements Exception {
   String message;
-  SignUpException(this.message);
+  SignUpHotelException(this.message);
 }
 
 class HotelManager extends ChangeNotifier {
@@ -20,7 +20,7 @@ class HotelManager extends ChangeNotifier {
       _hotel.id = hotelId;
       _hotel.saveData();
     } on FirebaseException catch (e) {
-      throw SignUpException(e.message!);
+      throw SignUpHotelException(e.message!);
     }
   }
 

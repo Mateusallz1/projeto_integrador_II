@@ -16,6 +16,7 @@ class RoomManager extends ChangeNotifier {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   List<Room> allRooms = [];
+  List<Room> hotelRooms = [];
 
   Future<void> signUpRoom(Room _room) async {
     try {
@@ -29,13 +30,15 @@ class RoomManager extends ChangeNotifier {
   }
 
   Future<void> _loadAllRooms() async {
-    // final QuerySnapshot snapRoom = await firestore.collection('rooms').get();
-
-    // _allRooms = snapRoom.docs.map((d) => Room.fromDocument(d)).toList();
-
     final QuerySnapshot snapRoom = await firestore.collection('rooms').get();
     allRooms = snapRoom.docs.map((d) => Room.fromDocument(d)).toList();
 
+    notifyListeners();
+  }
+
+  Future<void> loadRooms(hotelId) async {
+    final QuerySnapshot snapshotdocs = await firestore.collection('rooms').where('hotel_id', isEqualTo: hotelId).get();
+    hotelRooms = snapshotdocs.docs.map((d) => Room.fromDocument(d)).toList();
     notifyListeners();
   }
 }

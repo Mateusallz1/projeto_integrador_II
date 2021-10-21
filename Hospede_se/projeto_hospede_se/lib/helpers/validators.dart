@@ -42,4 +42,15 @@ class Validators {
             ? 'Telefone inválido'
             : null;
   }
+
+  static String? validateNumber(String number) {
+    if (number.isEmpty) {
+      return 'Campo Obrigatório';
+    }
+    final n = num.tryParse(number);
+    if (n == null) {
+      return 'Digite apenas números';
+    }
+    return null;
+  }
 }

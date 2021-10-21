@@ -52,21 +52,18 @@ class _HomeHostPageState extends State<HomeHostPage> {
                         color: Colors.white,
                         child: Row(
                           children: [
-                            Expanded(
-                              child: Consumer<RoomManager>(
-                                builder: (_, roomManager, __) { 
-                                  return ListView.builder(
-                                    itemCount: roomManager.allRooms.length,
-                                    itemBuilder: (_, index) {
-                                      return RoomListTile(roomManager.allRooms[index]);
-                                    },
-                                  ); 
-                               },
-                              )
-                            )
+                            Expanded(child: Consumer<RoomManager>(
+                              builder: (_, roomManager, __) {
+                                return ListView.builder(
+                                  itemCount: roomManager.allRooms.length,
+                                  itemBuilder: (_, index) {
+                                    return RoomListTile(roomManager.allRooms[index]);
+                                  },
+                                );
+                              },
+                            ))
                           ],
-                        )
-                      ),
+                        )),
                   ),
                 ),
               ],

@@ -9,6 +9,7 @@ class Validators {
 
   static String? validateEmail(String email) {
     final RegExp regex = RegExp(r"^(([^<>()[\]\\.,;:\s@\']+(\.[^<>()[\]\\.,;:\s@\']+)*)|(\'.+\'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$");
+
     return email.isEmpty
         ? 'Campo obrigatório'
         : !regex.hasMatch(email)
@@ -33,12 +34,11 @@ class Validators {
   }
 
   static String? validatePhone(String phonenumber) {
-    const pattern = r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$';
-    final regExp = RegExp(pattern);
+    final regex = RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$');
 
-    return phonenumber.isEmpty 
-        ? 'Campo Obrigatório' 
-        : !regExp.hasMatch(phonenumber) 
+    return phonenumber.isEmpty
+        ? 'Campo Obrigatório'
+        : !regex.hasMatch(phonenumber)
             ? 'Telefone inválido'
             : null;
   }

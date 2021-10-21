@@ -28,4 +28,26 @@ class Room {
     bathCount = document['bath_count'] as int;
     //images = List<String>.from(document['images'] as List<dynamic>);
   }
+
+  DocumentReference get firestoreRef => FirebaseFirestore.instance.doc('rooms/$id');
+
+  void saveData() async {
+    await firestoreRef.set(toMap());
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'hotel_id': hotelId,
+      'number': number,
+      'quantity': quantity,
+      'title': title,
+      'description': description,
+      'status': status,
+      'price': price,
+      'guest_count': guestCount,
+      'bed_count': bedCount,
+      'bath_count': bathCount,
+      //'images' : List<String>.from(document['images'] as List<dynamic>);
+    };
+  }
 }

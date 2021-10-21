@@ -8,27 +8,28 @@ class CustomDrawerHeader extends StatelessWidget {
   const CustomDrawerHeader({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final hotelManager = context.read<HotelManager>();
+    AuthService authService = context.read<AuthService>();
+    HotelManager hotelManager = context.read<HotelManager>();
+
+    hotelManager.loadHotel(authService.getUser().id.toString());
     return Container(
       padding: const EdgeInsets.fromLTRB(32, 24, 16, 8),
       height: 180,
       child: Consumer<AuthService>(
         builder: (_, auth, __) {
-          hotelManager.loadHotel(auth.getUser().id);
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              const Text(
-                'Hospede-se',
-                style: TextStyle(
+              Text(
+                '${hotelManager.getHotel().name}',
+                style: const TextStyle(
                   fontSize: 34,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
-                'Olá, ${auth.getUser().name}\n'
-                'Dono do hotel ${hotelManager.getHotel().name}',
+                'Olá, ${auth.getUser().name}',
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
                 style: const TextStyle(

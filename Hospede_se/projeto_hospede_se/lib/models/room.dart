@@ -13,7 +13,7 @@ class Room {
   int? bedCount;
   int? bathCount;
   //List<String>? images;
-
+  Room({required this.hotelId, required this.number, required this.quantity, required this.title, required this.description, required this.status, required this.price, required this.guestCount, required this.bedCount, required this.bathCount});
   Room.fromDocument(DocumentSnapshot document) {
     id = document.id;
     hotelId = document['hotel_id'] as String;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:projeto_hospede_se/models/hotel_manager.dart';
 import 'package:projeto_hospede_se/pages/home/page_manager.dart';
 import 'package:projeto_hospede_se/pages/rooms/room_manager.dart';
+import 'package:projeto_hospede_se/pages/rooms/room_page.dart';
 import 'package:projeto_hospede_se/services/auth_service.dart';
 import 'package:projeto_hospede_se/widgets/drawer.dart';
 import 'package:projeto_hospede_se/widgets/room_list_tile.dart';
@@ -16,15 +17,15 @@ class HomeHostPage extends StatefulWidget {
 class _HomeHostPageState extends State<HomeHostPage> {
   final GlobalKey<ScaffoldState> scaffoldKeyRooms = GlobalKey<ScaffoldState>();
   final PageController pageController = PageController();
-  
 
   @override
   Widget build(BuildContext context) {
     AuthService authService = context.read<AuthService>();
     HotelManager hotelManager = context.read<HotelManager>();
-
+    RoomManager roomManager = context.read<RoomManager>();
     hotelManager.loadHotel(authService.getUser().id.toString());
-    
+    roomManager.loadRooms(hotelManager.getHotel().id);
+
     return Provider(
       create: (_) => PageManager(pageController),
       child: PageView(
@@ -63,9 +64,9 @@ class _HomeHostPageState extends State<HomeHostPage> {
                             Expanded(child: Consumer<RoomManager>(
                               builder: (_, roomManager, __) {
                                 return ListView.builder(
-                                  itemCount: roomManager.allRooms.length,
+                                  itemCount: roomManager.hotelRooms.length,
                                   itemBuilder: (_, index) {
-                                    return RoomListTile(roomManager.allRooms[index]);
+                                    return RoomListTile(roomManager.hotelRooms[index]);
                                   },
                                 );
                               },
@@ -77,7 +78,12 @@ class _HomeHostPageState extends State<HomeHostPage> {
               ],
             ),
             floatingActionButton: FloatingActionButton(
-              onPressed: () => Fluttertoast.showToast(msg: 'Redirecionar para tela de registrar quarto'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const RoomPage()),
+                );
+              },
               child: const Icon(Icons.add),
               backgroundColor: Colors.green.shade800,
             ),

@@ -35,7 +35,8 @@ class _RoomPageState extends State<RoomPage> {
       final hotelId = context.read<HotelManager>().getHotel().id;
       await context.read<RoomManager>().signUpRoom(Room(hotelId: hotelId, number: int.parse(number.text), quantity: int.parse(quantity.text), title: title.text, description: description.text, status: status, price: double.parse(price.text), guestCount: int.parse(guestCount.text), bedCount: int.parse(bedCount.text), bathCount: int.parse(bathCount.text)));
       // CARREGAR NOVAMENTE A LISTA DE QUARTOS
-      // OU REDIRECIONAR PARA A PAGINA DE QUARTOS
+      Navigator.pop(context);
+      
     } on SignUpRoomException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(e.message),

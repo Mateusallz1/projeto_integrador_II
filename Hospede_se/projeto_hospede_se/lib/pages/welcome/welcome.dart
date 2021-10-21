@@ -31,9 +31,10 @@ class WelcomePage extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Você está em um aplicativo de hospedagem de Hotel!',
-                  style: descTextGrey,
-                  textAlign: TextAlign.center,
+                  'Você está em um aplicativo de hospedagem de Hotel!\n\n',
+                  style: GoogleFonts.roboto(
+                    textStyle: const TextStyle(fontSize: 15, color: Colors.grey),
+                  ),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,

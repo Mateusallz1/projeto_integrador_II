@@ -103,18 +103,18 @@ class _RoomPageState extends State<RoomPage> {
             TextFormField(
               controller: title,
               validator: (title) => Validators.validateText(title!),
-              decoration: inputDecorationSignUp('Título', const Icon(Icons.person)
+              decoration: inputDecorationSignUp('Título', const Icon(Icons.create)
               ),
             ),
             TextFormField(
               controller: description,
               validator: (description) => Validators.validateText(description!),
-              decoration: inputDecorationSignUp('Descrição', const Icon(Icons.person)),
+              decoration: inputDecorationSignUp('Descrição', const Icon(Icons.title)),
             ),
             TextFormField(
               controller: number,
               validator: (number) => Validators.validateText(number!),
-              decoration: inputDecorationSignUp('Número', const Icon(Icons.person)),
+              decoration: inputDecorationSignUp('Número', const Icon(Icons.short_text)),
             ),
           ],
         ),
@@ -130,13 +130,13 @@ class _RoomPageState extends State<RoomPage> {
             TextFormField(
               controller: quantity,
               validator: (quantity) => Validators.validateNumber(quantity!),
-              decoration: inputDecorationSignUp('Quantidade', const Icon(Icons.person)),
+              decoration: inputDecorationSignUp('Quantidade', const Icon(Icons.add)),
               keyboardType: TextInputType.number,
             ),
             TextFormField(
               controller: price,
               validator: (price) => Validators.validateNumber(price!),
-              decoration: inputDecorationSignUp('Preço', const Icon(Icons.person)),
+              decoration: inputDecorationSignUp('Preço', const Icon(Icons.attach_money)),
               keyboardType: TextInputType.number,
             ),
           ],
@@ -153,19 +153,19 @@ class _RoomPageState extends State<RoomPage> {
             TextFormField(
               controller: guestCount,
               validator: (guestCount) => Validators.validateNumber(guestCount!),
-              decoration: inputDecorationSignUp('Capacidade', const Icon(Icons.person)),
+              decoration: inputDecorationSignUp('Capacidade', const Icon(Icons.add)),
               keyboardType: TextInputType.number,
             ),
             TextFormField(
               controller: bedCount,
               validator: (bedCount) => Validators.validateNumber(bedCount!),
-              decoration: inputDecorationSignUp('Camas', const Icon(Icons.person)),
+              decoration: inputDecorationSignUp('Camas', const Icon(Icons.add)),
               keyboardType: TextInputType.number,
             ),
             TextFormField(
               controller: bathCount,
               validator: (bathCount) => Validators.validateNumber(bathCount!),
-              decoration: inputDecorationSignUp('Banheiros', const Icon(Icons.person)),
+              decoration: inputDecorationSignUp('Banheiros', const Icon(Icons.add)),
               keyboardType: TextInputType.number,
             ),
           ],

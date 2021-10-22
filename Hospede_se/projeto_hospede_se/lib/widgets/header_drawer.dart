@@ -39,6 +39,7 @@ class CustomDrawerHeader extends StatelessWidget {
                 onTap: () {
                   if (auth.isLogged()) {
                     auth.signOut();
+                    hotelManager.removeHotel();
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const AuthCheck()),

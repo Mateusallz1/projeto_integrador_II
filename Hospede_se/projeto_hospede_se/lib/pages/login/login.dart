@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_hospede_se/models/user.dart';
-import 'package:projeto_hospede_se/pages/home/home_host.dart';
+
 import 'package:projeto_hospede_se/pages/signup/signup.dart';
 import 'package:projeto_hospede_se/services/auth_service.dart';
 import 'package:projeto_hospede_se/styles/style.dart';
@@ -40,18 +40,16 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(
         backgroundColor: Colors.green.shade800,
         actions: [
-          Container(
-            child: TextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SignUpPage()),
-                );
-              },
-              child: const Text(
-                'Registre-se',
-                style: TextStyle(color: Colors.white),
-              ),
+          TextButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SignUpPage()),
+              );
+            },
+            child: const Text(
+              'Registre-se',
+              style: TextStyle(color: Colors.white),
             ),
           )
         ],

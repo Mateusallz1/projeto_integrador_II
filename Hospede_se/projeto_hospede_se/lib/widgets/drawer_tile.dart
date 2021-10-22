@@ -3,6 +3,7 @@ import 'package:projeto_hospede_se/pages/home/page_manager.dart';
 import 'package:provider/provider.dart';
 
 class DrawerTile extends StatelessWidget {
+  // ignore: use_key_in_widget_constructors
   const DrawerTile({required this.icondata, required this.title, required this.page});
 
   final IconData icondata;
@@ -14,11 +15,10 @@ class DrawerTile extends StatelessWidget {
     final int curPage = context.watch<PageManager>().page; //pega a página atual
 
     return InkWell(
-      onTap: (){
-
+      onTap: () {
         context.read<PageManager>().setPage(page);
       },
-      child: SizedBox( 
+      child: SizedBox(
         height: 60,
         child: Row(
           children: [

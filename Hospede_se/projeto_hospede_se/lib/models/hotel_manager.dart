@@ -24,9 +24,9 @@ class HotelManager extends ChangeNotifier {
     }
   }
 
-  Future<void> loadHotel(UserId) async {
+  Future<void> loadHotel(userId) async {
     String hotelId = '';
-    await firestore.collection('hotel').where('user', isEqualTo: UserId).get().then((QuerySnapshot query) {
+    await firestore.collection('hotel').where('user', isEqualTo: userId).get().then((QuerySnapshot query) {
       for (var doc in query.docs) {
         hotelId = doc.id;
       }
@@ -37,5 +37,9 @@ class HotelManager extends ChangeNotifier {
 
   Hotel getHotel() {
     return _hotel!;
+  }
+
+  void removeHotel() async {
+    _hotel = null;
   }
 }

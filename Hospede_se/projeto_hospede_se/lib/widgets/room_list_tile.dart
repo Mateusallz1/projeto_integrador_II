@@ -3,7 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:projeto_hospede_se/models/room.dart';
 
 class RoomListTile extends StatelessWidget {
-  RoomListTile(this.room);
+  // ignore: use_key_in_widget_constructors
+  const RoomListTile(this.room);
 
   final Room room;
 
@@ -19,7 +20,7 @@ class RoomListTile extends StatelessWidget {
         padding: const EdgeInsets.all(5),
         child: Column(
           children: [
-            Container(
+            SizedBox(
               height: MediaQuery.of(context).size.height * 0.045,
               child: Expanded(
                 child: Row(
@@ -76,7 +77,7 @@ class RoomListTile extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
+            SizedBox(
               height: MediaQuery.of(context).size.height * 0.15,
               child: Row(
                 children: [

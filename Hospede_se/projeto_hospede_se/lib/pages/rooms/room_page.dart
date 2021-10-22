@@ -4,7 +4,7 @@ import 'package:projeto_hospede_se/helpers/validators.dart';
 import 'package:projeto_hospede_se/models/hotel_manager.dart';
 import 'package:projeto_hospede_se/models/room.dart';
 import 'package:projeto_hospede_se/pages/rooms/room_manager.dart';
-import 'package:projeto_hospede_se/services/auth_service.dart';
+
 import 'package:projeto_hospede_se/styles/style.dart';
 import 'package:provider/provider.dart';
 
@@ -36,7 +36,6 @@ class _RoomPageState extends State<RoomPage> {
       await context.read<RoomManager>().signUpRoom(Room(hotelId: hotelId, number: int.parse(number.text), quantity: int.parse(quantity.text), title: title.text, description: description.text, status: status, price: double.parse(price.text), guestCount: int.parse(guestCount.text), bedCount: int.parse(bedCount.text), bathCount: int.parse(bathCount.text)));
       // CARREGAR NOVAMENTE A LISTA DE QUARTOS
       Navigator.pop(context);
-      
     } on SignUpRoomException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(e.message),
@@ -45,8 +44,8 @@ class _RoomPageState extends State<RoomPage> {
     }
   }
 
-  int c_step = 0;
-
+  int cstep = 0;
+  @override
   Widget build(BuildContext context) => Scaffold(
         key: scaffoldKey,
         appBar: AppBar(
@@ -65,11 +64,11 @@ class _RoomPageState extends State<RoomPage> {
               type: StepperType.vertical,
               physics: const AlwaysScrollableScrollPhysics(),
               steps: getSteps(),
-              currentStep: c_step,
+              currentStep: cstep,
               onStepContinue: () {
-                final isLastStep = c_step == getSteps().length - 1;
+                final isLastStep = cstep == getSteps().length - 1;
                 if (!isLastStep) {
-                  setState(() => c_step++);
+                  setState(() => cstep++);
                 } else {
                   if (formKey.currentState!.validate()) {
                     formKey.currentState!.save();
@@ -78,17 +77,17 @@ class _RoomPageState extends State<RoomPage> {
                 }
               },
               onStepCancel: () {
-                final isFirstStep = c_step == 0;
+                final isFirstStep = cstep == 0;
                 if (!isFirstStep) {
-                  setState(() => c_step--);
+                  setState(() => cstep--);
                 }
               },
               controlsBuilder: (BuildContext context, {VoidCallback? onStepContinue, VoidCallback? onStepCancel}) {
-                final isLastStep = c_step == getSteps().length - 1;
+                final isLastStep = cstep == getSteps().length - 1;
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    if (c_step != 0)
+                    if (cstep != 0)
                       ElevatedButton(
                         onPressed: onStepCancel,
                         child: const Text('Voltar'),
@@ -108,18 +107,15 @@ class _RoomPageState extends State<RoomPage> {
       );
 
   List<Step> getSteps() => [
-    Step(
-      state: c_step > 0 ? StepState.complete : StepState.disabled,
-      isActive: c_step >= 0,
-      title: const Text('Sobre o Quarto'),
-      content: Container(
-        child: Column(
-          children: [
+        Step(
+          state: cstep > 0 ? StepState.complete : StepState.disabled,
+          isActive: cstep >= 0,
+          title: const Text('Sobre o Quarto'),
+          content: Column(children: [
             TextFormField(
               controller: title,
               validator: (title) => Validators.validateText(title!),
-              decoration: inputDecorationSignUp('Título', const Icon(Icons.create)
-              ),
+              decoration: inputDecorationSignUp('Título', const Icon(Icons.create)),
             ),
             TextFormField(
               controller: description,
@@ -131,17 +127,13 @@ class _RoomPageState extends State<RoomPage> {
               validator: (number) => Validators.validateText(number!),
               decoration: inputDecorationSignUp('Número', const Icon(Icons.short_text)),
             ),
-          ]
-          ),
+          ]),
         ),
-      ),
-    Step(
-      state: c_step > 1 ? StepState.complete : StepState.disabled,
-      isActive: c_step >= 1,
-      title: const Text('Informações Quarto'),
-      content: Container(
-        child: Column(
-          children: [
+        Step(
+          state: cstep > 1 ? StepState.complete : StepState.disabled,
+          isActive: cstep >= 1,
+          title: const Text('Informações Quarto'),
+          content: Column(children: [
             TextFormField(
               controller: quantity,
               validator: (quantity) => Validators.validateNumber(quantity!),
@@ -154,17 +146,13 @@ class _RoomPageState extends State<RoomPage> {
               decoration: inputDecorationSignUp('Preço', const Icon(Icons.attach_money)),
               keyboardType: TextInputType.number,
             ),
-          ]
-          ),
+          ]),
         ),
-      ),
-    Step(
-      state: c_step > 2 ? StepState.complete : StepState.disabled,
-      isActive: c_step >= 2,
-      title: const Text('Serviços'),
-      content: Container(
-        child: Column(
-          children: [
+        Step(
+          state: cstep > 2 ? StepState.complete : StepState.disabled,
+          isActive: cstep >= 2,
+          title: const Text('Serviços'),
+          content: Column(children: [
             TextFormField(
               controller: guestCount,
               validator: (guestCount) => Validators.validateNumber(guestCount!),
@@ -183,9 +171,7 @@ class _RoomPageState extends State<RoomPage> {
               decoration: inputDecorationSignUp('Banheiros', const Icon(Icons.add)),
               keyboardType: TextInputType.number,
             ),
-          ]
-        ),
-      ),
-    )
-  ];
+          ]),
+        )
+      ];
 }

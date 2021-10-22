@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:projeto_hospede_se/models/hotel_manager.dart';
 import 'package:projeto_hospede_se/pages/home/page_manager.dart';
 import 'package:projeto_hospede_se/pages/rooms/room_manager.dart';
-import 'package:projeto_hospede_se/pages/rooms/room_page.dart';
+import 'package:projeto_hospede_se/pages/rooms/rooms_page.dart';
 import 'package:projeto_hospede_se/services/auth_service.dart';
 import 'package:projeto_hospede_se/widgets/drawer.dart';
-import 'package:projeto_hospede_se/widgets/room_list_tile.dart';
 import 'package:provider/provider.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class HomeHostPage extends StatefulWidget {
+  const HomeHostPage({Key? key}) : super(key: key);
+
   @override
   State<HomeHostPage> createState() => _HomeHostPageState();
 }
@@ -20,12 +20,12 @@ class _HomeHostPageState extends State<HomeHostPage> {
 
   @override
   Widget build(BuildContext context) {
-    AuthService authService = context.read<AuthService>();
-    HotelManager hotelManager = context.read<HotelManager>();
-    RoomManager roomManager = context.read<RoomManager>();
-    hotelManager.loadHotel(authService.getUser().id.toString());
-    roomManager.loadRooms(hotelManager.getHotel().id);
-
+    //AuthService authService = context.read<AuthService>();
+    //HotelManager hotelManager = context.read<HotelManager>();
+    //RoomManager roomManager = context.read<RoomManager>();
+    String userId = context.read<AuthService>().getUser().id.toString();
+    context.read<HotelManager>().loadHotel(userId);
+    context.read<RoomManager>().loadRooms(context.read<HotelManager>().loadHotel(userId));
     return Provider(
       create: (_) => PageManager(pageController),
       child: PageView(
@@ -40,54 +40,7 @@ class _HomeHostPageState extends State<HomeHostPage> {
               title: const Text('Início'),
             ),
           ),
-          Scaffold(
-            key: scaffoldKeyRooms,
-            backgroundColor: Colors.green.shade100,
-            drawer: const CustomDrawer(),
-            appBar: AppBar(
-              backgroundColor: Colors.green.shade800,
-              title: const Text('Quartos'),
-            ),
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.75,
-                  child: Expanded(
-                    child: Card(
-                        margin: const EdgeInsets.all(10),
-                        elevation: 10,
-                        color: Colors.white,
-                        child: Row(
-                          children: [
-                            Expanded(child: Consumer<RoomManager>(
-                              builder: (_, roomManager, __) {
-                                return ListView.builder(
-                                  itemCount: roomManager.hotelRooms.length,
-                                  itemBuilder: (_, index) {
-                                    return RoomListTile(roomManager.hotelRooms[index]);
-                                  },
-                                );
-                              },
-                            ))
-                          ],
-                        )),
-                  ),
-                ),
-              ],
-            ),
-            floatingActionButton: FloatingActionButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const RoomPage()),
-                );
-              },
-              child: const Icon(Icons.add),
-              backgroundColor: Colors.green.shade800,
-            ),
-          ),
+          const RoomsPage(),
           Scaffold(
             backgroundColor: Colors.green.shade100,
             drawer: const CustomDrawer(),

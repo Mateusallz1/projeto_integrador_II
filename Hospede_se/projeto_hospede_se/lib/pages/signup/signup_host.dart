@@ -88,8 +88,9 @@ class _SignUpHostPage extends State<SignUpHostPage> {
                           backgroundColor: Colors.red,
                         ),
                       );
+                    } else {
+                      save();
                     }
-                    save();
                   }
                 }
               },

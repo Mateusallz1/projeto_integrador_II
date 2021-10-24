@@ -32,7 +32,7 @@ class _SignUpHostPage extends State<SignUpHostPage> {
   String? state;
   String? country;
 
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  List<GlobalKey<FormState>> formKeys = [GlobalKey<FormState>(), GlobalKey<FormState>(), GlobalKey<FormState>(), GlobalKey<FormState>()];
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   void save() async {
@@ -66,51 +66,47 @@ class _SignUpHostPage extends State<SignUpHostPage> {
           data: Theme.of(context).copyWith(
             colorScheme: const ColorScheme.light(primary: Colors.green),
           ),
-          child: Form(
-            key: formKey,
-            child: Stepper(
-              type: StepperType.vertical,
-              physics: const AlwaysScrollableScrollPhysics(),
-              steps: getSteps(),
-              currentStep: cstep,
-              onStepContinue: () {
-                final isLastStep = cstep == getSteps().length - 1;
+          child: Stepper(
+            type: StepperType.vertical,
+            physics: const AlwaysScrollableScrollPhysics(),
+            steps: getSteps(),
+            currentStep: cstep,
+            onStepContinue: () {
+              final isLastStep = cstep == getSteps().length - 1;
+              if (formKeys[cstep].currentState!.validate()) {
                 if (!isLastStep) {
                   setState(() => cstep++);
                 } else {
-                  if (formKey.currentState!.validate()) {
-                    formKey.currentState!.save();
-                    save();
-                  }
+                  save();
                 }
-              },
-              onStepCancel: () {
-                final isFirstStep = cstep == 0;
-                if (!isFirstStep) {
-                  setState(() => cstep--);
-                }
-              },
-              controlsBuilder: (BuildContext context, {VoidCallback? onStepContinue, VoidCallback? onStepCancel}) {
-                final isLastStep = cstep == getSteps().length - 1;
+              }
+            },
+            onStepCancel: () {
+              final isFirstStep = cstep == 0;
+              if (!isFirstStep) {
+                setState(() => cstep--);
+              }
+            },
+            controlsBuilder: (BuildContext context, {VoidCallback? onStepContinue, VoidCallback? onStepCancel}) {
+              final isLastStep = cstep == getSteps().length - 1;
 
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    if (cstep != 0)
-                      ElevatedButton(
-                        onPressed: onStepCancel,
-                        child: const Text('Voltar'),
-                        style: elevatedButton,
-                      ),
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  if (cstep != 0)
                     ElevatedButton(
-                      onPressed: onStepContinue,
-                      child: Text(isLastStep ? 'Confirmar' : 'Próximo'),
+                      onPressed: onStepCancel,
+                      child: const Text('Voltar'),
                       style: elevatedButton,
                     ),
-                  ],
-                );
-              },
-            ),
+                  ElevatedButton(
+                    onPressed: onStepContinue,
+                    child: Text(isLastStep ? 'Confirmar' : 'Próximo'),
+                    style: elevatedButton,
+                  ),
+                ],
+              );
+            },
           ),
         ),
       );
@@ -119,81 +115,96 @@ class _SignUpHostPage extends State<SignUpHostPage> {
           state: cstep > 0 ? StepState.complete : StepState.disabled,
           isActive: cstep >= 0,
           title: const Text('Usuário'),
-          content: Column(
-            children: [
-              TextFormField(
-                controller: name,
-                validator: (name) => Validators.validateName(name!),
-                decoration: inputDecorationSignUp('Nome Completo', const Icon(Icons.person)),
-              ),
-              TextFormField(
-                controller: email,
-                validator: (email) => Validators.validateEmail(email!),
-                decoration: inputDecorationSignUp('Email', const Icon(Icons.email)),
-                keyboardType: TextInputType.emailAddress,
-              ),
-              TextFormField(
-                controller: passwd,
-                obscureText: true,
-                validator: (passwd) => Validators.validatePassword(passwd!),
-                decoration: inputDecorationSignUp('Senha', const Icon(Icons.password)),
-              ),
-              TextFormField(
-                controller: cpasswd,
-                obscureText: true,
-                validator: (cpasswd) => Validators.comparePassword(passwd.text, cpasswd!),
-                decoration: inputDecorationSignUp('Confirmar Senha', const Icon(Icons.password_sharp)),
-              ),
-            ],
+          content: Form(
+            key: formKeys[0],
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: name,
+                  validator: (name) => Validators.validateName(name!),
+                  decoration: inputDecorationSignUp('Nome Completo', const Icon(Icons.person)),
+                ),
+                TextFormField(
+                  controller: email,
+                  validator: (email) => Validators.validateEmail(email!),
+                  decoration: inputDecorationSignUp('Email', const Icon(Icons.email)),
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                TextFormField(
+                  controller: passwd,
+                  obscureText: true,
+                  validator: (passwd) => Validators.validatePassword(passwd!),
+                  decoration: inputDecorationSignUp('Senha', const Icon(Icons.password)),
+                ),
+                TextFormField(
+                  controller: cpasswd,
+                  obscureText: true,
+                  validator: (cpasswd) => Validators.comparePassword(passwd.text, cpasswd!),
+                  decoration: inputDecorationSignUp('Confirmar Senha', const Icon(Icons.password_sharp)),
+                ),
+              ],
+            ),
           ),
         ),
         Step(
           state: cstep > 1 ? StepState.complete : StepState.disabled,
           isActive: cstep >= 1,
-          title: const Text('Informações Hotel'),
-          content: Column(
-            children: [
-              TextFormField(
-                controller: nameHotel,
-                validator: (name) => Validators.validateName(name!),
-                decoration: inputDecorationSignUp('Nome Hotel', const Icon(Icons.business)),
-                keyboardType: TextInputType.name,
-              ),
-              TextFormField(
-                controller: phone,
-                validator: (phone) => Validators.validatePhone(phone!),
-                decoration: inputDecorationSignUp('Fone', const Icon(Icons.call)),
-                keyboardType: TextInputType.number,
-              ),
-            ],
+          title: const Text('Informações do Hotel'),
+          content: Form(
+            key: formKeys[1],
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: nameHotel,
+                  validator: (name) => Validators.validateName(name!),
+                  decoration: inputDecorationSignUp('Nome Hotel', const Icon(Icons.business)),
+                  keyboardType: TextInputType.name,
+                ),
+                TextFormField(
+                  controller: phone,
+                  validator: (phone) => Validators.validatePhone(phone!),
+                  decoration: inputDecorationSignUp('Fone', const Icon(Icons.call)),
+                  keyboardType: TextInputType.number,
+                ),
+              ],
+            ),
           ),
         ),
         Step(
           state: cstep > 2 ? StepState.complete : StepState.disabled,
           isActive: cstep >= 2,
           title: const Text('Classificação'),
-          content: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Icon(
-                    Icons.star,
-                    color: Colors.green,
-                  ),
-                  Text(value.round().toString())
-                ],
-              ),
-              Slider(
-                value: value,
-                min: 1,
-                max: 5,
-                divisions: 4,
-                activeColor: Colors.green,
-                //label: value.round().toString(),
-                onChanged: (value) => setState(() => this.value = value),
-              )
-            ],
+          content: Form(
+            key: formKeys[2],
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.star,
+                            color: Colors.green,
+                          ),
+                          Text(value.round().toString()),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                Slider(
+                  value: value,
+                  min: 1,
+                  max: 5,
+                  divisions: 4,
+                  activeColor: Colors.green,
+                  onChanged: (value) => setState(() => this.value = value),
+                ),
+              ],
+            ),
           ),
         ),
         Step(
@@ -204,73 +215,76 @@ class _SignUpHostPage extends State<SignUpHostPage> {
               Text('Endereço'),
             ],
           ),
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TextFormField(
-                controller: address,
-                validator: (address) => Validators.validateText(address!),
-                decoration: inputDecorationSignUp('Endereço', const Icon(Icons.password)),
-              ),
-              TextFormField(
-                controller: number,
-                validator: (number) => Validators.validateText(number!),
-                decoration: inputDecorationSignUp('Número', const Icon(Icons.markunread_mailbox)),
-                keyboardType: TextInputType.number,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: CSCPicker(
-                  countrySearchPlaceholder: "País",
-                  stateSearchPlaceholder: "Estado",
-                  citySearchPlaceholder: "Cidade",
-                  //
-                  countryDropdownLabel: "País",
-                  stateDropdownLabel: "Estado",
-                  cityDropdownLabel: "Cidade",
-                  //
-                  dropdownDecoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(10),
+          content: Form(
+            key: formKeys[3],
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                TextFormField(
+                  controller: address,
+                  validator: (address) => Validators.validateText(address!),
+                  decoration: inputDecorationSignUp('Endereço', const Icon(Icons.password)),
+                ),
+                TextFormField(
+                  controller: number,
+                  validator: (number) => Validators.validateText(number!),
+                  decoration: inputDecorationSignUp('Número', const Icon(Icons.markunread_mailbox)),
+                  keyboardType: TextInputType.number,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: CSCPicker(
+                    countrySearchPlaceholder: "País",
+                    stateSearchPlaceholder: "Estado",
+                    citySearchPlaceholder: "Cidade",
+                    //
+                    countryDropdownLabel: "País",
+                    stateDropdownLabel: "Estado",
+                    cityDropdownLabel: "Cidade",
+                    //
+                    dropdownDecoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                      color: Colors.white70,
+                      border: Border.all(color: Colors.green, width: 2),
                     ),
-                    color: Colors.white70,
-                    border: Border.all(color: Colors.green, width: 2),
-                  ),
-                  disabledDropdownDecoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(10),
+                    disabledDropdownDecoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                      color: Colors.white,
+                      border: Border.all(color: Colors.green, width: 2),
                     ),
-                    color: Colors.white,
-                    border: Border.all(color: Colors.green, width: 2),
-                  ),
-                  dropdownDialogRadius: 10,
+                    dropdownDialogRadius: 10,
 
-                  onCountryChanged: (value) {
-                    setState(() {
-                      country = value;
-                    });
-                  },
-                  onStateChanged: (value) {
-                    setState(() {
-                      state = value;
-                    });
-                  },
-                  onCityChanged: (value) {
-                    setState(() {
-                      city = value;
-                    });
-                  },
+                    onCountryChanged: (value) {
+                      setState(() {
+                        country = value;
+                      });
+                    },
+                    onStateChanged: (value) {
+                      setState(() {
+                        state = value;
+                      });
+                    },
+                    onCityChanged: (value) {
+                      setState(() {
+                        city = value;
+                      });
+                    },
+                  ),
                 ),
-              ),
-              ElevatedButton.icon(
-                onPressed: null,
-                icon: const Icon(
-                  Icons.location_on,
-                  color: Colors.green,
+                ElevatedButton.icon(
+                  onPressed: null,
+                  icon: const Icon(
+                    Icons.location_on,
+                    color: Colors.green,
+                  ),
+                  label: const Text('Sua Localização'),
                 ),
-                label: const Text('Sua Localização'),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ];

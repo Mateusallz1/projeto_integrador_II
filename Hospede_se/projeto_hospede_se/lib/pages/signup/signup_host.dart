@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:csc_picker/csc_picker.dart';
+import 'package:projeto_hospede_se/models/user.dart';
 import 'package:projeto_hospede_se/models/hotel.dart';
 import 'package:projeto_hospede_se/models/hotel_manager.dart';
-import 'package:projeto_hospede_se/widgets/auth_check.dart';
-import 'package:provider/provider.dart';
-import 'package:projeto_hospede_se/models/user.dart';
 import 'package:projeto_hospede_se/helpers/validators.dart';
 import 'package:projeto_hospede_se/services/auth_service.dart';
+import 'package:projeto_hospede_se/widgets/auth_check.dart';
+import 'package:projeto_hospede_se/pages/components/snackbar_alert.dart';
 import 'package:projeto_hospede_se/styles/style.dart';
 
 class SignUpHostPage extends StatefulWidget {
@@ -26,9 +28,9 @@ class _SignUpHostPage extends State<SignUpHostPage> {
 
   final address = TextEditingController();
   final number = TextEditingController();
-  final city = TextEditingController();
-  final state = TextEditingController();
-  final country = TextEditingController();
+  String? city;
+  String? state;
+  String? country;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -37,17 +39,14 @@ class _SignUpHostPage extends State<SignUpHostPage> {
     try {
       await context.read<AuthService>().signUp(UserApp(host: true, name: name.text, email: email.text, password: passwd.text, confirmPassword: cpasswd.text));
       String? userId = context.read<AuthService>().getUser().id;
-      await context.read<HotelManager>().signUpHotel(Hotel(userId: userId, name: nameHotel.text, phone: phone.text, address: address.text, number: number.text, city: city.text, state: state.text, country: country.text, rating: value.toInt()));
+      await context.read<HotelManager>().signUpHotel(Hotel(userId: userId, name: nameHotel.text, phone: phone.text, address: address.text, number: number.text, city: city, state: state, country: country, rating: value.toInt()));
 
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const AuthCheck()),
       );
     } on AuthException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(e.message),
-        backgroundColor: Colors.red,
-      ));
+      ScaffoldMessenger.of(context).showSnackBar(snackBarAlert(e.message));
     }
   }
 
@@ -81,16 +80,7 @@ class _SignUpHostPage extends State<SignUpHostPage> {
                 } else {
                   if (formKey.currentState!.validate()) {
                     formKey.currentState!.save();
-                    if (!Validators.comparePassword(passwd.text, cpasswd.text)) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Senhas não coincidem'),
-                          backgroundColor: Colors.red,
-                        ),
-                      );
-                    } else {
-                      save();
-                    }
+                    save();
                   }
                 }
               },
@@ -140,6 +130,7 @@ class _SignUpHostPage extends State<SignUpHostPage> {
                 controller: email,
                 validator: (email) => Validators.validateEmail(email!),
                 decoration: inputDecorationSignUp('Email', const Icon(Icons.email)),
+                keyboardType: TextInputType.emailAddress,
               ),
               TextFormField(
                 controller: passwd,
@@ -150,7 +141,7 @@ class _SignUpHostPage extends State<SignUpHostPage> {
               TextFormField(
                 controller: cpasswd,
                 obscureText: true,
-                validator: (passwd) => Validators.validatePassword(passwd!),
+                validator: (cpasswd) => Validators.comparePassword(passwd.text, cpasswd!),
                 decoration: inputDecorationSignUp('Confirmar Senha', const Icon(Icons.password_sharp)),
               ),
             ],
@@ -166,11 +157,13 @@ class _SignUpHostPage extends State<SignUpHostPage> {
                 controller: nameHotel,
                 validator: (name) => Validators.validateName(name!),
                 decoration: inputDecorationSignUp('Nome Hotel', const Icon(Icons.business)),
+                keyboardType: TextInputType.name,
               ),
               TextFormField(
                 controller: phone,
                 validator: (phone) => Validators.validatePhone(phone!),
                 decoration: inputDecorationSignUp('Fone', const Icon(Icons.call)),
+                keyboardType: TextInputType.number,
               ),
             ],
           ),
@@ -223,21 +216,51 @@ class _SignUpHostPage extends State<SignUpHostPage> {
                 controller: number,
                 validator: (number) => Validators.validateText(number!),
                 decoration: inputDecorationSignUp('Número', const Icon(Icons.markunread_mailbox)),
+                keyboardType: TextInputType.number,
               ),
-              TextFormField(
-                controller: city,
-                validator: (city) => Validators.validateText(city!),
-                decoration: inputDecorationSignUp('Cidade', const Icon(Icons.add_location_alt)),
-              ),
-              TextFormField(
-                controller: state,
-                validator: (state) => Validators.validateText(state!),
-                decoration: inputDecorationSignUp('Estado', const Icon(Icons.add_location_alt)),
-              ),
-              TextFormField(
-                controller: country,
-                validator: (country) => Validators.validateText(country!),
-                decoration: inputDecorationSignUp('País', const Icon(Icons.add_location_alt)),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: CSCPicker(
+                  countrySearchPlaceholder: "País",
+                  stateSearchPlaceholder: "Estado",
+                  citySearchPlaceholder: "Cidade",
+                  //
+                  countryDropdownLabel: "País",
+                  stateDropdownLabel: "Estado",
+                  cityDropdownLabel: "Cidade",
+                  //
+                  dropdownDecoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                    color: Colors.white70,
+                    border: Border.all(color: Colors.green, width: 2),
+                  ),
+                  disabledDropdownDecoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                    color: Colors.white,
+                    border: Border.all(color: Colors.green, width: 2),
+                  ),
+                  dropdownDialogRadius: 10,
+
+                  onCountryChanged: (value) {
+                    setState(() {
+                      country = value;
+                    });
+                  },
+                  onStateChanged: (value) {
+                    setState(() {
+                      state = value;
+                    });
+                  },
+                  onCityChanged: (value) {
+                    setState(() {
+                      city = value;
+                    });
+                  },
+                ),
               ),
               ElevatedButton.icon(
                 onPressed: null,

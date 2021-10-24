@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_hospede_se/widgets/drawer_tile.dart';
-import 'package:projeto_hospede_se/widgets/header_drawer.dart';
+import 'package:projeto_hospede_se/pages/components/drawer_tile.dart';
+import 'package:projeto_hospede_se/pages/components/header_drawer.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({Key? key}) : super(key: key);

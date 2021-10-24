@@ -3,8 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:projeto_hospede_se/helpers/validators.dart';
 import 'package:projeto_hospede_se/models/hotel_manager.dart';
 import 'package:projeto_hospede_se/models/room.dart';
-import 'package:projeto_hospede_se/pages/rooms/room_manager.dart';
-
+import 'package:projeto_hospede_se/models/room_manager.dart';
 import 'package:projeto_hospede_se/styles/style.dart';
 import 'package:provider/provider.dart';
 
@@ -126,6 +125,7 @@ class _RoomPageState extends State<RoomPage> {
               controller: number,
               validator: (number) => Validators.validateText(number!),
               decoration: inputDecorationSignUp('Número', const Icon(Icons.short_text)),
+              keyboardType: TextInputType.number,
             ),
           ]),
         ),

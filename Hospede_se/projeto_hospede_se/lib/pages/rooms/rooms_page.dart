@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_hospede_se/models/hotel_manager.dart';
-import 'package:projeto_hospede_se/pages/rooms/room_manager.dart';
+import 'package:projeto_hospede_se/models/room_manager.dart';
 import 'package:projeto_hospede_se/pages/rooms/room_page.dart';
 import 'package:projeto_hospede_se/services/auth_service.dart';
-import 'package:projeto_hospede_se/widgets/drawer.dart';
-import 'package:projeto_hospede_se/widgets/room_list_tile.dart';
+import 'package:projeto_hospede_se/pages/components/drawer.dart';
+import 'package:projeto_hospede_se/pages/components/room_list_tile.dart';
 import 'package:provider/provider.dart';
 
 class RoomsPage extends StatefulWidget {

@@ -82,21 +82,13 @@ class _SignUpUserPageState extends State<SignUpUserPage> {
                     controller: cpasswd,
                     decoration: inputDecorationRadius('Confirme sua Senha'),
                     obscureText: true,
-                    validator: (passwd) => Validators.validatePassword(passwd!),
+                    validator: (cpasswd) => Validators.comparePassword(passwd.text, cpasswd!),
                   ),
                   ElevatedButton(
                     style: elevatedButtonConfirm,
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
                         formKey.currentState!.save();
-                        if (!Validators.comparePassword(passwd.text, cpasswd.text)) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Senhas não coincidem'),
-                              backgroundColor: Colors.red,
-                            ),
-                          );
-                        }
                         signUp();
                       }
                     },

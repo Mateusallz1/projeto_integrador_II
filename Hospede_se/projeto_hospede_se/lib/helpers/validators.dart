@@ -25,8 +25,8 @@ class Validators {
             : null;
   }
 
-  static bool comparePassword(String password1, String password2) {
-    return password1 == password2 ? true : false;
+  static String? comparePassword(String password1, String password2) {
+    return password1 != password2 ? 'As senhas não coincidem' : null;
   }
 
   static String? validateText(String text) {

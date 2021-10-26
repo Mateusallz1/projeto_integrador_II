@@ -32,53 +32,44 @@ class _LoginPageState extends State<LoginPage> {
       ));
     }
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green.shade300,
-      appBar: AppBar(
-        backgroundColor: Colors.green.shade800,
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const SignUpPage()),
-              );
-            },
-            child: const Text(
-              'Registre-se',
-              style: TextStyle(color: Colors.white),
-            ),
-          )
-        ],
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            color: Colors.white,
-            padding: const EdgeInsets.all(10),
-            margin: const EdgeInsets.all(15),
+      backgroundColor: Colors.white,  
+      body: Padding(
+        padding: const EdgeInsets.all(25),
+        child: Center(
+          child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Text(
-                  'Login',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 35,
+                const SizedBox(height: 40,),
+                Icon(Icons.person_outlined, color: Colors.green.shade800, size: 140,),
+                const SizedBox(height: 13,),
+          
+                Text("Bem-Vindo de Volta!", style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green.shade800,
                   ),
                 ),
+          
+                Text("Adentres ou morra", style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green.shade600,
+                  ),
+                ),
+          
+                const SizedBox(height: 20,),
+
                 Form(
                   key: formKey,
-                  child: ListView(
-                    shrinkWrap: true,
+                  child: Column(
+                    //shrinkWrap: true,
                     children: [
                       Container(
-                        margin: const EdgeInsets.only(bottom: 10, top: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         child: TextFormField(
                           controller: email,
                           decoration: inputDecorationRadius('Email'),
@@ -87,8 +78,9 @@ class _LoginPageState extends State<LoginPage> {
                           validator: (email) => Validators.validateEmail(email!),
                         ),
                       ),
+          
                       Container(
-                        margin: const EdgeInsets.only(bottom: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         child: TextFormField(
                           controller: passwd,
                           decoration: inputDecorationRadius('Senha'),
@@ -97,25 +89,68 @@ class _LoginPageState extends State<LoginPage> {
                           validator: (password) => Validators.validatePassword(password!),
                         ),
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                        TextButton(
+                          onPressed: () {
+                
+                          }, 
+                          child: const Text(
+                            "Esqueceu sua senha?", 
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight:  FontWeight.bold,
+                              color: Colors.green,
+                              ),
+                            )
+                          )
+                        ],
+                      ),
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.83,
                         height: 70,
                         child: ElevatedButton(
-                            onPressed: () {
-                              if (formKey.currentState!.validate()) {
-                                signIn();
-                              }
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              signIn();
+                            }
+                          },
+                          child: const Text('Login'),
+                          style: elevatedButtonConfirm),
+                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "Não possui conta? ",
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
+                          
+                          GestureDetector(
+                            onTap: () {
+                              
                             },
-                            child: const Text('Login'),
-                            style: elevatedButtonConfirm),
-                      ),
+                            child: const Text(
+                              "Registre-se",
+                              style: TextStyle(
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20
+                              ),
+                            ),
+                          )
+                        ],
+                      )
                     ],
-                  ),
+                  )
                 ),
               ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }

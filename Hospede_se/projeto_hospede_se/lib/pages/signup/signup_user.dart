@@ -40,62 +40,77 @@ class _SignUpUserPageState extends State<SignUpUserPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green.shade300,
+      backgroundColor: Colors.white,
       key: scaffoldKey,
-      appBar: AppBar(
-        backgroundColor: Colors.green.shade800,
-        title: const Text('Criar Conta'),
-        centerTitle: true,
-        elevation: 5,
-      ),
-      body: Center(
-        child: Card(
-          elevation: 10,
-          margin: const EdgeInsets.symmetric(horizontal: 16),
-          child: Form(
-            key: formKey,
-            child: Container(
-              height: 400,
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  TextFormField(
-                    controller: name,
-                    decoration: inputDecorationRadius('Nome Completo'),
-                    validator: (name) => Validators.validateName(name!),
+      body: Padding(
+        padding: const EdgeInsets.all(25),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Text("Criar Conta", style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green.shade800,
                   ),
-                  TextFormField(
-                    controller: email,
-                    decoration: inputDecorationRadius('Email'),
-                    keyboardType: TextInputType.emailAddress,
-                    validator: (email) => Validators.validateEmail(email!),
+                ),
+          
+                Text("crie sua conta", style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green.shade600,
                   ),
-                  TextFormField(
-                    controller: passwd,
-                    decoration: inputDecorationRadius('Senha'),
-                    obscureText: true,
-                    validator: (passwd) => Validators.validatePassword(passwd!),
+                ),
+          
+                const SizedBox(height: 20,),
+                Form(
+                  key: formKey,
+                  child: Container(
+                    height: 400,
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        TextFormField(
+                          controller: name,
+                          decoration: inputDecorationRadius('Nome Completo'),
+                          validator: (name) => Validators.validateName(name!),
+                        ),
+                        TextFormField(
+                          controller: email,
+                          decoration: inputDecorationRadius('Email'),
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (email) => Validators.validateEmail(email!),
+                        ),
+                        TextFormField(
+                          controller: passwd,
+                          decoration: inputDecorationRadius('Senha'),
+                          obscureText: true,
+                          validator: (passwd) => Validators.validatePassword(passwd!),
+                        ),
+                        TextFormField(
+                          controller: cpasswd,
+                          decoration: inputDecorationRadius('Confirme sua Senha'),
+                          obscureText: true,
+                          validator: (cpasswd) => Validators.comparePassword(passwd.text, cpasswd!),
+                        ),
+                        ElevatedButton(
+                          style: elevatedButtonConfirm,
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              formKey.currentState!.save();
+                              signUp();
+                            }
+                          },
+                          child: const Text('criar conta', 
+                          style: TextStyle(fontSize: 15)),
+                        ),
+                      ],
+                    ),
                   ),
-                  TextFormField(
-                    controller: cpasswd,
-                    decoration: inputDecorationRadius('Confirme sua Senha'),
-                    obscureText: true,
-                    validator: (cpasswd) => Validators.comparePassword(passwd.text, cpasswd!),
-                  ),
-                  ElevatedButton(
-                    style: elevatedButtonConfirm,
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        formKey.currentState!.save();
-                        signUp();
-                      }
-                    },
-                    child: const Text('Criar Conta'),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

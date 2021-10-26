@@ -12,10 +12,6 @@ class _HomeUserPageState extends State<HomeUserPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green.shade300,
-      appBar: AppBar(
-        backgroundColor: Colors.green.shade800,
-      ),
       body: Column(),
     );
   }

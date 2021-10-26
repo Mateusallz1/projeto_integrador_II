@@ -42,6 +42,7 @@ dependencies:
   fluttertoast: ^8.0.8
   google_fonts: ^2.1.0
   csc_picker: ^0.2.6
+  convex_bottom_bar: ^3.0.0
 
 dev_dependencies:
   flutter_test:

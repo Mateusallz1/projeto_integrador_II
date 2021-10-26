@@ -56,57 +56,82 @@ class _SignUpHostPage extends State<SignUpHostPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         key: scaffoldKey,
-        appBar: AppBar(
-          title: const Text('Cadastro do Hotel'),
-          centerTitle: true,
-          backgroundColor: Colors.green.shade800,
-          elevation: 5,
-        ),
         body: Theme(
           data: Theme.of(context).copyWith(
-            colorScheme: const ColorScheme.light(primary: Colors.green),
+            colorScheme: ColorScheme.light(primary: Colors.green.shade800, background: Colors.white),
           ),
-          child: Stepper(
-            type: StepperType.vertical,
-            physics: const AlwaysScrollableScrollPhysics(),
-            steps: getSteps(),
-            currentStep: cstep,
-            onStepContinue: () {
-              final isLastStep = cstep == getSteps().length - 1;
-              if (formKeys[cstep].currentState!.validate()) {
-                if (!isLastStep) {
-                  setState(() => cstep++);
-                } else {
-                  save();
-                }
-              }
-            },
-            onStepCancel: () {
-              final isFirstStep = cstep == 0;
-              if (!isFirstStep) {
-                setState(() => cstep--);
-              }
-            },
-            controlsBuilder: (BuildContext context, {VoidCallback? onStepContinue, VoidCallback? onStepCancel}) {
-              final isLastStep = cstep == getSteps().length - 1;
-
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  if (cstep != 0)
-                    ElevatedButton(
-                      onPressed: onStepCancel,
-                      child: const Text('Voltar'),
-                      style: elevatedButton,
-                    ),
-                  ElevatedButton(
-                    onPressed: onStepContinue,
-                    child: Text(isLastStep ? 'Confirmar' : 'Próximo'),
-                    style: elevatedButton,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 30, bottom: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        icon: Icon(Icons.arrow_back, color: Colors.green.shade800),
+                      ),
+                    ],
                   ),
-                ],
-              );
-            },
+                ),
+                Container(
+                  margin: const EdgeInsets.only(bottom: 20),
+                  child: Text(
+                    "Criar Conta",
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green.shade800,
+                    ),
+                  ),
+                ),
+                Stepper(
+                  type: StepperType.vertical,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  steps: getSteps(),
+                  currentStep: cstep,
+                  onStepContinue: () {
+                    final isLastStep = cstep == getSteps().length - 1;
+                    if (formKeys[cstep].currentState!.validate()) {
+                      if (!isLastStep) {
+                        setState(() => cstep++);
+                      } else {
+                        save();
+                      }
+                    }
+                  },
+                  onStepCancel: () {
+                    final isFirstStep = cstep == 0;
+                    if (!isFirstStep) {
+                      setState(() => cstep--);
+                    }
+                  },
+                  controlsBuilder: (BuildContext context, {VoidCallback? onStepContinue, VoidCallback? onStepCancel}) {
+                    final isLastStep = cstep == getSteps().length - 1;
+
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        if (cstep != 0)
+                          ElevatedButton(
+                            onPressed: onStepCancel,
+                            child: const Text('Voltar'),
+                            style: elevatedButton,
+                          ),
+                        ElevatedButton(
+                          onPressed: onStepContinue,
+                          child: Text(isLastStep ? 'Confirmar' : 'Próximo'),
+                          style: elevatedButton,
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_hospede_se/models/hotel_manager.dart';
-import 'package:projeto_hospede_se/pages/home/page_manager.dart';
+import 'package:projeto_hospede_se/pages/home/host/page_manager.dart';
 import 'package:projeto_hospede_se/models/room_manager.dart';
 import 'package:projeto_hospede_se/pages/rooms/rooms_page.dart';
 import 'package:projeto_hospede_se/services/auth_service.dart';
@@ -20,9 +20,6 @@ class _HomeHostPageState extends State<HomeHostPage> {
 
   @override
   Widget build(BuildContext context) {
-    //AuthService authService = context.read<AuthService>();
-    //HotelManager hotelManager = context.read<HotelManager>();
-    //RoomManager roomManager = context.read<RoomManager>();
     String userId = context.read<AuthService>().getUser().id.toString();
     context.read<HotelManager>().loadHotel(userId);
     context.read<RoomManager>().loadRooms(context.read<HotelManager>().loadHotel(userId));

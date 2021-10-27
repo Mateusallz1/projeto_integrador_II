@@ -14,13 +14,8 @@ class _StartUserPage extends State<StartUserPage> {
   dateTimeRangePicker() async {
     return showDateRangePicker(
       context: context,
-      //locale: const Locale('pt', 'BR'),
       firstDate: DateTime(DateTime.now().year - 5),
       lastDate: DateTime(DateTime.now().year + 5),
-      // initialDateRange: DateTimeRange(
-      //   end: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 1),
-      //   start: DateTime.now(),
-      // ),
     );
   }
 

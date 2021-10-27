@@ -9,9 +9,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'Hospede se',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.indigo,
-      ),
+      theme: ThemeData(primarySwatch: Colors.green),
       home: const AuthCheck(),
     );
   }

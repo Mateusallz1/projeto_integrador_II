@@ -63,6 +63,27 @@ InputDecoration inputDecorationRadius(txt) {
   );
 }
 
+InputDecoration inputDecorationRadiusWhite(txt) {
+  return InputDecoration(
+    labelText: txt,
+    fillColor: Colors.white,
+    focusColor: Colors.white,
+    labelStyle: const TextStyle(color: Colors.grey),
+    focusedBorder: const OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.white),
+      borderRadius: BorderRadius.all(
+        Radius.circular(5),
+      ),
+    ),
+    enabledBorder: const OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.white),
+      borderRadius: BorderRadius.all(
+        Radius.circular(5),
+      ),
+    ),
+  );
+}
+
 InputDecoration inputDecorationSignUp(txt, icon) {
   return InputDecoration(
     labelText: txt,

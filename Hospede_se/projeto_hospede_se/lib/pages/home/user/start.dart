@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_hospede_se/styles/style.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
-//import 'package:flutter_localizations/flutter_localizations.dart';
 
 class StartUserPage extends StatefulWidget {
   const StartUserPage({Key? key}) : super(key: key);
@@ -26,19 +23,7 @@ class _StartUserPage extends State<StartUserPage> {
         data: Theme.of(context).copyWith(
           colorScheme: const ColorScheme.light(primary: Colors.green, secondary: Colors.green, background: Colors.white),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              style: elevatedButton,
-              onPressed: () {
-                dateTimeRangePicker();
-              },
-              child: const Text("DateRange Picker"),
-            ),
-          ],
-        ),
+        child: Column(),
       ),
     );
   }

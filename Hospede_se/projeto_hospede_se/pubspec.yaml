@@ -43,6 +43,10 @@ dependencies:
   google_fonts: ^2.1.0
   csc_picker: ^0.2.6
   convex_bottom_bar: ^3.0.0
+  syncfusion_flutter_datepicker: ^19.3.47
+  flutter_localizations: 
+    sdk: flutter
+    version: ^0.0.0
 
 dev_dependencies:
   flutter_test:

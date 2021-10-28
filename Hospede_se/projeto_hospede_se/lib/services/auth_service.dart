@@ -1,10 +1,10 @@
-// ignore_for_file: avoid_print
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:projeto_hospede_se/helpers/firebase_errors.dart';
 import 'package:projeto_hospede_se/models/user.dart';
 import 'package:flutter/material.dart';
+import 'package:projeto_hospede_se/services/delete_cache.dart';
 
 class AuthException implements Exception {
   String message;
@@ -70,6 +70,8 @@ class AuthService extends ChangeNotifier {
   }
 
   void signOut() async {
+    deleteAppDir();
+    deleteCacheDir();
     await auth.signOut();
     _user = null;
   }

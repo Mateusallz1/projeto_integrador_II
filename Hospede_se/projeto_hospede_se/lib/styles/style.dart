@@ -65,10 +65,10 @@ InputDecoration inputDecorationRadius(txt) {
 
 InputDecoration inputDecorationRadiusWhite(txt) {
   return InputDecoration(
-    labelText: txt,
+    filled: true,
     fillColor: Colors.white,
-    focusColor: Colors.white,
-    labelStyle: const TextStyle(color: Colors.grey),
+    hintText: txt,
+    labelStyle: const TextStyle(color: Colors.white),
     focusedBorder: const OutlineInputBorder(
       borderSide: BorderSide(color: Colors.white),
       borderRadius: BorderRadius.all(

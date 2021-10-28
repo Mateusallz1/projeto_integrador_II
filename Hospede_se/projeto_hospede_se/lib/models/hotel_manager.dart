@@ -52,9 +52,8 @@ class HotelManager extends ChangeNotifier {
     return _hotel!;
   }
 
-  List<Hotel> getAllHotels() {
-    _loadAllHotels();
-    return _allHotels;
+  void removeHotels() async {
+    _hotel = null;
   }
 
   void removeHotel() async {

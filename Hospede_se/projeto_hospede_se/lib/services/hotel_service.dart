@@ -11,18 +11,19 @@ class HotelsProvider extends ChangeNotifier {
   bool _isFetchingHotels = false;
 
   String get errorMessage => _errorMessage;
-
   bool get hasNext => _hasNext;
 
+  void removeHotels() {
+    _hotelsSnapshot.clear();
+    // ignore: avoid_print
+    print('lista de hoteis removida');
+  }
+
   List<Hotel> get hotels => _hotelsSnapshot.map((snap) {
-        // OPÇÃO 1
-        //   return Hotel(userId: snap['user'] as String, name: snap['name'] as String, phone: snap['phone'] as String, address: snap['address'] as String, number: snap['number'] as String, city: snap['city'] as String, state: snap['state'] as String, country: snap['country'] as String, rating: snap['rating'] as int);
-        // }).toList();
-        //
-        // OPÇÃO 2
         final Hotel hotel = Hotel.fromDocument(snap);
         return hotel;
       }).toList();
+
   Future fetchNextHotels() async {
     if (_isFetchingHotels) return;
 

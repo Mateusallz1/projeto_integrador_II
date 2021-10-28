@@ -26,6 +26,7 @@ class _LoginPageState extends State<LoginPage> {
       await context.read<AuthService>().signIn(UserLogin(email: email.text, password: passwd.text));
       Navigator.pop(context);
     } on AuthException catch (e) {
+      setState(() => loading = false);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(e.message),
         backgroundColor: Colors.red,

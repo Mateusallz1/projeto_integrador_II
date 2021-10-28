@@ -18,7 +18,7 @@ class CustomDrawerHeader extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
+            children: [
               Text(
                 '${hotelManager.getHotel().name}',
                 style: const TextStyle(

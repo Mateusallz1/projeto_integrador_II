@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:projeto_hospede_se/services/hotel_service.dart';
 import 'package:projeto_hospede_se/widgets/listview_hotels.dart';
 import 'package:provider/provider.dart';
-=======
-import 'package:projeto_hospede_se/models/hotel_manager.dart';
-import 'package:provider/provider.dart';
-import 'package:provider/src/provider.dart';
->>>>>>> 45a9da373d17bb9d6f4934327505e0e3e4611d19
 
 class StartUserPage extends StatefulWidget {
   const StartUserPage({Key? key}) : super(key: key);

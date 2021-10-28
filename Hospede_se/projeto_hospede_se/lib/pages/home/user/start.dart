@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_hospede_se/services/hotel_service.dart';
+import 'package:projeto_hospede_se/widgets/listview_hotels.dart';
+import 'package:provider/provider.dart';
 
 class StartUserPage extends StatefulWidget {
   const StartUserPage({Key? key}) : super(key: key);
@@ -23,7 +26,11 @@ class _StartUserPage extends State<StartUserPage> {
         data: Theme.of(context).copyWith(
           colorScheme: const ColorScheme.light(primary: Colors.green, secondary: Colors.green, background: Colors.white),
         ),
-        child: Column(),
+        child: Consumer<HotelsProvider>(
+          builder: (context, hotelsProvider, _) => ListViewHotelWidget(
+            hotelsProvider: hotelsProvider,
+          ),
+        ),
       ),
     );
   }

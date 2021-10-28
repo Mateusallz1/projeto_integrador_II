@@ -17,20 +17,10 @@ class _AuthCheckState extends State<AuthCheck> {
   Widget build(BuildContext context) {
     AuthService auth = Provider.of<AuthService>(context);
 
-    if (auth.isLoading) {
-      return loading();
-    } else if (!auth.isLogged()) {
+    if (!auth.isLogged()) {
       return const WelcomePage();
     } else {
       return auth.getUser().host == true ? const HomeHostPage() : const HomeUserPage();
     }
-  }
-
-  loading() {
-    return const Scaffold(
-      body: Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
   }
 }

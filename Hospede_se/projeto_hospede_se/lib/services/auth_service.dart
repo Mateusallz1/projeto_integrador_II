@@ -15,18 +15,18 @@ class AuthService extends ChangeNotifier {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   UserApp? _user;
-  bool isLoading = true;
 
   AuthService() {
     authcheck();
   }
 
   void authcheck() {
-    auth.authStateChanges().listen((User? user) {
-      user = (user == null) ? null : user;
-      setLoading(false);
-      notifyListeners();
-    });
+    auth.authStateChanges().listen(
+      (User? user) {
+        user = (user == null) ? null : user;
+        notifyListeners();
+      },
+    );
   }
 
   bool isLogged() {
@@ -72,9 +72,5 @@ class AuthService extends ChangeNotifier {
   void signOut() async {
     await auth.signOut();
     _user = null;
-  }
-
-  void setLoading(bool value) {
-    isLoading = value;
   }
 }

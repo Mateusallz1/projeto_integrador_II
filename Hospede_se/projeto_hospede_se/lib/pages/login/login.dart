@@ -15,11 +15,13 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final email = TextEditingController();
   final passwd = TextEditingController();
+  bool loading = false;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   void signIn() async {
+    setState(() => loading = true);
     try {
       await context.read<AuthService>().signIn(UserLogin(email: email.text, password: passwd.text));
       Navigator.pop(context);
@@ -116,13 +118,31 @@ class _LoginPageState extends State<LoginPage> {
                           width: MediaQuery.of(context).size.width * 0.83,
                           height: 70,
                           child: ElevatedButton(
-                              onPressed: () {
-                                if (formKey.currentState!.validate()) {
-                                  signIn();
-                                }
-                              },
-                              child: const Text('Login'),
-                              style: elevatedButtonConfirm),
+                            onPressed: () {
+                              if (formKey.currentState!.validate()) {
+                                signIn();
+                              }
+                            },
+                            style: elevatedButtonConfirm,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: (loading)
+                                  ? [
+                                      const SizedBox(
+                                        width: 24,
+                                        height: 24,
+                                        child: CircularProgressIndicator(
+                                          color: Colors.white,
+                                        ),
+                                      )
+                                    ]
+                                  : [
+                                      const Text(
+                                        'Entrar',
+                                      ),
+                                    ],
+                            ),
+                          ),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,

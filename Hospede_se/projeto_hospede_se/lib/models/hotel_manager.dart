@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,7 +10,7 @@ class SignUpHotelException implements Exception {
 
 class HotelManager extends ChangeNotifier {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  
+
   Hotel? _hotel;
   List<Hotel> _allHotels = [];
 
@@ -41,8 +39,13 @@ class HotelManager extends ChangeNotifier {
   Future<void> _loadAllHotels() async {
     final QuerySnapshot snapHotels = await firestore.collection('hotel').get();
     _allHotels = snapHotels.docs.map((d) => Hotel.fromDocument(d)).toList();
-    
+
     notifyListeners();
+  }
+
+  static Future<QuerySnapshot> loadAllHotels2(int limit, {DocumentSnapshot? startAfter}) async {
+    final QuerySnapshot snapHotels = await FirebaseFirestore.instance.collection('hotel').limit(limit).get();
+    return snapHotels;
   }
 
   Hotel getHotel() {

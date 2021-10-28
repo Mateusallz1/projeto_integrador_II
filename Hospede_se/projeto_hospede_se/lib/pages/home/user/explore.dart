@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_hospede_se/helpers/validators.dart';
-import 'package:projeto_hospede_se/styles/style.dart';
 
 class ExploreUserPage extends StatefulWidget {
   const ExploreUserPage({Key? key}) : super(key: key);

@@ -4,6 +4,7 @@ import 'package:projeto_hospede_se/app.dart';
 import 'package:projeto_hospede_se/models/hotel_manager.dart';
 import 'package:projeto_hospede_se/models/room_manager.dart';
 import 'package:projeto_hospede_se/services/auth_service.dart';
+import 'package:projeto_hospede_se/services/hotel_service.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -24,7 +25,11 @@ void main() async {
         ChangeNotifierProvider(
           create: (context) => RoomManager(),
           lazy: false,
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (context) => HotelsProvider(),
+          lazy: false,
+        ),
       ],
       child: const App(),
     ),

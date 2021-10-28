@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_hospede_se/pages/components/hotel_list_tile.dart';
 import 'package:projeto_hospede_se/services/hotel_service.dart';
 
 class ListViewHotelWidget extends StatefulWidget {
@@ -40,28 +41,21 @@ class _ListViewHotelWidgetState extends State<ListViewHotelWidget> {
 
   @override
   Widget build(BuildContext context) => ListView(
-        controller: scrollController,
-        padding: const EdgeInsets.all(12),
-        children: [
-          ...widget.hotelsProvider.hotels
-              .map((hotel) => ListTile(
-                    title: Text(hotel.name!),
-                    // leading: CircleAvatar(
-                    //   backgroundImage: NetworkImage(user.imageUrl),
-                    // ),
-                  ))
-              .toList(),
-          if (widget.hotelsProvider.hasNext)
-            Center(
-              child: GestureDetector(
-                onTap: widget.hotelsProvider.fetchNextHotels,
-                child: const SizedBox(
-                  height: 25,
-                  width: 25,
-                  child: CircularProgressIndicator(),
-                ),
-              ),
+    controller: scrollController,
+    padding: const EdgeInsets.all(12),
+    children: [
+      ...widget.hotelsProvider.hotels.map((hotel) => HotelListTile(hotel)).toList(),
+      if (widget.hotelsProvider.hasNext)
+        Center(
+          child: GestureDetector(
+            onTap: widget.hotelsProvider.fetchNextHotels,
+            child: const SizedBox(
+              height: 25,
+              width: 25,
+              child: CircularProgressIndicator(),
             ),
-        ],
-      );
+          ),
+        ),
+    ],
+  );
 }

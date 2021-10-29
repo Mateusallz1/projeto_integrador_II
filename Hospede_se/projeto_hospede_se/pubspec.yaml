@@ -49,6 +49,9 @@ dependencies:
     version: ^0.0.0
   intl: ^0.17.0
   path_provider: ^2.0.6
+  carousel_slider: ^4.0.0-nullsafety.0
+  dots_indicator: ^2.0.0
+  smooth_page_indicator: ^1.0.0+2
 
 dev_dependencies:
   flutter_test:

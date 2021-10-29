@@ -37,7 +37,10 @@ class RoomManager extends ChangeNotifier {
   }
 
   Future<void> loadRooms(hotelId) async {
-    final QuerySnapshot snapshotdocs = await firestore.collection('rooms').where('hotel_id', isEqualTo: hotelId).get();
+    final QuerySnapshot snapshotdocs = await firestore
+        .collection('rooms')
+        .where('hotel_id', isEqualTo: hotelId)
+        .get();
     hotelRooms = snapshotdocs.docs.map((d) => Room.fromDocument(d)).toList();
     notifyListeners();
   }

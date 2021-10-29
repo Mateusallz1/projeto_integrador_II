@@ -4,7 +4,8 @@ import 'package:provider/provider.dart';
 
 class DrawerTile extends StatelessWidget {
   // ignore: use_key_in_widget_constructors
-  const DrawerTile({required this.icondata, required this.title, required this.page});
+  const DrawerTile(
+      {required this.icondata, required this.title, required this.page});
 
   final IconData icondata;
   final String title;
@@ -32,9 +33,9 @@ class DrawerTile extends StatelessWidget {
             ),
             Text(
               title,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 16,
-                color: Colors.green,
+                color: curPage == page ? Colors.green.shade900 : Colors.green,
               ),
             ),
           ],

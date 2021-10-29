@@ -33,9 +33,20 @@ class _RoomPageState extends State<RoomPage> {
   void signUpRoom() async {
     try {
       final hotelId = context.read<HotelManager>().getHotel().id;
-      List<String>? listImages;
-      listImages!.add(imagePath.text);
-      await context.read<RoomManager>().signUpRoom(Room(hotelId: hotelId, number: int.parse(number.text), quantity: int.parse(quantity.text), title: title.text, description: description.text, status: status, price: double.parse(price.text), guestCount: int.parse(guestCount.text), bedCount: int.parse(bedCount.text), bathCount: int.parse(bathCount.text), images: listImages));
+      List<String> listImages = [];
+      listImages.add(imagePath.text);
+      await context.read<RoomManager>().signUpRoom(Room(
+          hotelId: hotelId,
+          number: int.parse(number.text),
+          quantity: int.parse(quantity.text),
+          title: title.text,
+          description: description.text,
+          status: status,
+          price: double.parse(price.text),
+          guestCount: int.parse(guestCount.text),
+          bedCount: int.parse(bedCount.text),
+          bathCount: int.parse(bathCount.text),
+          images: listImages));
       // CARREGAR NOVAMENTE A LISTA DE QUARTOS
       Navigator.pop(context);
     } on SignUpRoomException catch (e) {
@@ -74,8 +85,8 @@ class _RoomPageState extends State<RoomPage> {
                 } else {
                   if (formKey.currentState!.validate()) {
                     formKey.currentState!.save();
+                    signUpRoom();
                   }
-                  signUpRoom();
                 }
               },
               onStepCancel: () {
@@ -84,7 +95,8 @@ class _RoomPageState extends State<RoomPage> {
                   setState(() => cstep--);
                 }
               },
-              controlsBuilder: (BuildContext context, {VoidCallback? onStepContinue, VoidCallback? onStepCancel}) {
+              controlsBuilder: (BuildContext context,
+                  {VoidCallback? onStepContinue, VoidCallback? onStepCancel}) {
                 final isLastStep = cstep == getSteps().length - 1;
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -117,17 +129,20 @@ class _RoomPageState extends State<RoomPage> {
             TextFormField(
               controller: title,
               validator: (title) => Validators.validateText(title!),
-              decoration: inputDecorationSignUp('Título', const Icon(Icons.create)),
+              decoration:
+                  inputDecorationSignUp('Título', const Icon(Icons.create)),
             ),
             TextFormField(
               controller: description,
               validator: (description) => Validators.validateText(description!),
-              decoration: inputDecorationSignUp('Descrição', const Icon(Icons.title)),
+              decoration:
+                  inputDecorationSignUp('Descrição', const Icon(Icons.title)),
             ),
             TextFormField(
               controller: number,
               validator: (number) => Validators.validateText(number!),
-              decoration: inputDecorationSignUp('Número', const Icon(Icons.short_text)),
+              decoration:
+                  inputDecorationSignUp('Número', const Icon(Icons.short_text)),
               keyboardType: TextInputType.number,
             ),
           ]),
@@ -140,19 +155,22 @@ class _RoomPageState extends State<RoomPage> {
             TextFormField(
               controller: quantity,
               validator: (quantity) => Validators.validateNumber(quantity!),
-              decoration: inputDecorationSignUp('Quantidade', const Icon(Icons.add)),
+              decoration:
+                  inputDecorationSignUp('Quantidade', const Icon(Icons.add)),
               keyboardType: TextInputType.number,
             ),
             TextFormField(
               controller: price,
               validator: (price) => Validators.validateNumber(price!),
-              decoration: inputDecorationSignUp('Preço', const Icon(Icons.attach_money)),
+              decoration: inputDecorationSignUp(
+                  'Preço', const Icon(Icons.attach_money)),
               keyboardType: TextInputType.number,
             ),
             TextFormField(
               controller: imagePath,
               validator: (imagePath) => Validators.validateText(imagePath!),
-              decoration: inputDecorationSignUp('Imagens', const Icon(Icons.image)),
+              decoration:
+                  inputDecorationSignUp('Imagens', const Icon(Icons.image)),
             ),
           ]),
         ),
@@ -164,7 +182,8 @@ class _RoomPageState extends State<RoomPage> {
             TextFormField(
               controller: guestCount,
               validator: (guestCount) => Validators.validateNumber(guestCount!),
-              decoration: inputDecorationSignUp('Capacidade', const Icon(Icons.add)),
+              decoration:
+                  inputDecorationSignUp('Capacidade', const Icon(Icons.add)),
               keyboardType: TextInputType.number,
             ),
             TextFormField(
@@ -176,7 +195,8 @@ class _RoomPageState extends State<RoomPage> {
             TextFormField(
               controller: bathCount,
               validator: (bathCount) => Validators.validateNumber(bathCount!),
-              decoration: inputDecorationSignUp('Banheiros', const Icon(Icons.add)),
+              decoration:
+                  inputDecorationSignUp('Banheiros', const Icon(Icons.add)),
               keyboardType: TextInputType.number,
             ),
           ]),

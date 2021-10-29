@@ -25,6 +25,7 @@ class _RoomPageState extends State<RoomPage> {
   final guestCount = TextEditingController();
   final bedCount = TextEditingController();
   final bathCount = TextEditingController();
+  final imagePath = TextEditingController();
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -32,7 +33,9 @@ class _RoomPageState extends State<RoomPage> {
   void signUpRoom() async {
     try {
       final hotelId = context.read<HotelManager>().getHotel().id;
-      await context.read<RoomManager>().signUpRoom(Room(hotelId: hotelId, number: int.parse(number.text), quantity: int.parse(quantity.text), title: title.text, description: description.text, status: status, price: double.parse(price.text), guestCount: int.parse(guestCount.text), bedCount: int.parse(bedCount.text), bathCount: int.parse(bathCount.text)));
+      List<String>? listImages;
+      listImages!.add(imagePath.text);
+      await context.read<RoomManager>().signUpRoom(Room(hotelId: hotelId, number: int.parse(number.text), quantity: int.parse(quantity.text), title: title.text, description: description.text, status: status, price: double.parse(price.text), guestCount: int.parse(guestCount.text), bedCount: int.parse(bedCount.text), bathCount: int.parse(bathCount.text), images: listImages));
       // CARREGAR NOVAMENTE A LISTA DE QUARTOS
       Navigator.pop(context);
     } on SignUpRoomException catch (e) {
@@ -145,6 +148,11 @@ class _RoomPageState extends State<RoomPage> {
               validator: (price) => Validators.validateNumber(price!),
               decoration: inputDecorationSignUp('Preço', const Icon(Icons.attach_money)),
               keyboardType: TextInputType.number,
+            ),
+            TextFormField(
+              controller: imagePath,
+              validator: (imagePath) => Validators.validateText(imagePath!),
+              decoration: inputDecorationSignUp('Imagens', const Icon(Icons.image)),
             ),
           ]),
         ),

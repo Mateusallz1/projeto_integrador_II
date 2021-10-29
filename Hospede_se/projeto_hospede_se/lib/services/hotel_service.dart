@@ -31,7 +31,7 @@ class HotelsProvider extends ChangeNotifier {
     _isFetchingHotels = true;
 
     try {
-      final snap = await HotelManager.loadAllHotels2(
+      final snap = await HotelManager.loadAllHotels(
         documentLimit,
         startAfter: _hotelsSnapshot.isNotEmpty ? _hotelsSnapshot.last : null,
       );

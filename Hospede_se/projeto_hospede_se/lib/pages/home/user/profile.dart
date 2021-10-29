@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_hospede_se/models/hotel_manager.dart';
 import 'package:projeto_hospede_se/services/auth_service.dart';
 import 'package:projeto_hospede_se/services/hotel_service.dart';
 import 'package:projeto_hospede_se/styles/style.dart';
@@ -38,7 +37,7 @@ class _ProfileUserPage extends State<ProfileUserPage> {
                       MaterialPageRoute(builder: (context) => const AuthCheck());
                     }
                   },
-                  child: Text('Sair'),
+                  child: const Text('Sair'),
                   style: elevatedButton,
                 ),
               ),

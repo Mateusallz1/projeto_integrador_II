@@ -12,9 +12,9 @@ class Room {
   int? guestCount;
   int? bedCount;
   int? bathCount;
-  //List<String>? images;
+  List<String>? images;
 
-  Room({required this.hotelId, required this.number, required this.quantity, required this.title, required this.description, required this.status, required this.price, required this.guestCount, required this.bedCount, required this.bathCount});
+  Room({required this.hotelId, required this.number, required this.quantity, required this.title, required this.description, required this.status, required this.price, required this.guestCount, required this.bedCount, required this.bathCount, required this.images});
   Room.fromDocument(DocumentSnapshot document) {
     id = document.id;
     hotelId = document['hotel_id'] as String;
@@ -27,7 +27,7 @@ class Room {
     guestCount = document['guest_count'] as int;
     bedCount = document['bed_count'] as int;
     bathCount = document['bath_count'] as int;
-    //images = List<String>.from(document['images'] as List<dynamic>);
+    images = List<String>.from(document['images'] as List<dynamic>);
   }
 
   DocumentReference get firestoreRef => FirebaseFirestore.instance.doc('rooms/$id');
@@ -48,7 +48,7 @@ class Room {
       'guest_count': guestCount,
       'bed_count': bedCount,
       'bath_count': bathCount,
-      //'images' : List<String>.from(document['images'] as List<dynamic>);
+      'images': images,
     };
   }
 }

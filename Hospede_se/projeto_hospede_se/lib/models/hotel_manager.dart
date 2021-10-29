@@ -12,7 +12,6 @@ class HotelManager extends ChangeNotifier {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   Hotel? _hotel;
-  List<Hotel> _allHotels = [];
 
   Future<void> signUpHotel(Hotel _hotel) async {
     try {
@@ -36,14 +35,7 @@ class HotelManager extends ChangeNotifier {
     _hotel = Hotel.fromDocument(snapshotdoc);
   }
 
-  Future<void> _loadAllHotels() async {
-    final QuerySnapshot snapHotels = await firestore.collection('hotel').get();
-    _allHotels = snapHotels.docs.map((d) => Hotel.fromDocument(d)).toList();
-
-    notifyListeners();
-  }
-
-  static Future<QuerySnapshot> loadAllHotels2(int limit, {DocumentSnapshot? startAfter}) async {
+  static Future<QuerySnapshot> loadAllHotels(int limit, {DocumentSnapshot? startAfter}) async {
     final QuerySnapshot snapHotels = await FirebaseFirestore.instance.collection('hotel').limit(limit).get();
     return snapHotels;
   }

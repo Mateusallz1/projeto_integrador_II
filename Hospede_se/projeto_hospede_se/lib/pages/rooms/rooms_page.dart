@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_hospede_se/models/hotel_manager.dart';
 import 'package:projeto_hospede_se/models/room_manager.dart';
+import 'package:projeto_hospede_se/pages/components/search_dialog.dart';
 import 'package:projeto_hospede_se/pages/rooms/registration_room.dart';
 import 'package:projeto_hospede_se/services/auth_service.dart';
 import 'package:projeto_hospede_se/pages/components/drawer.dart';
@@ -34,14 +35,19 @@ class _RoomsPageState extends State<RoomsPage> {
         centerTitle: true,
         backgroundColor: Colors.green.shade800,
         title: const Text('Quartos'),
-        /* actions: [
+        actions: [
           IconButton(
             icon: const Icon(Icons.search),
-            onPressed: () {
-              showDialog(context: context, builder: (_) => SearchDialogg());
+            onPressed: () async {
+              final search = await showDialog<String>(context: context, 
+                builder: (_) => const SearchDialogg());
+              
+              if (search != null) {
+                context.read<RoomManager>().search = search;
+              }
             },
           )
-        ], */
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -57,13 +63,13 @@ class _RoomsPageState extends State<RoomsPage> {
                   color: Colors.white,
                   child: Row(
                     children: [
-                      Expanded(child: Consumer<RoomManager>(
+                      Expanded(child: Consumer<RoomManager>( // Achar um jeito de não chamar o get 2 vezes
                         builder: (_, roomManager, __) {
                           return ListView.builder(
-                            itemCount: roomManager.hotelRooms.length,
+                            itemCount: roomManager.filteredRooms.length,
                             itemBuilder: (_, index) {
                               return RoomListTile(
-                                  roomManager.hotelRooms[index]);
+                                  roomManager.filteredRooms[index]);
                             },
                           );
                         },

@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:projeto_hospede_se/models/room.dart';
 
+
 class SignUpRoomException implements Exception {
   String message;
   SignUpRoomException(this.message);
@@ -17,6 +18,26 @@ class RoomManager extends ChangeNotifier {
 
   List<Room> allRooms = [];
   List<Room> hotelRooms = [];
+  
+  String _search = '';
+
+  String get search => _search;
+  set search(String value) {
+    _search = value;
+    notifyListeners();
+  }
+
+  List<Room> get filteredRooms {
+    final List<Room> filteredRooms = [];
+
+    if (search.isEmpty) {
+      filteredRooms.addAll(hotelRooms);
+    } else {
+      filteredRooms.addAll(hotelRooms.where((p) => p.title!.toLowerCase().contains(search.toLowerCase())));
+    }
+    return filteredRooms;
+  }
+
 
   Future<void> signUpRoom(Room _room) async {
     try {

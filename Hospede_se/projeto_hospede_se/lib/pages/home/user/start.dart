@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:projeto_hospede_se/pages/components/search_dialog.dart';
 import 'package:projeto_hospede_se/services/hotel_service.dart';
 import 'package:projeto_hospede_se/widgets/listview_hotels.dart';
 import 'package:provider/provider.dart';
@@ -25,6 +27,27 @@ class _StartUserPage extends State<StartUserPage> {
     hotelManager.getAllHotels(); */
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Hotéis",
+          style: GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.green.shade800,)),
+        ),
+        backgroundColor: Colors.grey.shade50,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            color: Colors.green.shade800,
+            onPressed: () async {
+              final search = await showDialog<String>(context: context, 
+                builder: (_) => const SearchDialogg());
+              
+              if (search != null) {
+                context.read<HotelsProvider>().search = search;
+              }
+            },
+          )
+        ],
+      ),
+
       body: Theme(
         data: Theme.of(context).copyWith(
           colorScheme: const ColorScheme.light(primary: Colors.green, secondary: Colors.green, background: Colors.white),

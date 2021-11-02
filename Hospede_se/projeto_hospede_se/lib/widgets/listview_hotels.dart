@@ -23,6 +23,7 @@ class _ListViewHotelWidgetState extends State<ListViewHotelWidget> {
 
     scrollController.addListener(scrollListener);
     widget.hotelsProvider.fetchNextHotels();
+    widget.hotelsProvider.removeHotels();
   }
 
   @override
@@ -38,6 +39,7 @@ class _ListViewHotelWidgetState extends State<ListViewHotelWidget> {
       }
     }
   }
+
 
   @override
   Widget build(BuildContext context) => ListView(

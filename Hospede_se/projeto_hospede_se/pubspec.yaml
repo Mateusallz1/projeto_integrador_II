@@ -41,7 +41,7 @@ dependencies:
   provider: ^6.0.1
   fluttertoast: ^8.0.8
   google_fonts: ^2.1.0
-  csc_picker: ^0.2.6
+  csc_picker: ^0.2.r
   convex_bottom_bar: ^3.0.0
   syncfusion_flutter_datepicker: ^19.3.47
   flutter_localizations: 
@@ -52,6 +52,10 @@ dependencies:
   carousel_slider: ^4.0.0-nullsafety.0
   dots_indicator: ^2.0.0
   smooth_page_indicator: ^1.0.0+2
+  flutter_dotenv: ^5.0.2
+  flutter_google_places_hoc081098: ^1.0.0-nullsafety.5
+  google_api_headers: ^1.1.1
+  number_selection: ^1.0.0
 
 dev_dependencies:
   flutter_test:

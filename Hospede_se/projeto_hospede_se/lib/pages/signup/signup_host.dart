@@ -32,14 +32,35 @@ class _SignUpHostPage extends State<SignUpHostPage> {
   String? state;
   String? country;
 
-  List<GlobalKey<FormState>> formKeys = [GlobalKey<FormState>(), GlobalKey<FormState>(), GlobalKey<FormState>(), GlobalKey<FormState>()];
+  List<GlobalKey<FormState>> formKeys = [
+    GlobalKey<FormState>(),
+    GlobalKey<FormState>(),
+    GlobalKey<FormState>(),
+    GlobalKey<FormState>()
+  ];
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   void save() async {
     try {
-      await context.read<AuthService>().signUp(UserApp(host: true, name: name.text, email: email.text, password: passwd.text, confirmPassword: cpasswd.text));
+      await context.read<AuthService>().signUp(UserApp(
+          host: true,
+          name: name.text,
+          email: email.text,
+          password: passwd.text,
+          confirmPassword: cpasswd.text));
+
       String? userId = context.read<AuthService>().getUser().id;
-      await context.read<HotelManager>().signUpHotel(Hotel(userId: userId, name: nameHotel.text, phone: phone.text, address: address.text, number: number.text, city: city, state: state, country: country, rating: value.toInt()));
+
+      await context.read<HotelManager>().signUpHotel(Hotel(
+          userId: userId,
+          name: nameHotel.text,
+          phone: phone.text,
+          address: address.text,
+          number: number.text,
+          city: city,
+          state: state,
+          country: country,
+          rating: value.toInt()));
 
       Navigator.push(
         context,
@@ -58,7 +79,8 @@ class _SignUpHostPage extends State<SignUpHostPage> {
         key: scaffoldKey,
         body: Theme(
           data: Theme.of(context).copyWith(
-            colorScheme: ColorScheme.light(primary: Colors.green.shade800, background: Colors.white),
+            colorScheme: ColorScheme.light(
+                primary: Colors.green.shade800, background: Colors.white),
           ),
           child: SingleChildScrollView(
             child: Column(
@@ -72,7 +94,8 @@ class _SignUpHostPage extends State<SignUpHostPage> {
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        icon: Icon(Icons.arrow_back, color: Colors.green.shade800),
+                        icon: Icon(Icons.arrow_back,
+                            color: Colors.green.shade800),
                       ),
                     ],
                   ),
@@ -109,7 +132,9 @@ class _SignUpHostPage extends State<SignUpHostPage> {
                       setState(() => cstep--);
                     }
                   },
-                  controlsBuilder: (BuildContext context, {VoidCallback? onStepContinue, VoidCallback? onStepCancel}) {
+                  controlsBuilder: (BuildContext context,
+                      {VoidCallback? onStepContinue,
+                      VoidCallback? onStepCancel}) {
                     final isLastStep = cstep == getSteps().length - 1;
 
                     return Row(
@@ -147,25 +172,30 @@ class _SignUpHostPage extends State<SignUpHostPage> {
                 TextFormField(
                   controller: name,
                   validator: (name) => Validators.validateName(name!),
-                  decoration: inputDecorationSignUp('Nome Completo', const Icon(Icons.person)),
+                  decoration: inputDecorationSignUp(
+                      'Nome Completo', const Icon(Icons.person)),
                 ),
                 TextFormField(
                   controller: email,
                   validator: (email) => Validators.validateEmail(email!),
-                  decoration: inputDecorationSignUp('Email', const Icon(Icons.email)),
+                  decoration:
+                      inputDecorationSignUp('Email', const Icon(Icons.email)),
                   keyboardType: TextInputType.emailAddress,
                 ),
                 TextFormField(
                   controller: passwd,
                   obscureText: true,
                   validator: (passwd) => Validators.validatePassword(passwd!),
-                  decoration: inputDecorationSignUp('Senha', const Icon(Icons.password)),
+                  decoration: inputDecorationSignUp(
+                      'Senha', const Icon(Icons.password)),
                 ),
                 TextFormField(
                   controller: cpasswd,
                   obscureText: true,
-                  validator: (cpasswd) => Validators.comparePassword(passwd.text, cpasswd!),
-                  decoration: inputDecorationSignUp('Confirmar Senha', const Icon(Icons.password_sharp)),
+                  validator: (cpasswd) =>
+                      Validators.comparePassword(passwd.text, cpasswd!),
+                  decoration: inputDecorationSignUp(
+                      'Confirmar Senha', const Icon(Icons.password_sharp)),
                 ),
               ],
             ),
@@ -182,13 +212,15 @@ class _SignUpHostPage extends State<SignUpHostPage> {
                 TextFormField(
                   controller: nameHotel,
                   validator: (name) => Validators.validateName(name!),
-                  decoration: inputDecorationSignUp('Nome Hotel', const Icon(Icons.business)),
+                  decoration: inputDecorationSignUp(
+                      'Nome Hotel', const Icon(Icons.business)),
                   keyboardType: TextInputType.name,
                 ),
                 TextFormField(
                   controller: phone,
                   validator: (phone) => Validators.validatePhone(phone!),
-                  decoration: inputDecorationSignUp('Fone', const Icon(Icons.call)),
+                  decoration:
+                      inputDecorationSignUp('Fone', const Icon(Icons.call)),
                   keyboardType: TextInputType.number,
                 ),
               ],
@@ -248,12 +280,14 @@ class _SignUpHostPage extends State<SignUpHostPage> {
                 TextFormField(
                   controller: address,
                   validator: (address) => Validators.validateText(address!),
-                  decoration: inputDecorationSignUp('Endereço', const Icon(Icons.password)),
+                  decoration: inputDecorationSignUp(
+                      'Endereço', const Icon(Icons.password)),
                 ),
                 TextFormField(
                   controller: number,
                   validator: (number) => Validators.validateText(number!),
-                  decoration: inputDecorationSignUp('Número', const Icon(Icons.markunread_mailbox)),
+                  decoration: inputDecorationSignUp(
+                      'Número', const Icon(Icons.markunread_mailbox)),
                   keyboardType: TextInputType.number,
                 ),
                 Padding(

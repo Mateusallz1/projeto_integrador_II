@@ -36,6 +36,12 @@ var elevatedButtonConfirm = ElevatedButton.styleFrom(
   ),
 );
 
+var elevatedButtonConfirmWhite = ElevatedButton.styleFrom(
+  primary: Colors.white,
+  padding: const EdgeInsets.symmetric(vertical: 12),
+  textStyle: const TextStyle(fontSize: 20),
+);
+
 var inputBorderGreen = const UnderlineInputBorder(
   borderSide: BorderSide(color: Colors.green),
 );

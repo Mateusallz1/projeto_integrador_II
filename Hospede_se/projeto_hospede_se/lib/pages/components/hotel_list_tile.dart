@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:projeto_hospede_se/models/hotel.dart';
 
@@ -13,7 +14,9 @@ class HotelListTile extends StatelessWidget {
     return SafeArea(
       child: Card(
         elevation: 5,
-        shape: RoundedRectangleBorder(side: BorderSide(color: Colors.grey.shade900, width: 3), borderRadius: BorderRadius.circular(10)),
+        shape: RoundedRectangleBorder(
+            side: BorderSide(color: Colors.grey.shade900, width: 3),
+            borderRadius: BorderRadius.circular(10)),
         child: Container(
           padding: const EdgeInsets.all(5),
           child: Column(
@@ -35,7 +38,8 @@ class HotelListTile extends StatelessWidget {
                             overflow: TextOverflow.fade,
                             maxLines: 1,
                             softWrap: false,
-                            style: GoogleFonts.lobster(
+                            style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w500,
                               textStyle: const TextStyle(
                                 fontSize: 25,
                               ),
@@ -53,10 +57,11 @@ class HotelListTile extends StatelessWidget {
                             children: [
                               Text(
                                 '${hotel.rating}',
+                                style: const TextStyle(fontSize: 16),
                               ),
                               const Icon(
                                 Icons.star,
-                                size: 15,
+                                size: 25,
                                 color: Colors.yellow,
                               ),
                             ],
@@ -91,7 +96,9 @@ class HotelListTile extends StatelessWidget {
                                       overflow: TextOverflow.fade,
                                       maxLines: 4,
                                       softWrap: true,
-                                      style: GoogleFonts.montserrat(textStyle: const TextStyle(fontSize: 16)),
+                                      style: GoogleFonts.montserrat(
+                                          textStyle:
+                                              const TextStyle(fontSize: 16)),
                                     ),
                                   ],
                                 ),

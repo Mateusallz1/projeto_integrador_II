@@ -24,7 +24,12 @@ class _SignUpUserPageState extends State<SignUpUserPage> {
 
   void signUp() async {
     try {
-      await context.read<AuthService>().signUp(UserApp(host: false, name: name.text, email: email.text, password: passwd.text, confirmPassword: cpasswd.text));
+      await context.read<AuthService>().signUp(UserApp(
+          host: false,
+          name: name.text,
+          email: email.text,
+          password: passwd.text,
+          confirmPassword: cpasswd.text));
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const AuthCheck()),
@@ -87,26 +92,33 @@ class _SignUpUserPageState extends State<SignUpUserPage> {
                             children: [
                               TextFormField(
                                 controller: name,
-                                decoration: inputDecorationRadius('Nome Completo'),
-                                validator: (name) => Validators.validateName(name!),
+                                decoration:
+                                    inputDecorationRadius('Nome Completo'),
+                                validator: (name) =>
+                                    Validators.validateName(name!),
                               ),
                               TextFormField(
                                 controller: email,
                                 decoration: inputDecorationRadius('Email'),
                                 keyboardType: TextInputType.emailAddress,
-                                validator: (email) => Validators.validateEmail(email!),
+                                validator: (email) =>
+                                    Validators.validateEmail(email!),
                               ),
                               TextFormField(
                                 controller: passwd,
                                 decoration: inputDecorationRadius('Senha'),
                                 obscureText: true,
-                                validator: (passwd) => Validators.validatePassword(passwd!),
+                                validator: (passwd) =>
+                                    Validators.validatePassword(passwd!),
                               ),
                               TextFormField(
                                 controller: cpasswd,
-                                decoration: inputDecorationRadius('Confirme sua Senha'),
+                                decoration:
+                                    inputDecorationRadius('Confirme sua Senha'),
                                 obscureText: true,
-                                validator: (cpasswd) => Validators.comparePassword(passwd.text, cpasswd!),
+                                validator: (cpasswd) =>
+                                    Validators.comparePassword(
+                                        passwd.text, cpasswd!),
                               ),
                               ElevatedButton(
                                 style: elevatedButtonConfirm,
@@ -116,7 +128,8 @@ class _SignUpUserPageState extends State<SignUpUserPage> {
                                     signUp();
                                   }
                                 },
-                                child: const Text('Confirmar', style: TextStyle(fontSize: 15)),
+                                child: const Text('Confirmar',
+                                    style: TextStyle(fontSize: 15)),
                               ),
                             ],
                           ),

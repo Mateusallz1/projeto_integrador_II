@@ -5,6 +5,7 @@ import 'package:projeto_hospede_se/models/room.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class RoomScreen extends StatefulWidget {
+  // ignore: use_key_in_widget_constructors
   const RoomScreen(this.room);
   final Room room;
 

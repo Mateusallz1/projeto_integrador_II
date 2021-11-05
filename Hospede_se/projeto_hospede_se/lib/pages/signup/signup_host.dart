@@ -293,6 +293,7 @@ class _SignUpHostPage extends State<SignUpHostPage> {
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: CSCPicker(
+                    flagState: CountryFlag.DISABLE,
                     countrySearchPlaceholder: "País",
                     stateSearchPlaceholder: "Estado",
                     citySearchPlaceholder: "Cidade",

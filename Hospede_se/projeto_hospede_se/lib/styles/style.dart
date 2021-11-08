@@ -98,3 +98,20 @@ InputDecoration inputDecorationSignUp(txt, icon) {
     focusedBorder: inputFocusedBorderGreen,
   );
 }
+
+Row starsRating(qtd) {
+  return Row(
+    children: List.generate(5, (index) {
+      return star();
+      }
+    ),
+  );
+}
+
+Icon star() {
+  return const Icon(
+    Icons.star,
+    size: 25,
+    color: Colors.yellow,
+  );
+}

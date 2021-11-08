@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:projeto_hospede_se/models/hotel.dart';
+import 'package:projeto_hospede_se/styles/style.dart';
 
 class HotelListTile extends StatelessWidget {
   // ignore: use_key_in_widget_constructors
@@ -28,7 +29,7 @@ class HotelListTile extends StatelessWidget {
                   children: [
                     Container(
                       padding: const EdgeInsets.only(left: 7),
-                      width: MediaQuery.of(context).size.height * 0.35,
+                      width: MediaQuery.of(context).size.height * 0.27,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,15 +56,7 @@ class HotelListTile extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                '${hotel.rating}',
-                                style: const TextStyle(fontSize: 16),
-                              ),
-                              const Icon(
-                                Icons.star,
-                                size: 25,
-                                color: Colors.yellow,
-                              ),
+                              starsRating(hotel.rating)
                             ],
                           ),
                         ],

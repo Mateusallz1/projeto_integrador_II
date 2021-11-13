@@ -19,6 +19,7 @@ class WelcomePage extends StatelessWidget {
             margin: const EdgeInsets.all(20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   'Bem-Vindo!',
@@ -31,9 +32,9 @@ class WelcomePage extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Você está em um aplicativo de hospedagem de Hotel!\n\n',
+                  'Este é um aplicativo de hospedagens\n\n',
                   style: GoogleFonts.roboto(
-                    textStyle: const TextStyle(fontSize: 15, color: Colors.grey),
+                    textStyle: const TextStyle(fontSize: 18.5, color: Colors.grey),
                   ),
                 ),
                 Column(

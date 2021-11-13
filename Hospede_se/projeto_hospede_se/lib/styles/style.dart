@@ -100,11 +100,20 @@ InputDecoration inputDecorationSignUp(txt, icon) {
 }
 
 Row starsRating(qtd) {
+  var starAmber = const Icon(
+    Icons.star,
+    size: 25,
+    color: Colors.amber,
+  );
+  var starGrey = const Icon(
+    Icons.star,
+    size: 25,
+    color: Colors.grey,
+  );
   return Row(
     children: List.generate(5, (index) {
-      return star();
-      }
-    ),
+      return index < qtd ? starAmber : starGrey;
+    }),
   );
 }
 
@@ -112,6 +121,6 @@ Icon star() {
   return const Icon(
     Icons.star,
     size: 25,
-    color: Colors.yellow,
+    color: Colors.amber,
   );
 }

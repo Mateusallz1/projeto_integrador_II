@@ -28,8 +28,13 @@ class _StartUserPage extends State<StartUserPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Hotéis",
-          style: GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.green.shade800,)),
+        title: Text(
+          "Hotéis",
+          style: GoogleFonts.montserrat(
+            textStyle: TextStyle(
+              color: Colors.green.shade800,
+            ),
+          ),
         ),
         backgroundColor: Colors.grey.shade50,
         actions: [
@@ -37,9 +42,8 @@ class _StartUserPage extends State<StartUserPage> {
             icon: const Icon(Icons.search),
             color: Colors.green.shade800,
             onPressed: () async {
-              final search = await showDialog<String>(context: context, 
-                builder: (_) => const SearchDialogg());
-              
+              final search = await showDialog<String>(context: context, builder: (_) => const SearchDialogg());
+
               if (search != null) {
                 context.read<HotelsProvider>().search = search;
               }
@@ -47,7 +51,6 @@ class _StartUserPage extends State<StartUserPage> {
           )
         ],
       ),
-
       body: Theme(
         data: Theme.of(context).copyWith(
           colorScheme: const ColorScheme.light(primary: Colors.green, secondary: Colors.green, background: Colors.white),

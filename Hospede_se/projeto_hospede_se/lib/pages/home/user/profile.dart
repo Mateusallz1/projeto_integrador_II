@@ -28,7 +28,7 @@ class _ProfileUserPage extends State<ProfileUserPage> {
                   onPressed: () {
                     if (auth.isLogged()) {
                       auth.signOut();
-                      hotels.removeHotels();
+                      //hotels.removeHotels();
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const AuthCheck()),

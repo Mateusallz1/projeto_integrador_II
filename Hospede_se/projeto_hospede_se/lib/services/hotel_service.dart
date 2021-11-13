@@ -5,43 +5,34 @@ import 'package:flutter/material.dart';
 
 class HotelsProvider extends ChangeNotifier {
   final _hotelsSnapshot = <DocumentSnapshot>[];
-  String _errorMessage = '';
-  int documentLimit = 15;
-  bool _hasNext = true;
-  bool _isFetchingHotels = false;
-
-  String get errorMessage => _errorMessage;
-  bool get hasNext => _hasNext;
 
   String _search = '';
-
   String get search => _search;
+
+  final bool _isSearchkey = true;
+  bool get isSearchkey => _isSearchkey;
+
+  String _errorMessage = '';
+  String get errorMessage => _errorMessage;
+
+  bool _hasNext = true;
+  bool get hasNext => _hasNext;
+
+  bool _isFetchingHotels = false;
+
+  int documentLimit = 15;
+
   set search(String value) {
     _search = value;
     notifyListeners();
   }
 
-  List<Hotel> get filteredHotel {
-    final List<Hotel> filteredHotel = [];
-
-    if (search.isEmpty) {
-      filteredHotel.addAll(hotels);
-    } else {
-      filteredHotel.addAll(hotels.where((p) => p.name!.toLowerCase().contains(search.toLowerCase())));
-    }
-    return filteredHotel;
+  List<Hotel> getHotels() {
+    List<Hotel> hotels = _hotelsSnapshot.map((snap) => Hotel.fromDocument(snap)).toList();
+    List<Hotel> filteredhotels = [];
+    filteredhotels.addAll(hotels.where((h) => h.name!.toLowerCase().contains(search.toLowerCase())));
+    return filteredhotels;
   }
-
-  void removeHotels() {
-    _hotelsSnapshot.clear();
-    // ignore: avoid_print
-    print('lista de hoteis removida');
-  }
-
-  List<Hotel> get hotels => _hotelsSnapshot.map((snap) {
-        final Hotel hotel = Hotel.fromDocument(snap);
-        return hotel;
-      }).toList();
 
   Future fetchNextHotels() async {
     if (_isFetchingHotels) return;
@@ -50,13 +41,16 @@ class HotelsProvider extends ChangeNotifier {
     _isFetchingHotels = true;
 
     try {
-      final snap = await HotelManager.loadAllHotels(
+      final snap = await HotelManager.getFilteredHotels(
         documentLimit,
+        search,
+        1,
         startAfter: _hotelsSnapshot.isNotEmpty ? _hotelsSnapshot.last : null,
       );
+
       _hotelsSnapshot.addAll(snap.docs);
 
-      if (snap.docs.length < documentLimit) _hasNext = false;
+      if (getHotels().length < documentLimit) _hasNext = false;
       notifyListeners();
     } catch (error) {
       _errorMessage = error.toString();

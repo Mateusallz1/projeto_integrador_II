@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_hospede_se/models/hotel.dart';
 import 'package:projeto_hospede_se/pages/components/hotel_list_tile.dart';
 import 'package:projeto_hospede_se/services/hotel_service.dart';
 
@@ -20,10 +21,9 @@ class _ListViewHotelWidgetState extends State<ListViewHotelWidget> {
   @override
   void initState() {
     super.initState();
-
     scrollController.addListener(scrollListener);
     widget.hotelsProvider.fetchNextHotels();
-    widget.hotelsProvider.removeHotels();
+    //widget.hotelsProvider.removeHotels();
   }
 
   @override
@@ -40,24 +40,22 @@ class _ListViewHotelWidgetState extends State<ListViewHotelWidget> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) => ListView(
-    controller: scrollController,
-    padding: const EdgeInsets.all(12),
-    children: [
-      ...widget.hotelsProvider.hotels.map((hotel) => HotelListTile(hotel)).toList(),
-      if (widget.hotelsProvider.hasNext)
-        Center(
-          child: GestureDetector(
-            onTap: widget.hotelsProvider.fetchNextHotels,
-            child: const SizedBox(
-              height: 25,
-              width: 25,
-              child: CircularProgressIndicator(),
+        controller: scrollController,
+        children: [
+          ...widget.hotelsProvider.getHotels().map((hotel) => HotelListTile(hotel)).toList(),
+          if (widget.hotelsProvider.hasNext)
+            Center(
+              child: GestureDetector(
+                onTap: widget.hotelsProvider.fetchNextHotels,
+                child: const SizedBox(
+                  height: 25,
+                  width: 25,
+                  child: CircularProgressIndicator(),
+                ),
+              ),
             ),
-          ),
-        ),
-    ],
-  );
+        ],
+      );
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -35,9 +37,16 @@ class HotelManager extends ChangeNotifier {
     _hotel = Hotel.fromDocument(snapshotdoc);
   }
 
-  static Future<QuerySnapshot> loadAllHotels(int limit, {DocumentSnapshot? startAfter}) async {
-    final QuerySnapshot snapHotels = await FirebaseFirestore.instance.collection('hotel').limit(limit).get();
-    return snapHotels;
+  static Future<QuerySnapshot> getFilteredHotels(int limit, String searchkey, int searchtype, {DocumentSnapshot? startAfter}) async {
+    if (searchtype == 1 && searchkey.isNotEmpty) {
+      final QuerySnapshot snapHotels;
+      snapHotels = await FirebaseFirestore.instance.collection('hotel').where('name', arrayContains: searchkey).limit(limit).get();
+      return snapHotels;
+    } else {
+      final QuerySnapshot snapHotels;
+      snapHotels = await FirebaseFirestore.instance.collection('hotel').limit(limit).get();
+      return snapHotels;
+    }
   }
 
   Hotel getHotel() {

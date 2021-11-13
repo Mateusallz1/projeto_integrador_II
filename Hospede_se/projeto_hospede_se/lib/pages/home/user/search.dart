@@ -63,8 +63,7 @@ class _SearchUserPage extends State<SearchUserPage> {
     await displayPrediction(p, ScaffoldMessenger.of(context));
   }
 
-  Future<void> displayPrediction(
-      Prediction? p, ScaffoldMessengerState messengerState) async {
+  Future<void> displayPrediction(Prediction? p, ScaffoldMessengerState messengerState) async {
     if (p == null) {
       return;
     }
@@ -120,23 +119,20 @@ class _SearchUserPage extends State<SearchUserPage> {
                             onTap: () {
                               _handlePressButton();
                             },
-                            validator: (search) =>
-                                Validators.validateText(search!),
+                            validator: (search) => Validators.validateText(search!),
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
                               hintText: 'Para onde você está indo?',
                               labelStyle: const TextStyle(color: Colors.white),
                               focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.green.shade800),
+                                borderSide: BorderSide(color: Colors.green.shade800),
                                 borderRadius: const BorderRadius.all(
                                   Radius.circular(5),
                                 ),
                               ),
                               enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.green.shade800),
+                                borderSide: BorderSide(color: Colors.green.shade800),
                                 borderRadius: const BorderRadius.all(
                                   Radius.circular(5),
                                 ),
@@ -160,19 +156,16 @@ class _SearchUserPage extends State<SearchUserPage> {
                                     filled: true,
                                     fillColor: Colors.white,
                                     hintText: 'Data Inicial',
-                                    labelStyle:
-                                        const TextStyle(color: Colors.white),
+                                    labelStyle: const TextStyle(color: Colors.white),
                                     focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.green.shade800),
+                                      borderSide: BorderSide(color: Colors.green.shade800),
                                       borderRadius: const BorderRadius.only(
                                         topRight: Radius.circular(5),
                                         topLeft: Radius.circular(5),
                                       ),
                                     ),
                                     enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.green.shade800),
+                                      borderSide: BorderSide(color: Colors.green.shade800),
                                       borderRadius: const BorderRadius.only(
                                         topRight: Radius.circular(5),
                                         topLeft: Radius.circular(5),
@@ -183,8 +176,7 @@ class _SearchUserPage extends State<SearchUserPage> {
                                       color: Colors.green.shade800,
                                     ),
                                   ),
-                                  validator: (firstdate) =>
-                                      Validators.validateText(firstdate!),
+                                  validator: (firstdate) => Validators.validateText(firstdate!),
                                   onTap: _dateTimeRangePicker,
                                 ),
                                 TextFormField(
@@ -195,19 +187,16 @@ class _SearchUserPage extends State<SearchUserPage> {
                                     filled: true,
                                     fillColor: Colors.white,
                                     hintText: 'Data Final',
-                                    labelStyle:
-                                        const TextStyle(color: Colors.white),
+                                    labelStyle: const TextStyle(color: Colors.white),
                                     focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.green.shade800),
+                                      borderSide: BorderSide(color: Colors.green.shade800),
                                       borderRadius: const BorderRadius.only(
                                         bottomRight: Radius.circular(5),
                                         bottomLeft: Radius.circular(5),
                                       ),
                                     ),
                                     enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.green.shade800),
+                                      borderSide: BorderSide(color: Colors.green.shade800),
                                       borderRadius: const BorderRadius.only(
                                         bottomRight: Radius.circular(5),
                                         bottomLeft: Radius.circular(5),
@@ -218,8 +207,7 @@ class _SearchUserPage extends State<SearchUserPage> {
                                       color: Colors.white,
                                     ),
                                   ),
-                                  validator: (lastdate) =>
-                                      Validators.validateText(lastdate!),
+                                  validator: (lastdate) => Validators.validateText(lastdate!),
                                 ),
                               ],
                             ),
@@ -232,24 +220,19 @@ class _SearchUserPage extends State<SearchUserPage> {
                               children: [
                                 Text(
                                   'Selecione a quantidade de hóspedes',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.grey.shade700),
+                                  style: TextStyle(fontSize: 16, color: Colors.grey.shade700),
                                 ),
                                 Container(
                                   width: MediaQuery.of(context).size.height * 1,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.07,
+                                  height: MediaQuery.of(context).size.height * 0.07,
                                   margin: const EdgeInsets.only(top: 10),
                                   child: NumberSelection(
                                     theme: NumberSelectionTheme(
-                                        draggableCircleColor:
-                                            Colors.green.shade800,
+                                        draggableCircleColor: Colors.green.shade800,
                                         iconsColor: Colors.green.shade800,
                                         numberColor: Colors.white,
                                         backgroundColor: Colors.white,
-                                        outOfConstraintsColor:
-                                            Colors.deepOrange),
+                                        outOfConstraintsColor: Colors.deepOrange),
                                     initialValue: 1,
                                     minValue: 1,
                                     maxValue: 15,
@@ -272,9 +255,7 @@ class _SearchUserPage extends State<SearchUserPage> {
                             child: ElevatedButton(
                                 child: Text(
                                   'Pesquisar',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.green.shade800),
+                                  style: TextStyle(fontSize: 20, color: Colors.green.shade800),
                                 ),
                                 onPressed: () {},
                                 style: elevatedButtonConfirmWhite),

@@ -1,32 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:projeto_hospede_se/pages/components/search_dialog.dart';
 import 'package:projeto_hospede_se/services/hotel_service.dart';
 import 'package:projeto_hospede_se/widgets/listview_hotels.dart';
 import 'package:provider/provider.dart';
 
-class StartUserPage extends StatefulWidget {
-  const StartUserPage({Key? key}) : super(key: key);
+class BookingPage extends StatefulWidget {
+  final Map booking;
+  const BookingPage({required this.booking, Key? key}) : super(key: key);
 
   @override
-  State<StartUserPage> createState() => _StartUserPage();
+  State<BookingPage> createState() => _BookingPage();
 }
 
-class _StartUserPage extends State<StartUserPage> {
-  dateTimeRangePicker() async {
-    return showDateRangePicker(
-      context: context,
-      firstDate: DateTime(DateTime.now().year - 5),
-      lastDate: DateTime(DateTime.now().year + 5),
-    );
-  }
-
+class _BookingPage extends State<BookingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Hotéis",
+          "Hotéis disponíveis",
           style: GoogleFonts.montserrat(
             textStyle: TextStyle(
               color: Colors.green.shade800,
@@ -34,19 +26,6 @@ class _StartUserPage extends State<StartUserPage> {
           ),
         ),
         backgroundColor: Colors.grey.shade50,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            color: Colors.green.shade800,
-            onPressed: () async {
-              final search = await showDialog<String>(context: context, builder: (_) => const SearchDialogg());
-
-              if (search != null) {
-                context.read<HotelsProvider>().search = search;
-              }
-            },
-          )
-        ],
       ),
       body: Theme(
         data: Theme.of(context).copyWith(
@@ -56,7 +35,7 @@ class _StartUserPage extends State<StartUserPage> {
         child: Consumer<HotelsProvider>(
           builder: (context, hotelsProvider, _) => ListViewHotelWidget(
             hotelsProvider: hotelsProvider,
-            typesearch: 1,
+            typesearch: 2,
           ),
         ),
       ),

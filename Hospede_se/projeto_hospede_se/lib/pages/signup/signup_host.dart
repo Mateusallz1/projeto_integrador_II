@@ -342,7 +342,7 @@ class _SignUpHostPage extends State<SignUpHostPage> {
                     },
                   ),
                 ),
-                Text('\n\nPor favor, especifique ao máximo seu endereço\n'),
+                const Text('\n\nPor favor, especifique ao máximo seu endereço\n'),
                 TextFormField(
                   controller: address,
                   enabled: city == null ? false : true,

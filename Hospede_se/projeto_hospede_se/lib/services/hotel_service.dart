@@ -9,6 +9,9 @@ class HotelsProvider extends ChangeNotifier {
   String _search = '';
   String get search => _search;
 
+  Map _booking = {};
+  Map get booking => _booking;
+
   final bool _isSearchkey = true;
   bool get isSearchkey => _isSearchkey;
 
@@ -22,6 +25,11 @@ class HotelsProvider extends ChangeNotifier {
 
   int documentLimit = 15;
 
+  set booking(Map value) {
+    _booking = value;
+    notifyListeners();
+  }
+
   set search(String value) {
     _search = value;
     notifyListeners();
@@ -31,26 +39,34 @@ class HotelsProvider extends ChangeNotifier {
     List<Hotel> hotels = _hotelsSnapshot.map((snap) => Hotel.fromDocument(snap)).toList();
     List<Hotel> filteredhotels = [];
     filteredhotels.addAll(hotels.where((h) => h.name!.toLowerCase().contains(search.toLowerCase())));
+    if (search.isNotEmpty) {
+      final ids = filteredhotels.map((h) => h.id).toSet();
+      filteredhotels.retainWhere((h) => ids.remove(h.id));
+    }
     return filteredhotels;
   }
 
-  Future fetchNextHotels() async {
+  Future fetchNextHotels(int type) async {
     if (_isFetchingHotels) return;
 
     _errorMessage = '';
     _isFetchingHotels = true;
 
     try {
-      final snap = await HotelManager.getFilteredHotels(
-        documentLimit,
-        search,
-        1,
-        startAfter: _hotelsSnapshot.isNotEmpty ? _hotelsSnapshot.last : null,
-      );
+      if (type == 1) {
+        final snap = await HotelManager.getFilteredHotels(
+          documentLimit,
+          search,
+          1,
+          startAfter: _hotelsSnapshot.isNotEmpty ? _hotelsSnapshot.last : null,
+        );
+        _hotelsSnapshot.addAll(snap.docs);
+      } else {
+        final snap = await HotelManager.getBookingHotels(documentLimit, booking);
+        _hotelsSnapshot.addAll(snap.docs);
+      }
 
-      _hotelsSnapshot.addAll(snap.docs);
-
-      if (getHotels().length < documentLimit) _hasNext = false;
+      if (_hotelsSnapshot.length < documentLimit) _hasNext = false;
       notifyListeners();
     } catch (error) {
       _errorMessage = error.toString();

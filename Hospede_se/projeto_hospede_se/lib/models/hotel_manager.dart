@@ -11,7 +11,7 @@ class SignUpHotelException implements Exception {
 }
 
 class HotelManager extends ChangeNotifier {
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  static FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   Hotel? _hotel;
 
@@ -37,16 +37,53 @@ class HotelManager extends ChangeNotifier {
     _hotel = Hotel.fromDocument(snapshotdoc);
   }
 
-  static Future<QuerySnapshot> getFilteredHotels(int limit, String searchkey, int searchtype, {DocumentSnapshot? startAfter}) async {
+  static Future<QuerySnapshot> getFilteredHotels(int limit, String searchkey, int searchtype,
+      {DocumentSnapshot? startAfter}) async {
     if (searchtype == 1 && searchkey.isNotEmpty) {
       final QuerySnapshot snapHotels;
-      snapHotels = await FirebaseFirestore.instance.collection('hotel').where('name', arrayContains: searchkey).limit(limit).get();
+      snapHotels = await FirebaseFirestore.instance
+          .collection('hotel')
+          .where('name', arrayContains: searchkey)
+          .limit(limit)
+          .get();
       return snapHotels;
     } else {
       final QuerySnapshot snapHotels;
       snapHotels = await FirebaseFirestore.instance.collection('hotel').limit(limit).get();
       return snapHotels;
     }
+  }
+
+  static Future<QuerySnapshot> getBookingHotels(int limit, Map booking, {DocumentSnapshot? startAfter}) async {
+    String description = booking['description'].toString();
+    String flongname = booking['flongname'].toString();
+    String fshortname = booking['fshortname'].toString();
+    String slongname = booking['slongname'].toString();
+    String sshortname = booking['sshortname'].toString();
+    // booking.forEach((key, value) {
+    //   print(value.toString());
+    // });
+    QuerySnapshot snapHotels;
+    snapHotels = await firestore
+        .collection('hotel')
+        .where('city', whereIn: [flongname, fshortname, slongname, sshortname])
+        .limit(limit)
+        .get();
+    if (snapHotels.size == 0) {
+      snapHotels = await firestore
+          .collection('hotel')
+          .where('state', whereIn: [flongname, fshortname, slongname, sshortname])
+          .limit(limit)
+          .get();
+      if (snapHotels.size == 0) {
+        snapHotels = await firestore
+            .collection('hotel')
+            .where('country', whereIn: [flongname, fshortname, slongname, sshortname])
+            .limit(limit)
+            .get();
+      }
+    }
+    return snapHotels;
   }
 
   Hotel getHotel() {

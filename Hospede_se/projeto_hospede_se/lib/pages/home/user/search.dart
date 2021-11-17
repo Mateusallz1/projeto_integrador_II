@@ -1,14 +1,18 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
 import 'package:google_api_headers/google_api_headers.dart';
 import 'package:google_maps_webservice/places.dart';
+import 'package:projeto_hospede_se/helpers/map_address.dart';
 import 'package:projeto_hospede_se/helpers/validators.dart';
 import 'package:number_selection/number_selection.dart';
+import 'package:projeto_hospede_se/models/hotel.dart';
+import 'package:projeto_hospede_se/models/hotel_manager.dart';
+import 'package:projeto_hospede_se/services/hotel_service.dart';
 import 'package:projeto_hospede_se/styles/style.dart';
-
-const kGoogleApiKey = "AIzaSyCVeWR8xFrJtYK1jaCHXUXclOTIvjLxbZw";
+import 'package:provider/provider.dart';
 
 class SearchUserPage extends StatefulWidget {
   const SearchUserPage({Key? key}) : super(key: key);
@@ -18,6 +22,11 @@ class SearchUserPage extends StatefulWidget {
 }
 
 class _SearchUserPage extends State<SearchUserPage> {
+  final kGoogleApiKey = "AIzaSyCVeWR8xFrJtYK1jaCHXUXclOTIvjLxbZw";
+
+  Map _booking = {};
+  Map _searchAddress = {};
+  Map _date = {};
   final _searchkey = TextEditingController();
   final _firstdate = TextEditingController();
   final _lastdate = TextEditingController();
@@ -39,6 +48,8 @@ class _SearchUserPage extends State<SearchUserPage> {
 
       _firstdate.text = dateformat.format(start).toString();
       _lastdate.text = dateformat.format(end).toString();
+
+      _date = {'start': start, 'end': end};
     }
   }
 
@@ -79,11 +90,38 @@ class _SearchUserPage extends State<SearchUserPage> {
     final llongname = detail.result.addressComponents.last.longName;
     final lshortname = detail.result.addressComponents.last.shortName;
 
-    // ignore: avoid_print
-    print('FirstLongName: $flongname\nFirstShortName: $fshortname'
-        '\nLastLongName: $llongname\nLastShortName: $lshortname');
-
     _searchkey.text = p.description.toString();
+
+    _searchAddress = {
+      'description': p.description,
+      'flongname': flongname,
+      'fshortname': fshortname,
+      'llongname': llongname,
+      'lshortname': lshortname,
+    };
+    _searchAddress = mapAddress(_searchAddress);
+  }
+
+  bookingSearch(HotelsProvider hotelsProvider) async {
+    final _hotelsSnapshot = <DocumentSnapshot>[];
+    _booking = {
+      'description': _searchAddress['description'],
+      'flongname': _searchAddress['flongname'],
+      'fshortname': _searchAddress['flongname'],
+      'llongname': _searchAddress['llongname'],
+      'lshortname': _searchAddress['lshortname'],
+      'startdate': _date['start'],
+      'enddate': _date['end'],
+      'quantity': _quantity
+    };
+
+    // print('Funcao Booking Search');
+    // final snap = await HotelManager.getBookingHotels(15, _booking);
+    // _hotelsSnapshot.addAll(snap.docs);
+    // List<Hotel> hotels = _hotelsSnapshot.map((snap) => Hotel.fromDocument(snap)).toList();
+    // for (var h in hotels) {
+    //   print(h.name);
+    // }
   }
 
   @override
@@ -104,166 +142,170 @@ class _SearchUserPage extends State<SearchUserPage> {
                   bottomRight: Radius.circular(15),
                 ),
               ),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
-                child: Column(
-                  children: [
-                    Form(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TextFormField(
-                            readOnly: true,
-                            controller: _searchkey,
-                            style: const TextStyle(color: Colors.black),
-                            onTap: () {
-                              _handlePressButton();
-                            },
-                            validator: (search) => Validators.validateText(search!),
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              hintText: 'Para onde você está indo?',
-                              labelStyle: const TextStyle(color: Colors.white),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.green.shade800),
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(5),
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.green.shade800),
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(5),
-                                ),
-                              ),
-                              prefixIcon: Icon(
-                                Icons.location_on,
-                                color: Colors.green.shade800,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 10),
-                            child: Column(
-                              children: [
-                                TextFormField(
-                                  readOnly: true,
-                                  enabled: true,
-                                  controller: _firstdate,
-                                  style: const TextStyle(color: Colors.black),
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    hintText: 'Data Inicial',
-                                    labelStyle: const TextStyle(color: Colors.white),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.green.shade800),
-                                      borderRadius: const BorderRadius.only(
-                                        topRight: Radius.circular(5),
-                                        topLeft: Radius.circular(5),
-                                      ),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.green.shade800),
-                                      borderRadius: const BorderRadius.only(
-                                        topRight: Radius.circular(5),
-                                        topLeft: Radius.circular(5),
-                                      ),
-                                    ),
-                                    prefixIcon: Icon(
-                                      Icons.date_range,
-                                      color: Colors.green.shade800,
-                                    ),
-                                  ),
-                                  validator: (firstdate) => Validators.validateText(firstdate!),
-                                  onTap: _dateTimeRangePicker,
-                                ),
-                                TextFormField(
-                                  readOnly: true,
-                                  controller: _lastdate,
-                                  style: const TextStyle(color: Colors.black),
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    hintText: 'Data Final',
-                                    labelStyle: const TextStyle(color: Colors.white),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.green.shade800),
-                                      borderRadius: const BorderRadius.only(
-                                        bottomRight: Radius.circular(5),
-                                        bottomLeft: Radius.circular(5),
-                                      ),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.green.shade800),
-                                      borderRadius: const BorderRadius.only(
-                                        bottomRight: Radius.circular(5),
-                                        bottomLeft: Radius.circular(5),
-                                      ),
-                                    ),
-                                    prefixIcon: const Icon(
-                                      Icons.date_range,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  validator: (lastdate) => Validators.validateText(lastdate!),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 10),
-                            padding: const EdgeInsets.all(5),
-                            color: Colors.white,
-                            child: Column(
-                              children: [
-                                Text(
-                                  'Selecione a quantidade de hóspedes',
-                                  style: TextStyle(fontSize: 16, color: Colors.grey.shade700),
-                                ),
-                                Container(
-                                  width: MediaQuery.of(context).size.height * 1,
-                                  height: MediaQuery.of(context).size.height * 0.07,
-                                  margin: const EdgeInsets.only(top: 10),
-                                  child: NumberSelection(
-                                    theme: NumberSelectionTheme(
-                                        draggableCircleColor: Colors.green.shade800,
-                                        iconsColor: Colors.green.shade800,
-                                        numberColor: Colors.white,
-                                        backgroundColor: Colors.white,
-                                        outOfConstraintsColor: Colors.deepOrange),
-                                    initialValue: 1,
-                                    minValue: 1,
-                                    maxValue: 15,
-                                    direction: Axis.horizontal,
-                                    withSpring: true,
-                                    onChanged: (value) => {
-                                      _quantity.text = value.toString(),
-                                      // ignore: avoid_print
-                                      print(_quantity.text)
-                                    },
-                                    enableOnOutOfConstraintsAnimation: false,
+              child: Consumer<HotelsProvider>(
+                builder: (context, hotelsProvider, _) => Padding(
+                  padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+                  child: Column(
+                    children: [
+                      Form(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TextFormField(
+                              readOnly: true,
+                              controller: _searchkey,
+                              style: const TextStyle(color: Colors.black),
+                              onTap: () {
+                                _handlePressButton();
+                              },
+                              validator: (search) => Validators.validateText(search!),
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                hintText: 'Para onde você está indo?',
+                                labelStyle: const TextStyle(color: Colors.white),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.green.shade800),
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(5),
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 27),
-                            width: MediaQuery.of(context).size.height * 1,
-                            child: ElevatedButton(
-                                child: Text(
-                                  'Pesquisar',
-                                  style: TextStyle(fontSize: 20, color: Colors.green.shade800),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.green.shade800),
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(5),
+                                  ),
                                 ),
-                                onPressed: () {},
-                                style: elevatedButtonConfirmWhite),
-                          ),
-                        ],
+                                prefixIcon: Icon(
+                                  Icons.location_on,
+                                  color: Colors.green.shade800,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(top: 10),
+                              child: Column(
+                                children: [
+                                  TextFormField(
+                                    readOnly: true,
+                                    enabled: true,
+                                    controller: _firstdate,
+                                    style: const TextStyle(color: Colors.black),
+                                    decoration: InputDecoration(
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                      hintText: 'Data Inicial',
+                                      labelStyle: const TextStyle(color: Colors.white),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(color: Colors.green.shade800),
+                                        borderRadius: const BorderRadius.only(
+                                          topRight: Radius.circular(5),
+                                          topLeft: Radius.circular(5),
+                                        ),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(color: Colors.green.shade800),
+                                        borderRadius: const BorderRadius.only(
+                                          topRight: Radius.circular(5),
+                                          topLeft: Radius.circular(5),
+                                        ),
+                                      ),
+                                      prefixIcon: Icon(
+                                        Icons.date_range,
+                                        color: Colors.green.shade800,
+                                      ),
+                                    ),
+                                    validator: (firstdate) => Validators.validateText(firstdate!),
+                                    onTap: _dateTimeRangePicker,
+                                  ),
+                                  TextFormField(
+                                    readOnly: true,
+                                    controller: _lastdate,
+                                    style: const TextStyle(color: Colors.black),
+                                    decoration: InputDecoration(
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                      hintText: 'Data Final',
+                                      labelStyle: const TextStyle(color: Colors.white),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(color: Colors.green.shade800),
+                                        borderRadius: const BorderRadius.only(
+                                          bottomRight: Radius.circular(5),
+                                          bottomLeft: Radius.circular(5),
+                                        ),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(color: Colors.green.shade800),
+                                        borderRadius: const BorderRadius.only(
+                                          bottomRight: Radius.circular(5),
+                                          bottomLeft: Radius.circular(5),
+                                        ),
+                                      ),
+                                      prefixIcon: const Icon(
+                                        Icons.date_range,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    validator: (lastdate) => Validators.validateText(lastdate!),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(top: 10),
+                              padding: const EdgeInsets.all(5),
+                              color: Colors.white,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'Selecione a quantidade de hóspedes',
+                                    style: TextStyle(fontSize: 16, color: Colors.grey.shade700),
+                                  ),
+                                  Container(
+                                    width: MediaQuery.of(context).size.height * 1,
+                                    height: MediaQuery.of(context).size.height * 0.07,
+                                    margin: const EdgeInsets.only(top: 10),
+                                    child: NumberSelection(
+                                      theme: NumberSelectionTheme(
+                                          draggableCircleColor: Colors.green.shade800,
+                                          iconsColor: Colors.green.shade800,
+                                          numberColor: Colors.white,
+                                          backgroundColor: Colors.white,
+                                          outOfConstraintsColor: Colors.deepOrange),
+                                      initialValue: 1,
+                                      minValue: 1,
+                                      maxValue: 15,
+                                      direction: Axis.horizontal,
+                                      withSpring: true,
+                                      onChanged: (value) => {
+                                        _quantity.text = value.toString(),
+                                        // ignore: avoid_print
+                                        print(_quantity.text)
+                                      },
+                                      enableOnOutOfConstraintsAnimation: false,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(top: 27),
+                              width: MediaQuery.of(context).size.height * 1,
+                              child: ElevatedButton(
+                                  child: Text(
+                                    'Pesquisar',
+                                    style: TextStyle(fontSize: 20, color: Colors.green.shade800),
+                                  ),
+                                  onPressed: () {
+                                    bookingSearch(hotelsProvider);
+                                  },
+                                  style: elevatedButtonConfirmWhite),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

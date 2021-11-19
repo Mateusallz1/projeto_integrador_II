@@ -28,12 +28,12 @@ class _StartUserPage extends State<StartUserPage> {
         title: Text(
           "Hotéis",
           style: GoogleFonts.montserrat(
-            textStyle: TextStyle(
-              color: Colors.green.shade800,
+            textStyle: const TextStyle(
+              color: Colors.white,
             ),
           ),
         ),
-        backgroundColor: Colors.grey.shade50,
+        backgroundColor: Colors.green.shade800,
         actions: [
           IconButton(
             icon: const Icon(Icons.search),

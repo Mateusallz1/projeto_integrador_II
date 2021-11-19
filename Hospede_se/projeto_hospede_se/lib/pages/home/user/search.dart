@@ -32,6 +32,7 @@ class _SearchUserPage extends State<SearchUserPage> {
   final _firstdate = TextEditingController();
   final _lastdate = TextEditingController();
   final _quantity = TextEditingController();
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -115,7 +116,7 @@ class _SearchUserPage extends State<SearchUserPage> {
       'enddate': _date['end'],
       'quantity': _quantity
     };
-
+       
     Navigator.push(context, MaterialPageRoute(builder: (context) => BookingPage(booking: _booking)));
   }
 
@@ -143,6 +144,7 @@ class _SearchUserPage extends State<SearchUserPage> {
                   child: Column(
                     children: [
                       Form(
+                        key: formKey,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -154,28 +156,7 @@ class _SearchUserPage extends State<SearchUserPage> {
                                 _handlePressButton();
                               },
                               validator: (search) => Validators.validateText(search!),
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Colors.white,
-                                hintText: 'Para onde você está indo?',
-                                labelStyle: const TextStyle(color: Colors.white),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.green.shade800),
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(5),
-                                  ),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.green.shade800),
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(5),
-                                  ),
-                                ),
-                                prefixIcon: Icon(
-                                  Icons.location_on,
-                                  color: Colors.green.shade800,
-                                ),
-                              ),
+                              decoration: inputDecorationBooking('Para onde você está indo?'),
                             ),
                             Container(
                               margin: const EdgeInsets.only(top: 10),
@@ -186,30 +167,7 @@ class _SearchUserPage extends State<SearchUserPage> {
                                     enabled: true,
                                     controller: _firstdate,
                                     style: const TextStyle(color: Colors.black),
-                                    decoration: InputDecoration(
-                                      filled: true,
-                                      fillColor: Colors.white,
-                                      hintText: 'Data Inicial',
-                                      labelStyle: const TextStyle(color: Colors.white),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(color: Colors.green.shade800),
-                                        borderRadius: const BorderRadius.only(
-                                          topRight: Radius.circular(5),
-                                          topLeft: Radius.circular(5),
-                                        ),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(color: Colors.green.shade800),
-                                        borderRadius: const BorderRadius.only(
-                                          topRight: Radius.circular(5),
-                                          topLeft: Radius.circular(5),
-                                        ),
-                                      ),
-                                      prefixIcon: Icon(
-                                        Icons.date_range,
-                                        color: Colors.green.shade800,
-                                      ),
-                                    ),
+                                    decoration: inputDecorationBookingIcon('Data Inicial', Icons.date_range),
                                     validator: (firstdate) => Validators.validateText(firstdate!),
                                     onTap: _dateTimeRangePicker,
                                   ),
@@ -217,30 +175,7 @@ class _SearchUserPage extends State<SearchUserPage> {
                                     readOnly: true,
                                     controller: _lastdate,
                                     style: const TextStyle(color: Colors.black),
-                                    decoration: InputDecoration(
-                                      filled: true,
-                                      fillColor: Colors.white,
-                                      hintText: 'Data Final',
-                                      labelStyle: const TextStyle(color: Colors.white),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(color: Colors.green.shade800),
-                                        borderRadius: const BorderRadius.only(
-                                          bottomRight: Radius.circular(5),
-                                          bottomLeft: Radius.circular(5),
-                                        ),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(color: Colors.green.shade800),
-                                        borderRadius: const BorderRadius.only(
-                                          bottomRight: Radius.circular(5),
-                                          bottomLeft: Radius.circular(5),
-                                        ),
-                                      ),
-                                      prefixIcon: const Icon(
-                                        Icons.date_range,
-                                        color: Colors.white,
-                                      ),
-                                    ),
+                                    decoration: inputDecorationBookingIcon('Data Final', Icons.date_range),
                                     validator: (lastdate) => Validators.validateText(lastdate!),
                                   ),
                                 ],
@@ -274,8 +209,6 @@ class _SearchUserPage extends State<SearchUserPage> {
                                       withSpring: true,
                                       onChanged: (value) => {
                                         _quantity.text = value.toString(),
-                                        // ignore: avoid_print
-                                        print(_quantity.text)
                                       },
                                       enableOnOutOfConstraintsAnimation: false,
                                     ),
@@ -292,7 +225,10 @@ class _SearchUserPage extends State<SearchUserPage> {
                                     style: TextStyle(fontSize: 20, color: Colors.green.shade800),
                                   ),
                                   onPressed: () {
+                                    if (formKey.currentState!.validate()) {
+                                    formKey.currentState!.save();
                                     bookingSearch(hotelsProvider);
+                                    }                                    
                                   },
                                   style: elevatedButtonConfirmWhite),
                             ),

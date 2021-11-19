@@ -17,8 +17,9 @@ class _BookingPage extends State<BookingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
-          "Hotéis disponíveis",
+          "Hotéis Disponíveis",
           style: GoogleFonts.montserrat(
             textStyle: TextStyle(
               color: Colors.green.shade800,
@@ -33,10 +34,14 @@ class _BookingPage extends State<BookingPage> {
               const ColorScheme.light(primary: Colors.green, secondary: Colors.green, background: Colors.white),
         ),
         child: Consumer<HotelsProvider>(
-          builder: (context, hotelsProvider, _) => ListViewHotelWidget(
-            hotelsProvider: hotelsProvider,
-            typesearch: 2,
-          ),
+          builder: (context, hotelsProvider, _){
+            hotelsProvider.booking = widget.booking;
+
+            return ListViewHotelWidget(
+              hotelsProvider: hotelsProvider,
+              typesearch: 2,
+            );
+           }
         ),
       ),
     );

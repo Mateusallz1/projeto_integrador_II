@@ -20,6 +20,7 @@ class RoomPageState extends State<RoomScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.green.shade800,
         title: Text(widget.room.title.toString()),
         centerTitle: true,
       ),

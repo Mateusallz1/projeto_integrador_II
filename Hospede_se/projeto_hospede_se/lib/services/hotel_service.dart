@@ -60,8 +60,11 @@ class HotelsProvider extends ChangeNotifier {
           1,
           startAfter: _hotelsSnapshot.isNotEmpty ? _hotelsSnapshot.last : null,
         );
+        _hotelsSnapshot.clear();
         _hotelsSnapshot.addAll(snap.docs);
-      } else {
+
+      } else if (type == 2) {
+        _hotelsSnapshot.clear();
         final snap = await HotelManager.getBookingHotels(documentLimit, booking);
         _hotelsSnapshot.addAll(snap.docs);
       }

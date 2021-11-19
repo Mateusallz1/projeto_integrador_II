@@ -90,6 +90,58 @@ InputDecoration inputDecorationRadiusWhite(txt) {
   );
 }
 
+InputDecoration inputDecorationBooking(txt) {
+  return InputDecoration(
+    filled: true,
+    fillColor: Colors.white,
+    hintText: txt,
+    labelStyle: const TextStyle(color: Colors.white),
+    focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.green.shade800),
+      borderRadius: const BorderRadius.all(
+        Radius.circular(5),
+      ),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.green.shade800),
+      borderRadius: const BorderRadius.all(
+        Radius.circular(5),
+      ),
+    ),
+    prefixIcon: Icon(
+      Icons.location_on,
+      color: Colors.green.shade800,
+    ),
+  );
+}
+
+InputDecoration inputDecorationBookingIcon(txt, icon) {
+  return InputDecoration(
+    filled: true,
+    fillColor: Colors.white,
+    hintText: txt,
+    labelStyle: const TextStyle(color: Colors.white),
+    focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.green.shade800),
+      borderRadius: const BorderRadius.only(
+        topRight: Radius.circular(5),
+        topLeft: Radius.circular(5),
+      ),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.green.shade800),
+      borderRadius: const BorderRadius.only(
+        topRight: Radius.circular(5),
+        topLeft: Radius.circular(5),
+      ),
+    ),
+    prefixIcon: Icon(
+      icon,
+      color: Colors.green.shade800,
+    ),
+  );
+}
+
 InputDecoration inputDecorationSignUp(txt, icon) {
   return InputDecoration(
     labelText: txt,

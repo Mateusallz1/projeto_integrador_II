@@ -58,9 +58,9 @@ class _ListViewHotelWidgetState extends State<ListViewHotelWidget> {
                   height: 25,
                   width: 25,
                   child: CircularProgressIndicator(),
-                ),
-              ),
             ),
-        ],
-      );
+          ),
+       ),
+    ],
+  );
 }

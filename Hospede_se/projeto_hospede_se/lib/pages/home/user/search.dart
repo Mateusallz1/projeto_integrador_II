@@ -10,6 +10,7 @@ import 'package:projeto_hospede_se/helpers/validators.dart';
 import 'package:number_selection/number_selection.dart';
 import 'package:projeto_hospede_se/models/hotel.dart';
 import 'package:projeto_hospede_se/models/hotel_manager.dart';
+import 'package:projeto_hospede_se/pages/home/user/booking_page.dart';
 import 'package:projeto_hospede_se/services/hotel_service.dart';
 import 'package:projeto_hospede_se/styles/style.dart';
 import 'package:provider/provider.dart';
@@ -115,13 +116,7 @@ class _SearchUserPage extends State<SearchUserPage> {
       'quantity': _quantity
     };
 
-    // print('Funcao Booking Search');
-    // final snap = await HotelManager.getBookingHotels(15, _booking);
-    // _hotelsSnapshot.addAll(snap.docs);
-    // List<Hotel> hotels = _hotelsSnapshot.map((snap) => Hotel.fromDocument(snap)).toList();
-    // for (var h in hotels) {
-    //   print(h.name);
-    // }
+    Navigator.push(context, MaterialPageRoute(builder: (context) => BookingPage(booking: _booking)));
   }
 
   @override

@@ -4,8 +4,7 @@ import 'package:provider/provider.dart';
 
 class DrawerTile extends StatelessWidget {
   // ignore: use_key_in_widget_constructors
-  const DrawerTile(
-      {required this.icondata, required this.title, required this.page});
+  const DrawerTile({required this.icondata, required this.title, required this.page});
 
   final IconData icondata;
   final String title;

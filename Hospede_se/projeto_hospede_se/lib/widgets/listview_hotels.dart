@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_hospede_se/models/hotel.dart';
 import 'package:projeto_hospede_se/pages/components/hotel_list_tile.dart';
 import 'package:projeto_hospede_se/services/hotel_service.dart';
 
@@ -58,9 +57,9 @@ class _ListViewHotelWidgetState extends State<ListViewHotelWidget> {
                   height: 25,
                   width: 25,
                   child: CircularProgressIndicator(),
+                ),
+              ),
             ),
-          ),
-       ),
-    ],
-  );
+        ],
+      );
 }

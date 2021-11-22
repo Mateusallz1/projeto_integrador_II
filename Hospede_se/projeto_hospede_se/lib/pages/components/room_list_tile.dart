@@ -74,9 +74,7 @@ class RoomListTile extends StatelessWidget {
                                       'Inativo',
                                       style: GoogleFonts.montserrat(
                                         textStyle: TextStyle(
-                                            color: Colors.red.shade900,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold),
+                                            color: Colors.red.shade900, fontSize: 18, fontWeight: FontWeight.bold),
                                       ),
                                     ),
                             ],
@@ -132,17 +130,14 @@ class RoomListTile extends StatelessWidget {
                                 Card(
                                   elevation: 3,
                                   shape: RoundedRectangleBorder(
-                                    side: BorderSide(
-                                        color: Colors.grey.shade900, width: 2),
+                                    side: BorderSide(color: Colors.grey.shade900, width: 2),
                                     borderRadius: BorderRadius.circular(5),
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(5),
                                     child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           'Quantidade: ${room.quantity}\n'
@@ -164,18 +159,14 @@ class RoomListTile extends StatelessWidget {
                                   child: Card(
                                     elevation: 3,
                                     shape: RoundedRectangleBorder(
-                                      side: BorderSide(
-                                          color: Colors.grey.shade900,
-                                          width: 2),
+                                      side: BorderSide(color: Colors.grey.shade900, width: 2),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: Padding(
                                       padding: const EdgeInsets.all(5),
                                       child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
                                           Text(
                                             '${room.price} BRL',
@@ -183,9 +174,8 @@ class RoomListTile extends StatelessWidget {
                                             maxLines: 1,
                                             softWrap: false,
                                             style: GoogleFonts.montserrat(
-                                              textStyle: const TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold),
+                                              textStyle:
+                                                  const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                                             ),
                                           ),
                                         ],

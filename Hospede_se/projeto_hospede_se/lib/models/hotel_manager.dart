@@ -55,14 +55,11 @@ class HotelManager extends ChangeNotifier {
   }
 
   static Future<QuerySnapshot> getBookingHotels(int limit, Map booking, {DocumentSnapshot? startAfter}) async {
-    String description = booking['description'].toString();
     String flongname = booking['flongname'].toString();
     String fshortname = booking['fshortname'].toString();
     String slongname = booking['slongname'].toString();
     String sshortname = booking['sshortname'].toString();
-    // booking.forEach((key, value) {
-    //   print(value.toString());
-    // });
+
     QuerySnapshot snapHotels;
     snapHotels = await firestore
         .collection('hotel')

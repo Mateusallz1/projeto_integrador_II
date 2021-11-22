@@ -41,8 +41,7 @@ class Room {
     images.add(document['images'] as String);
   }
 
-  DocumentReference get firestoreRef =>
-      FirebaseFirestore.instance.doc('rooms/$id');
+  DocumentReference get firestoreRef => FirebaseFirestore.instance.doc('rooms/$id');
 
   void saveData() async {
     await firestoreRef.set(toMap());

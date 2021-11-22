@@ -50,8 +50,7 @@ class RoomPageState extends State<RoomScreen> {
                 disableCenter: true,
                 aspectRatio: 16 / 9,
                 autoPlayCurve: Curves.fastOutSlowIn,
-                onPageChanged: (index, reason) =>
-                    setState(() => activeIndex = index),
+                onPageChanged: (index, reason) => setState(() => activeIndex = index),
               )),
           const SizedBox(
             height: 32,
@@ -69,15 +68,13 @@ class RoomPageState extends State<RoomScreen> {
                 Text(
                   widget.room.number.toString(),
                   style: GoogleFonts.montserrat(
-                      textStyle: const TextStyle(
-                          fontSize: 35, fontWeight: FontWeight.bold)),
+                      textStyle: const TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 10),
                   child: Text(
                     widget.room.description.toString(),
-                    style: GoogleFonts.montserrat(
-                        textStyle: const TextStyle(fontSize: 20)),
+                    style: GoogleFonts.montserrat(textStyle: const TextStyle(fontSize: 20)),
                   ),
                 ),
               ],
@@ -92,9 +89,6 @@ class RoomPageState extends State<RoomScreen> {
         activeIndex: activeIndex,
         count: widget.room.images.length,
         effect: WormEffect(
-            dotColor: Colors.green.shade800,
-            activeDotColor: Colors.green.shade300,
-            dotWidth: 20,
-            dotHeight: 20),
+            dotColor: Colors.green.shade800, activeDotColor: Colors.green.shade300, dotWidth: 20, dotHeight: 20),
       );
 }

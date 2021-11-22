@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
@@ -8,8 +7,6 @@ import 'package:google_maps_webservice/places.dart';
 import 'package:projeto_hospede_se/helpers/map_address.dart';
 import 'package:projeto_hospede_se/helpers/validators.dart';
 import 'package:number_selection/number_selection.dart';
-import 'package:projeto_hospede_se/models/hotel.dart';
-import 'package:projeto_hospede_se/models/hotel_manager.dart';
 import 'package:projeto_hospede_se/pages/home/user/booking_page.dart';
 import 'package:projeto_hospede_se/services/hotel_service.dart';
 import 'package:projeto_hospede_se/styles/style.dart';
@@ -105,7 +102,6 @@ class _SearchUserPage extends State<SearchUserPage> {
   }
 
   bookingSearch(HotelsProvider hotelsProvider) async {
-    final _hotelsSnapshot = <DocumentSnapshot>[];
     _booking = {
       'description': _searchAddress['description'],
       'flongname': _searchAddress['flongname'],
@@ -116,7 +112,7 @@ class _SearchUserPage extends State<SearchUserPage> {
       'enddate': _date['end'],
       'quantity': _quantity
     };
-       
+
     Navigator.push(context, MaterialPageRoute(builder: (context) => BookingPage(booking: _booking)));
   }
 
@@ -226,9 +222,9 @@ class _SearchUserPage extends State<SearchUserPage> {
                                   ),
                                   onPressed: () {
                                     if (formKey.currentState!.validate()) {
-                                    formKey.currentState!.save();
-                                    bookingSearch(hotelsProvider);
-                                    }                                    
+                                      formKey.currentState!.save();
+                                      bookingSearch(hotelsProvider);
+                                    }
                                   },
                                   style: elevatedButtonConfirmWhite),
                             ),

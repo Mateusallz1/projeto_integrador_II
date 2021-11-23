@@ -8,7 +8,12 @@ class UserApp {
   String? password;
   String? confirmPassword;
 
-  UserApp({required this.host, required this.name, required this.email, required this.password, required this.confirmPassword});
+  UserApp(
+      {required this.host,
+      required this.name,
+      required this.email,
+      required this.password,
+      required this.confirmPassword});
 
   UserApp.fromDocument(DocumentSnapshot document) {
     id = document.id;

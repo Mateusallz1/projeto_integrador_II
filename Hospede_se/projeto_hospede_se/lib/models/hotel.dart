@@ -13,7 +13,16 @@ class Hotel {
   String? userId;
   //List<String>? images;
 
-  Hotel({required this.userId, required this.name, required this.phone, required this.address, required this.number, required this.city, required this.state, required this.country, required this.rating});
+  Hotel(
+      {required this.userId,
+      required this.name,
+      required this.phone,
+      required this.address,
+      required this.number,
+      required this.city,
+      required this.state,
+      required this.country,
+      required this.rating});
 
   Hotel.fromDocument(DocumentSnapshot document) {
     id = document.id;

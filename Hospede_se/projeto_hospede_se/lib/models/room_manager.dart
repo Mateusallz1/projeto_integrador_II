@@ -3,7 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:projeto_hospede_se/models/room.dart';
 
-
 class SignUpRoomException implements Exception {
   String message;
   SignUpRoomException(this.message);
@@ -14,11 +13,11 @@ class RoomManager extends ChangeNotifier {
     _loadAllRooms();
   }
 
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  static FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   List<Room> allRooms = [];
   List<Room> hotelRooms = [];
-  
+
   String _search = '';
 
   String get search => _search;
@@ -37,7 +36,6 @@ class RoomManager extends ChangeNotifier {
     }
     return filteredRooms;
   }
-
 
   Future<void> signUpRoom(Room _room) async {
     try {
@@ -58,11 +56,16 @@ class RoomManager extends ChangeNotifier {
   }
 
   Future<void> loadRooms(hotelId) async {
-    final QuerySnapshot snapshotdocs = await firestore
-        .collection('rooms')
-        .where('hotel_id', isEqualTo: hotelId)
-        .get();
+    // ALTERAR FUNCOES PARA RETORNAR APENAS UM SNAPSHOT
+    final QuerySnapshot snapshotdocs =
+        await firestore.collection('rooms').where('hotel_id', isEqualTo: hotelId).get();
     hotelRooms = snapshotdocs.docs.map((d) => Room.fromDocument(d)).toList();
     notifyListeners();
   }
+
+  // static Future<QuerySnapshot> loadHotelRooms(String hotelId) async {
+  //   QuerySnapshot snapRooms;
+  //   snapRooms = await firestore.collection('rooms').where('hotel_id', isEqualTo: hotelId).get();
+  //   return snapRooms;
+  // }
 }

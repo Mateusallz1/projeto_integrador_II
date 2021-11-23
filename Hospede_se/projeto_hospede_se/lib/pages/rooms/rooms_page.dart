@@ -39,9 +39,7 @@ class _RoomsPageState extends State<RoomsPage> {
           IconButton(
             icon: const Icon(Icons.search),
             onPressed: () async {
-              final search = await showDialog<String>(context: context, 
-                builder: (_) => const SearchDialogg());
-              
+              final search = await showDialog<String>(context: context, builder: (_) => const SearchDialogg());
               if (search != null) {
                 context.read<RoomManager>().search = search;
               }
@@ -63,13 +61,12 @@ class _RoomsPageState extends State<RoomsPage> {
                   color: Colors.white,
                   child: Row(
                     children: [
-                      Expanded(child: Consumer<RoomManager>( // Achar um jeito de não chamar o get 2 vezes
+                      Expanded(child: Consumer<RoomManager>(
                         builder: (_, roomManager, __) {
                           return ListView.builder(
                             itemCount: roomManager.filteredRooms.length,
                             itemBuilder: (_, index) {
-                              return RoomListTile(
-                                  roomManager.filteredRooms[index]);
+                              return RoomListTile(roomManager.filteredRooms[index]);
                             },
                           );
                         },

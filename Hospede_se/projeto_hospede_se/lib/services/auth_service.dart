@@ -37,7 +37,8 @@ class AuthService extends ChangeNotifier {
 
   Future<void> signUp(UserApp _user) async {
     try {
-      UserCredential usercredential = await auth.createUserWithEmailAndPassword(email: _user.email!, password: _user.confirmPassword!);
+      UserCredential usercredential =
+          await auth.createUserWithEmailAndPassword(email: _user.email!, password: _user.confirmPassword!);
       _user.id = usercredential.user!.uid;
       _user.saveData();
       await loadCurrentUser();
@@ -58,7 +59,8 @@ class AuthService extends ChangeNotifier {
   Future<void> loadCurrentUser() async {
     final User? currentUser = auth.currentUser;
     if (currentUser != null) {
-      DocumentSnapshot snapshotdoc = await FirebaseFirestore.instance.collection('users').doc(currentUser.uid).get();
+      DocumentSnapshot snapshotdoc =
+          await FirebaseFirestore.instance.collection('users').doc(currentUser.uid).get();
       _user = UserApp.fromDocument(snapshotdoc);
       notifyListeners();
     }
@@ -67,6 +69,10 @@ class AuthService extends ChangeNotifier {
   UserApp getUser() {
     return _user!;
   }
+
+  // bool? userIsHost() {
+  //   getUser().host == true ? true : false;
+  // }
 
   void signOut() async {
     deleteAppDir();

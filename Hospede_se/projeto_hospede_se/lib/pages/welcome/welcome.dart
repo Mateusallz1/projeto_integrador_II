@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:projeto_hospede_se/pages/login/login.dart';
-import 'package:projeto_hospede_se/pages/signup/signup.dart';
+import 'package:projeto_hospede_se/ui/pages/login/login.dart';
+import 'package:projeto_hospede_se/ui/pages/signup/signup.dart';
 import 'package:projeto_hospede_se/styles/style.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

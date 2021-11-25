@@ -30,7 +30,7 @@ var elevatedButton = ElevatedButton.styleFrom(
 
 var elevatedButtonConfirm = ElevatedButton.styleFrom(
   primary: Colors.green.shade800,
-  padding: const EdgeInsets.symmetric(vertical: 12),
+  //padding: const EdgeInsets.symmetric(vertical: 5),
   textStyle: const TextStyle(
     fontSize: 20,
   ),

@@ -1,19 +1,21 @@
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:projeto_hospede_se/helpers/firebase_errors.dart';
 import 'package:projeto_hospede_se/models/user.dart';
-import 'package:flutter/material.dart';
-import 'package:projeto_hospede_se/services/delete_cache.dart';
-
-class AuthException implements Exception {
-  String message;
-  AuthException(this.message);
-}
+import 'package:projeto_hospede_se/helpers/firebase_errors.dart';
 
 class AuthService extends ChangeNotifier {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
   UserApp? _user;
+
+  UserApp get user => _user!;
+
+  set user(UserApp user) {
+    _user = user;
+    notifyListeners();
+  }
 
   AuthService() {
     authcheck();
@@ -70,14 +72,13 @@ class AuthService extends ChangeNotifier {
     return _user!;
   }
 
-  // bool? userIsHost() {
-  //   getUser().host == true ? true : false;
-  // }
-
   void signOut() async {
-    deleteAppDir();
-    deleteCacheDir();
     await auth.signOut();
     _user = null;
   }
+}
+
+class AuthException implements Exception {
+  String message;
+  AuthException(this.message);
 }

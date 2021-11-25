@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_hospede_se/pages/signup/signup_host.dart';
-import 'package:projeto_hospede_se/pages/signup/signup_user.dart';
 import 'package:projeto_hospede_se/styles/style.dart';
+import 'package:projeto_hospede_se/ui/pages/signup/signup_host.dart';
+import 'package:projeto_hospede_se/ui/pages/signup/signup_user.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);

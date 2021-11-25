@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
 import 'package:google_api_headers/google_api_headers.dart';
 import 'package:google_maps_webservice/places.dart';
+import 'package:projeto_hospede_se/environment/environment.dart';
 import 'package:projeto_hospede_se/helpers/map_address.dart';
 import 'package:projeto_hospede_se/helpers/validators.dart';
 import 'package:number_selection/number_selection.dart';
@@ -20,8 +21,6 @@ class SearchUserPage extends StatefulWidget {
 }
 
 class _SearchUserPage extends State<SearchUserPage> {
-  final kGoogleApiKey = "AIzaSyCVeWR8xFrJtYK1jaCHXUXclOTIvjLxbZw";
-
   Map _booking = {};
   Map _searchAddress = {};
   Map _date = {};
@@ -63,11 +62,10 @@ class _SearchUserPage extends State<SearchUserPage> {
 
     final p = await PlacesAutocomplete.show(
       context: context,
-      apiKey: kGoogleApiKey,
+      apiKey: Environment.kGoogleApiKey,
       onError: onError,
       mode: Mode.overlay,
       language: 'en',
-      // components: [Component(Component.country, 'br')],
     );
 
     await displayPrediction(p, ScaffoldMessenger.of(context));
@@ -79,7 +77,7 @@ class _SearchUserPage extends State<SearchUserPage> {
     }
 
     final _places = GoogleMapsPlaces(
-      apiKey: kGoogleApiKey,
+      apiKey: Environment.kGoogleApiKey,
       apiHeaders: await const GoogleApiHeaders().getHeaders(),
     );
 

@@ -37,18 +37,37 @@ class _SignUpHostPage extends State<SignUpHostPage> {
   String? state;
   String? country;
 
-  List<GlobalKey<FormState>> formKeys = [GlobalKey<FormState>(), GlobalKey<FormState>(), GlobalKey<FormState>(), GlobalKey<FormState>()];
+  List<GlobalKey<FormState>> formKeys = [
+    GlobalKey<FormState>(),
+    GlobalKey<FormState>(),
+    GlobalKey<FormState>(),
+    GlobalKey<FormState>()
+  ];
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   void save() async {
     try {
-      await context.read<AuthService>().signUp(UserApp(host: true, name: name.text, email: email.text, password: passwd.text, confirmPassword: cpasswd.text));
+      await context.read<AuthService>().signUp(
+            UserApp(
+                host: true,
+                name: name.text,
+                email: email.text,
+                password: passwd.text,
+                confirmPassword: cpasswd.text),
+          );
 
       String? userId = context.read<AuthService>().getUser().id;
 
-      await context
-          .read<HotelManager>()
-          .signUpHotel(Hotel(userId: userId, name: nameHotel.text, phone: phone.text, address: address.text, number: number.text, city: city, state: state, country: country, rating: value.toInt()));
+      await context.read<HotelManager>().signUpHotel(Hotel(
+          userId: userId,
+          name: nameHotel.text,
+          phone: phone.text,
+          address: address.text,
+          number: number.text,
+          city: city,
+          state: state,
+          country: country,
+          rating: value.toInt()));
 
       Navigator.push(
         context,
@@ -161,7 +180,8 @@ class _SignUpHostPage extends State<SignUpHostPage> {
                       setState(() => cstep--);
                     }
                   },
-                  controlsBuilder: (BuildContext context, {VoidCallback? onStepContinue, VoidCallback? onStepCancel}) {
+                  controlsBuilder: (BuildContext context,
+                      {VoidCallback? onStepContinue, VoidCallback? onStepCancel}) {
                     final isLastStep = cstep == getSteps().length - 1;
 
                     return Row(

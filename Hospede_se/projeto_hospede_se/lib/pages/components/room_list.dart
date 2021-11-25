@@ -26,11 +26,8 @@ class _RoomListViewState extends State<RoomListView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          child: Expanded(
-            child: Card(
-              margin: const EdgeInsets.all(10),
-              elevation: 10,
-              color: Colors.white,
+          child: SingleChildScrollView(
+            child: Expanded(
               child: Row(
                 children: [
                   Expanded(child: Consumer<RoomManager>(

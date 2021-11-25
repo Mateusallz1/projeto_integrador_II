@@ -25,11 +25,7 @@ class RoomListTile extends StatelessWidget {
         );
       },
       child: Card(
-        elevation: 5,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(color: Colors.grey.shade900, width: 3),
-          borderRadius: BorderRadius.circular(10),
-        ),
+        elevation: 20,
         child: Container(
           padding: const EdgeInsets.all(5),
           child: Column(
@@ -40,7 +36,6 @@ class RoomListTile extends StatelessWidget {
                   child: Row(
                     children: [
                       Container(
-                        color: Colors.red,
                         padding: const EdgeInsets.only(left: 7),
                         width: MediaQuery.of(context).size.width * widthtitle,
                         child: Column(
@@ -55,6 +50,7 @@ class RoomListTile extends StatelessWidget {
                               style: GoogleFonts.montserrat(
                                 textStyle: const TextStyle(
                                   fontSize: 25,
+                                  fontWeight: FontWeight.bold
                                 ),
                               ),
                             ),
@@ -64,10 +60,6 @@ class RoomListTile extends StatelessWidget {
                       Expanded(
                         child: Card(
                             elevation: 5,
-                            //color: Colors.green.shade100,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
                             child: host
                                 ? Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -113,19 +105,23 @@ class RoomListTile extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Card(
-                              elevation: 0.5,
+                              elevation: 0,
                               child: Padding(
                                 padding: const EdgeInsets.all(3),
                                 child: Column(
                                   children: [
                                     Text(
-                                      room.description!,
+                                      host
+                                          ? 'Quantidade: ${room.quantity}\n'
+                                              'Capacidade: ${room.guestCount}'
+                                          : 'Capacidade: ${room.guestCount}',
                                       overflow: TextOverflow.fade,
-                                      maxLines: 3,
+                                      maxLines: 2,
                                       softWrap: true,
                                       style: GoogleFonts.montserrat(
                                         textStyle: const TextStyle(
-                                          fontSize: 16,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w500
                                         ),
                                       ),
                                     ),
@@ -136,62 +132,34 @@ class RoomListTile extends StatelessWidget {
                           ),
                           Expanded(
                             child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Card(
                                   elevation: 3,
                                   shape: RoundedRectangleBorder(
-                                    side: BorderSide(color: Colors.grey.shade900, width: 2),
-                                    borderRadius: BorderRadius.circular(5),
+                                    side: const BorderSide(color: Colors.grey, width: 2),
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(5),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          host
-                                              ? 'Quantidade: ${room.quantity}\n'
-                                                  'Capacidade: ${room.guestCount}'
-                                              : 'Capacidade: ${room.guestCount}',
+                                          'R\$ ${room.price!.toStringAsFixed(2)}',
                                           overflow: TextOverflow.fade,
-                                          maxLines: 2,
-                                          softWrap: true,
+                                          maxLines: 1,
+                                          softWrap: false,
                                           style: GoogleFonts.montserrat(
-                                            textStyle: const TextStyle(
-                                              fontSize: 15,
-                                            ),
+                                            textStyle:
+                                                const TextStyle(
+                                                  fontSize: 20, 
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.green),
                                           ),
                                         ),
                                       ],
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Card(
-                                    elevation: 3,
-                                    shape: RoundedRectangleBorder(
-                                      side: BorderSide(color: Colors.grey.shade900, width: 2),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(5),
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            '${room.price} BRL',
-                                            overflow: TextOverflow.fade,
-                                            maxLines: 1,
-                                            softWrap: false,
-                                            style: GoogleFonts.montserrat(
-                                              textStyle:
-                                                  const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
                                     ),
                                   ),
                                 ),

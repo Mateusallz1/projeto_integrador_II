@@ -68,8 +68,9 @@ class HotelsProvider extends ChangeNotifier {
         _hotelsSnapshot.addAll(snap.docs);
         // ignore: avoid_function_literals_in_foreach_calls
         _hotelsSnapshot.forEach((h) async { 
-          if (await HotelManager.hotelHaveRooms(h.id)) {
+          if (!await HotelManager.hotelHaveRooms(h.id)) {
             _hotelsSnapshot.remove(h);
+            notifyListeners();
           }
          }
         );

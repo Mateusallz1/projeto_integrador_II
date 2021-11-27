@@ -4,6 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:projeto_hospede_se/models/room.dart';
+import 'package:projeto_hospede_se/ui/styles/style.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class RoomScreen extends StatefulWidget {
@@ -60,31 +61,49 @@ class RoomPageState extends State<RoomScreen> {
                 autoPlayCurve: Curves.fastOutSlowIn,
                 onPageChanged: (index, reason) => setState(() => activeIndex = index),
               )),
-          const SizedBox(
-            height: 32,
-          ),
+              
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              buildIndicator(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: buildIndicator(),
+              ),
             ],
           ),
+
           Padding(
             padding: const EdgeInsets.only(top: 15),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  widget.room.number.toString(),
+                  widget.room.title.toString(),
                   style: GoogleFonts.montserrat(
-                      textStyle: const TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
+                      textStyle: const TextStyle(
+                        fontSize: 35, 
+                        fontWeight: FontWeight.bold)),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 10),
+                  margin: const EdgeInsets.all(10),
                   child: Text(
                     widget.room.description.toString(),
-                    style: GoogleFonts.montserrat(textStyle: const TextStyle(fontSize: 20)),
+                    style: GoogleFonts.montserrat(
+                      textStyle: const TextStyle(
+                        fontSize: 20)),
                   ),
                 ),
+                Container(
+                  margin:  const EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      iconCard(Icons.person_outlined, widget.room.quantity.toString()),
+                      iconCard(Icons.bed, widget.room.bedCount.toString()),
+                      iconCard(Icons.bathtub_outlined, widget.room.bathCount.toString()),
+                    ],
+                  )
+                )
               ],
             ),
           )
@@ -97,6 +116,9 @@ class RoomPageState extends State<RoomScreen> {
         activeIndex: activeIndex,
         count: widget.room.images.length,
         effect: WormEffect(
-            dotColor: Colors.green.shade800, activeDotColor: Colors.green.shade300, dotWidth: 20, dotHeight: 20),
+            dotColor: Colors.green.shade800, 
+            activeDotColor: Colors.green.shade300, 
+            dotWidth: 15, 
+            dotHeight: 15),
       );
 }

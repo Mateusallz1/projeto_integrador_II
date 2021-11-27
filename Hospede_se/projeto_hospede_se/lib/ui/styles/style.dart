@@ -176,3 +176,25 @@ Icon star() {
     color: Colors.amber,
   );
 }
+
+Card iconCard(icon, String) {
+  return Card(
+    elevation: 0,
+    //color: Colors.green.shade800,
+    child: Column(
+      children: [
+        Icon(
+          icon,
+          size: 50,
+          color: Colors.green.shade800,
+        ),
+        Text(String,
+        style: TextStyle(
+          fontSize: 18,
+          color: Colors.green.shade800,
+          fontWeight: FontWeight.bold,
+        ),)
+      ],
+    ),
+  );
+}

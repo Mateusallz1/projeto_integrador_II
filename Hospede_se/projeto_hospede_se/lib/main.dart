@@ -11,6 +11,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
+  ErrorWidget.builder = (FlutterErrorDetails details) {
+    return Container();
+  };
+
   runApp(
     MultiProvider(
       providers: [

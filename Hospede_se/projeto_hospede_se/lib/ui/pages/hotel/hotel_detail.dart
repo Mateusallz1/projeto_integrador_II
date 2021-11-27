@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:projeto_hospede_se/models/hotel.dart';
-import 'package:projeto_hospede_se/pages/components/room_list.dart';
+import 'package:projeto_hospede_se/ui/pages/components/room_list.dart';
 
 class HotelScreen extends StatefulWidget {
   // ignore: use_key_in_widget_constructors

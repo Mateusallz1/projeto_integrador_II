@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_hospede_se/pages/components/hotel_list_tile.dart';
+import 'package:projeto_hospede_se/ui/pages/components/hotel_list_tile.dart';
 import 'package:projeto_hospede_se/services/hotel_service.dart';
 
 class ListViewHotelWidget extends StatefulWidget {
@@ -53,10 +53,13 @@ class _ListViewHotelWidgetState extends State<ListViewHotelWidget> {
                 onTap: () {
                   widget.hotelsProvider.fetchNextHotels(widget.typesearch);
                 },
-                child: const SizedBox(
-                  height: 25,
-                  width: 25,
-                  child: CircularProgressIndicator(),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    height: 25,
+                    width: 25,
+                    child: CircularProgressIndicator(),
+                  ),
                 ),
               ),
             ),

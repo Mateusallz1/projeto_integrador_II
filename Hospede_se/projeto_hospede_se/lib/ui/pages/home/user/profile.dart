@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_hospede_se/services/auth_service.dart';
 import 'package:projeto_hospede_se/services/hotel_service.dart';
-import 'package:projeto_hospede_se/styles/style.dart';
+import 'package:projeto_hospede_se/ui/styles/style.dart';
 import 'package:projeto_hospede_se/widgets/auth_check.dart';
 import 'package:provider/provider.dart';
 
@@ -28,7 +28,6 @@ class _ProfileUserPage extends State<ProfileUserPage> {
                   onPressed: () {
                     if (auth.isLogged()) {
                       auth.signOut();
-                      //hotels.removeHotels();
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const AuthCheck()),

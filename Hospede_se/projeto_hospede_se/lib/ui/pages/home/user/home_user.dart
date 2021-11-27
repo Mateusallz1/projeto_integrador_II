@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_hospede_se/pages/home/user/home_user_bar.dart';
+import 'package:projeto_hospede_se/ui/pages/home/user/home_user_bar.dart';
 
 class HomeUserPage extends StatefulWidget {
   const HomeUserPage({Key? key}) : super(key: key);

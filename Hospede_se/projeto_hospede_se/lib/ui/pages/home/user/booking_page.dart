@@ -27,16 +27,14 @@ class _BookingPage extends State<BookingPage> {
         ),
         backgroundColor: Colors.green.shade800,
       ),
-      body: Consumer<HotelsProvider>(
-        builder: (context, hotelsProvider, _){
-          hotelsProvider.booking = widget.booking;
+      body: Consumer<HotelsProvider>(builder: (context, hotelsProvider, _) {
+        hotelsProvider.booking = widget.booking;
 
-          return ListViewHotelWidget(
-            hotelsProvider: hotelsProvider,
-            typesearch: 2,
-          );
-         }
-      ),
+        return ListViewHotelWidget(
+          hotelsProvider: hotelsProvider,
+          typesearch: 2,
+        );
+      }),
     );
   }
 }

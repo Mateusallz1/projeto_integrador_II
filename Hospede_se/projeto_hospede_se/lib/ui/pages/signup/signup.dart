@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_hospede_se/styles/style.dart';
+import 'package:projeto_hospede_se/ui/styles/style.dart';
 import 'package:projeto_hospede_se/ui/pages/signup/signup_host.dart';
 import 'package:projeto_hospede_se/ui/pages/signup/signup_user.dart';
 

@@ -85,7 +85,7 @@ class HotelManager extends ChangeNotifier {
 
   static Future<bool> hotelHaveRooms(String hotelId) async {
     QuerySnapshot snapHotels = await firestore.collection('rooms').where('hotel_id', isEqualTo: hotelId).get();
-    
+
     if (snapHotels.size == 0) {
       return false;
     }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_hospede_se/pages/home/user/home_user.dart';
-import 'package:projeto_hospede_se/pages/home/host/home_host.dart';
-import 'package:projeto_hospede_se/pages/welcome/welcome.dart';
+import 'package:projeto_hospede_se/ui/pages/home/user/home_user.dart';
+import 'package:projeto_hospede_se/ui/pages/home/host/home_host.dart';
+import 'package:projeto_hospede_se/ui/pages/welcome/welcome.dart';
 import 'package:projeto_hospede_se/services/auth_service.dart';
 import 'package:provider/provider.dart';
 

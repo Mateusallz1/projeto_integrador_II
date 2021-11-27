@@ -1,11 +1,13 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:projeto_hospede_se/helpers/validators.dart';
 import 'package:projeto_hospede_se/models/hotel_manager.dart';
 import 'package:projeto_hospede_se/models/room.dart';
 import 'package:projeto_hospede_se/models/room_manager.dart';
-import 'package:projeto_hospede_se/styles/style.dart';
+import 'package:projeto_hospede_se/ui/styles/style.dart';
 import 'package:provider/provider.dart';
+import 'package:projeto_hospede_se/ui/pages/components/image_source_sheet.dart';
 
 class RoomPage extends StatefulWidget {
   const RoomPage({Key? key}) : super(key: key);
@@ -25,28 +27,29 @@ class _RoomPageState extends State<RoomPage> {
   final guestCount = TextEditingController();
   final bedCount = TextEditingController();
   final bathCount = TextEditingController();
-  final imagePath = TextEditingController();
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  void signUpRoom() async {
+  List<String> listImages = [];
+
+  void signUpRoom(List<File> images) async {
     try {
       final hotelId = context.read<HotelManager>().getHotel().id;
-      List<String> listImages = [];
-      listImages.add(imagePath.text);
-      await context.read<RoomManager>().signUpRoom(Room(
-          hotelId: hotelId,
-          number: int.parse(number.text),
-          quantity: int.parse(quantity.text),
-          title: title.text,
-          description: description.text,
-          status: status,
-          price: double.parse(price.text),
-          guestCount: int.parse(guestCount.text),
-          bedCount: int.parse(bedCount.text),
-          bathCount: int.parse(bathCount.text),
-          images: listImages));
+      await context.read<RoomManager>().signUpRoom(
+          Room(
+              hotelId: hotelId,
+              number: int.parse(number.text),
+              quantity: int.parse(quantity.text),
+              title: title.text,
+              description: description.text,
+              status: status,
+              price: double.parse(price.text),
+              guestCount: int.parse(guestCount.text),
+              bedCount: int.parse(bedCount.text),
+              bathCount: int.parse(bathCount.text),
+              images: listImages),
+          images);
       // CARREGAR NOVAMENTE A LISTA DE QUARTOS
       Navigator.pop(context);
     } on SignUpRoomException catch (e) {
@@ -85,7 +88,7 @@ class _RoomPageState extends State<RoomPage> {
                 } else {
                   if (formKey.currentState!.validate()) {
                     formKey.currentState!.save();
-                    signUpRoom();
+                    signUpRoom(newImages);
                   }
                 }
               },
@@ -95,8 +98,7 @@ class _RoomPageState extends State<RoomPage> {
                   setState(() => cstep--);
                 }
               },
-              controlsBuilder: (BuildContext context,
-                  {VoidCallback? onStepContinue, VoidCallback? onStepCancel}) {
+              controlsBuilder: (BuildContext context, {VoidCallback? onStepContinue, VoidCallback? onStepCancel}) {
                 final isLastStep = cstep == getSteps().length - 1;
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -120,6 +122,8 @@ class _RoomPageState extends State<RoomPage> {
         ),
       );
 
+  List<File> newImages = [];
+
   List<Step> getSteps() => [
         Step(
           state: cstep > 0 ? StepState.complete : StepState.disabled,
@@ -129,20 +133,17 @@ class _RoomPageState extends State<RoomPage> {
             TextFormField(
               controller: title,
               validator: (title) => Validators.validateText(title!),
-              decoration:
-                  inputDecorationSignUp('Título', const Icon(Icons.create)),
+              decoration: inputDecorationSignUp('Título', const Icon(Icons.create)),
             ),
             TextFormField(
               controller: description,
               validator: (description) => Validators.validateText(description!),
-              decoration:
-                  inputDecorationSignUp('Descrição', const Icon(Icons.title)),
+              decoration: inputDecorationSignUp('Descrição', const Icon(Icons.title)),
             ),
             TextFormField(
               controller: number,
               validator: (number) => Validators.validateText(number!),
-              decoration:
-                  inputDecorationSignUp('Número', const Icon(Icons.short_text)),
+              decoration: inputDecorationSignUp('Número', const Icon(Icons.short_text)),
               keyboardType: TextInputType.number,
             ),
           ]),
@@ -155,22 +156,14 @@ class _RoomPageState extends State<RoomPage> {
             TextFormField(
               controller: quantity,
               validator: (quantity) => Validators.validateNumber(quantity!),
-              decoration:
-                  inputDecorationSignUp('Quantidade', const Icon(Icons.add)),
+              decoration: inputDecorationSignUp('Quantidade', const Icon(Icons.add)),
               keyboardType: TextInputType.number,
             ),
             TextFormField(
               controller: price,
               validator: (price) => Validators.validateNumber(price!),
-              decoration: inputDecorationSignUp(
-                  'Preço', const Icon(Icons.attach_money)),
+              decoration: inputDecorationSignUp('Preço', const Icon(Icons.attach_money)),
               keyboardType: TextInputType.number,
-            ),
-            TextFormField(
-              controller: imagePath,
-              validator: (imagePath) => Validators.validateText(imagePath!),
-              decoration:
-                  inputDecorationSignUp('Imagens', const Icon(Icons.image)),
             ),
           ]),
         ),
@@ -182,8 +175,7 @@ class _RoomPageState extends State<RoomPage> {
             TextFormField(
               controller: guestCount,
               validator: (guestCount) => Validators.validateNumber(guestCount!),
-              decoration:
-                  inputDecorationSignUp('Capacidade', const Icon(Icons.add)),
+              decoration: inputDecorationSignUp('Capacidade', const Icon(Icons.add)),
               keyboardType: TextInputType.number,
             ),
             TextFormField(
@@ -195,11 +187,47 @@ class _RoomPageState extends State<RoomPage> {
             TextFormField(
               controller: bathCount,
               validator: (bathCount) => Validators.validateNumber(bathCount!),
-              decoration:
-                  inputDecorationSignUp('Banheiros', const Icon(Icons.add)),
+              decoration: inputDecorationSignUp('Banheiros', const Icon(Icons.add)),
               keyboardType: TextInputType.number,
             ),
           ]),
-        )
+        ),
+        Step(
+          state: cstep > 3 ? StepState.complete : StepState.disabled,
+          isActive: cstep >= 2,
+          title: const Text('Fotos'),
+          content: Column(
+            children: [
+              Material(
+                child: IconButton(
+                  icon: const Icon(Icons.add_a_photo),
+                  color: Theme.of(context).primaryColor,
+                  iconSize: 50,
+                  onPressed: () async {
+                    await showModalBottomSheet(
+                      context: context,
+                      builder: (_) => ImageSourceSheet(
+                        onImageSelected: onImageSelected,
+                        onImagesSelected: onImagesSelected,
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
       ];
+
+  void onImageSelected(File file) {
+    newImages.add(file);
+    Navigator.pop(context);
+  }
+
+  void onImagesSelected(List<File> files) {
+    for (var i = 0; i < files.length; i++) {
+      newImages.add(files[i]);
+    }
+    Navigator.pop(context);
+  }
 }

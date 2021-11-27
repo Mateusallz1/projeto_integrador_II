@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -33,12 +35,18 @@ class RoomPageState extends State<RoomScreen> {
                         child: Stack(
                           fit: StackFit.expand,
                           children: <Widget>[
-                            Image.network(
-                              e,
-                              width: 650,
-                              height: 350,
-                              fit: BoxFit.cover,
-                            )
+                            if (e is String)
+                              Image.network(
+                                e,
+                                width: 650,
+                                height: 350,
+                                fit: BoxFit.cover,
+                              )
+                            else
+                              Image.file(
+                                e as File,
+                                fit: BoxFit.cover,
+                              ),
                           ],
                         ),
                       ))

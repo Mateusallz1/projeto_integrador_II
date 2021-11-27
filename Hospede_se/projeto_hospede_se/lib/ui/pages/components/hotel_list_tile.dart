@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:projeto_hospede_se/models/hotel.dart';
-import 'package:projeto_hospede_se/pages/hotel/hotel_detail.dart';
-import 'package:projeto_hospede_se/styles/style.dart';
+import 'package:projeto_hospede_se/ui/pages/hotel/hotel_detail.dart';
+import 'package:projeto_hospede_se/ui/styles/style.dart';
 
 class HotelListTile extends StatelessWidget {
   // ignore: use_key_in_widget_constructors

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:projeto_hospede_se/pages/home/user/notifications.dart';
-import 'package:projeto_hospede_se/pages/home/user/profile.dart';
-import 'package:projeto_hospede_se/pages/home/user/search.dart';
-import 'package:projeto_hospede_se/pages/home/user/start.dart';
+import 'package:projeto_hospede_se/ui/pages/home/user/notifications.dart';
+import 'package:projeto_hospede_se/ui/pages/home/user/profile.dart';
+import 'package:projeto_hospede_se/ui/pages/home/user/search.dart';
+import 'package:projeto_hospede_se/ui/pages/home/user/start.dart';
 
 class HomeTabBar extends StatelessWidget {
   const HomeTabBar({Key? key}) : super(key: key);

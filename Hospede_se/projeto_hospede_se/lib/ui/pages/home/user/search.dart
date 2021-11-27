@@ -8,9 +8,9 @@ import 'package:projeto_hospede_se/environment/environment.dart';
 import 'package:projeto_hospede_se/helpers/map_address.dart';
 import 'package:projeto_hospede_se/helpers/validators.dart';
 import 'package:number_selection/number_selection.dart';
-import 'package:projeto_hospede_se/pages/home/user/booking_page.dart';
+import 'package:projeto_hospede_se/ui/pages/home/user/booking_page.dart';
 import 'package:projeto_hospede_se/services/hotel_service.dart';
-import 'package:projeto_hospede_se/styles/style.dart';
+import 'package:projeto_hospede_se/ui/styles/style.dart';
 import 'package:provider/provider.dart';
 
 class SearchUserPage extends StatefulWidget {

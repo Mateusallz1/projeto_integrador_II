@@ -43,10 +43,12 @@ class HotelsProvider extends ChangeNotifier {
       final ids = filteredhotels.map((h) => h.id).toSet();
       filteredhotels.retainWhere((h) => ids.remove(h.id));
     }
+    //sleep(const Duration(seconds: 3));
     return filteredhotels;
   }
 
   Future fetchNextHotels(int type) async {
+    notifyListeners();
     if (_isFetchingHotels) return;
 
     _errorMessage = '';
@@ -67,13 +69,12 @@ class HotelsProvider extends ChangeNotifier {
         final snap = await HotelManager.getBookingHotels(documentLimit, booking);
         _hotelsSnapshot.addAll(snap.docs);
         // ignore: avoid_function_literals_in_foreach_calls
-        _hotelsSnapshot.forEach((h) async { 
+        _hotelsSnapshot.forEach((h) async {
           if (!await HotelManager.hotelHaveRooms(h.id)) {
             _hotelsSnapshot.remove(h);
             notifyListeners();
           }
-         }
-        );
+        });
       }
 
       if (_hotelsSnapshot.length < documentLimit) _hasNext = false;

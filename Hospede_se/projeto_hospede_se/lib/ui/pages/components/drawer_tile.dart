@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_hospede_se/pages/home/host/page_manager.dart';
+import 'package:projeto_hospede_se/ui/pages/home/host/page_manager.dart';
 import 'package:provider/provider.dart';
 
 class DrawerTile extends StatelessWidget {

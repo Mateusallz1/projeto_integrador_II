@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_hospede_se/models/user.dart';
 import 'package:projeto_hospede_se/services/auth_service.dart';
-import 'package:projeto_hospede_se/styles/style.dart';
+import 'package:projeto_hospede_se/ui/styles/style.dart';
 import 'package:projeto_hospede_se/helpers/validators.dart';
 import 'package:provider/provider.dart';
 

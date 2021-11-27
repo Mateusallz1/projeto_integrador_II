@@ -28,7 +28,7 @@ class _RoomsPageState extends State<RoomsPage> {
     roomManager.loadRooms(hotelManager.getHotel().id);
     return Scaffold(
       key: scaffoldKeyRooms,
-      backgroundColor: Colors.green.shade100,
+      backgroundColor: Colors.grey.shade50,
       drawer: const CustomDrawer(),
       appBar: AppBar(
         centerTitle: true,
@@ -53,7 +53,7 @@ class _RoomsPageState extends State<RoomsPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.75,
+              height: MediaQuery.of(context).size.height * 1,
               child: Expanded(
                 child: Row(
                   children: [

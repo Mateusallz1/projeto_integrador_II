@@ -14,12 +14,10 @@ class RoomListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthService auth = Provider.of<AuthService>(context);
-    bool? host = auth.getUser().host;
-    var widthtitle = host! ? 0.6 : 0.9;
+    bool? host = auth.getUser().host!;
 
     return GestureDetector(
       onTap: () {
-        //Navigator.of(context).pushNamed('/room', arguments: room);
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => RoomScreen(room)),
@@ -27,6 +25,10 @@ class RoomListTile extends StatelessWidget {
       },
       child: Card(
         elevation: 20,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: Colors.green.shade800, width: 0),
+          borderRadius: BorderRadius.circular(5),
+        ),
         child: Container(
           padding: const EdgeInsets.all(5),
           child: Column(
@@ -38,7 +40,7 @@ class RoomListTile extends StatelessWidget {
                     children: [
                       Container(
                         padding: const EdgeInsets.only(left: 7),
-                        width: MediaQuery.of(context).size.width * widthtitle,
+                        width: MediaQuery.of(context).size.width * 0.9,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,36 +57,7 @@ class RoomListTile extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Expanded(
-                        child: Card(
-                            elevation: 5,
-                            child: host
-                                ? Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      (room.status == true)
-                                          ? Text(
-                                              'Ativo',
-                                              style: GoogleFonts.montserrat(
-                                                textStyle: TextStyle(
-                                                    color: Colors.green.shade900,
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.bold),
-                                              ),
-                                            )
-                                          : Text(
-                                              'Inativo',
-                                              style: GoogleFonts.montserrat(
-                                                textStyle: TextStyle(
-                                                    color: Colors.red.shade900,
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.bold),
-                                              ),
-                                            ),
-                                    ],
-                                  )
-                                : null),
-                      ),
+                      
                     ],
                   ),
                 ),
@@ -141,13 +114,51 @@ class RoomListTile extends StatelessWidget {
                           ),
                           Expanded(
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+                                Card(
+                                  elevation: 5,
+                                  shape: RoundedRectangleBorder(
+                                  side: BorderSide(color: Colors.green.shade800, width: 2),
+                                  borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  color: room.status == true 
+                                    ? Colors.green.shade50 
+                                    : Colors.red.shade100,
+                                  child: 
+                                  Padding(padding: const EdgeInsets.all(10),
+                                  child: host
+                                      ? Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          (room.status == true)
+                                          ? Text(
+                                              'Ativo',
+                                              style: GoogleFonts.montserrat(
+                                                textStyle: TextStyle(
+                                                    color: Colors.green.shade900,
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.bold),
+                                              ),
+                                            )
+                                          : Text(
+                                              'Inativo',
+                                              style: GoogleFonts.montserrat(
+                                                textStyle: TextStyle(
+                                                    color: Colors.red.shade900,
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.bold),
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      : null),
+                                      ),
                                 Card(
                                   elevation: 3,
                                   shape: RoundedRectangleBorder(
-                                    side: const BorderSide(color: Colors.grey, width: 2),
-                                    borderRadius: BorderRadius.circular(10),
+                                    side: BorderSide(color: Colors.green.shade800, width: 2),
+                                    borderRadius: BorderRadius.circular(5),
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(5),
@@ -161,8 +172,10 @@ class RoomListTile extends StatelessWidget {
                                           maxLines: 1,
                                           softWrap: false,
                                           style: GoogleFonts.montserrat(
-                                            textStyle: const TextStyle(
-                                                fontSize: 20, fontWeight: FontWeight.bold, color: Colors.green),
+                                            textStyle: TextStyle(
+                                                fontSize: 20, 
+                                                fontWeight: FontWeight.bold, 
+                                                color: Colors.green.shade800),
                                           ),
                                         ),
                                       ],

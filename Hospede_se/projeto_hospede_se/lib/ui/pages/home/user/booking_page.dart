@@ -27,7 +27,7 @@ class _BookingPage extends State<BookingPage> {
         ),
         backgroundColor: Colors.green.shade800,
       ),
-      body: Consumer<HotelsProvider>(builder: (context, hotelsProvider, _) {
+      body: Consumer<HotelsProvider>(builder: (_, hotelsProvider, __) {
         hotelsProvider.booking = widget.booking;
 
         return ListViewHotelWidget(

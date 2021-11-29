@@ -54,9 +54,11 @@ class Room {
     }
   }
 
-  DocumentReference get firestoreRef => FirebaseFirestore.instance.doc('rooms/$id');
+  DocumentReference get firestoreRef =>
+      FirebaseFirestore.instance.doc('rooms/$id');
 
-  firebase_storage.FirebaseStorage storage = firebase_storage.FirebaseStorage.instance;
+  firebase_storage.FirebaseStorage storage =
+      firebase_storage.FirebaseStorage.instance;
 
   void saveData() async {
     await firestoreRef.set(toMap());
@@ -65,17 +67,21 @@ class Room {
   final List<String> updateImages = [];
 
   Future<void> storageImages(List<File> newImages) async {
-    firebase_storage.Reference storagerefence =
-        firebase_storage.FirebaseStorage.instance.ref().child('rooms').child(id!);
+    firebase_storage.Reference storagerefence = firebase_storage
+        .FirebaseStorage.instance
+        .ref()
+        .child('rooms')
+        .child(id!);
 
     for (var i = 0; i < newImages.length; i++) {
       File file = newImages[i];
       if (images.contains(file.path)) {
         updateImages.add(file.path);
       } else {
-        final firebase_storage.Reference reference = storagerefence.child(const Uuid().v1());
-        final firebase_storage.TaskSnapshot snapshot = await reference.putFile(file);
-        print(snapshot);
+        final firebase_storage.Reference reference =
+            storagerefence.child(const Uuid().v1());
+        final firebase_storage.TaskSnapshot snapshot =
+            await reference.putFile(file);
         final String url = await snapshot.ref.getDownloadURL();
         updateImages.add(url);
       }

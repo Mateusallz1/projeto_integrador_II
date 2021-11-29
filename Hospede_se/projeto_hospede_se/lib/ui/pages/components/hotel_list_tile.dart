@@ -63,7 +63,7 @@ class HotelListTile extends StatelessWidget {
                     children: [
                       AspectRatio(
                         aspectRatio: 1.2,
-                        child: Image.network('https://www.ahstatic.com/photos/9399_ho_00_p_1024x768.jpg'),
+                        child: Image.network(hotel.images.first),
                       ),
                       Expanded(
                         child: Column(
@@ -76,10 +76,13 @@ class HotelListTile extends StatelessWidget {
                                   child: Column(
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.only(left: 5, bottom: 5),
+                                        padding: const EdgeInsets.only(
+                                            left: 5, bottom: 5),
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [starsRating(hotel.rating)],
                                         ),
                                       ),
@@ -100,8 +103,10 @@ class HotelListTile extends StatelessWidget {
                                             maxLines: 3,
                                             softWrap: true,
                                             style: GoogleFonts.montserrat(
-                                                textStyle:
-                                                    const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                                                textStyle: const TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.w600)),
                                           ),
                                         ],
                                       ),

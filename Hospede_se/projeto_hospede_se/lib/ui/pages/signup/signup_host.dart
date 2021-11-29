@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:projeto_hospede_se/ui/pages/components/image_source_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:csc_picker/csc_picker.dart';
 import 'package:projeto_hospede_se/models/user.dart';
@@ -45,7 +48,9 @@ class _SignUpHostPage extends State<SignUpHostPage> {
   ];
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  void save() async {
+  List<String> listImages = [];
+
+  void save(List<File> images) async {
     try {
       await context.read<AuthService>().signUp(
             UserApp(
@@ -58,16 +63,19 @@ class _SignUpHostPage extends State<SignUpHostPage> {
 
       String? userId = context.read<AuthService>().getUser().id;
 
-      await context.read<HotelManager>().signUpHotel(Hotel(
-          userId: userId,
-          name: nameHotel.text,
-          phone: phone.text,
-          address: address.text,
-          number: number.text,
-          city: city,
-          state: state,
-          country: country,
-          rating: value.toInt()));
+      await context.read<HotelManager>().signUpHotel(
+          Hotel(
+              userId: userId,
+              name: nameHotel.text,
+              phone: phone.text,
+              address: address.text,
+              number: number.text,
+              city: city,
+              state: state,
+              country: country,
+              rating: value.toInt(),
+              images: listImages),
+          images);
 
       Navigator.push(
         context,
@@ -98,7 +106,8 @@ class _SignUpHostPage extends State<SignUpHostPage> {
     await displayPrediction(p, ScaffoldMessenger.of(context));
   }
 
-  Future<void> displayPrediction(Prediction? p, ScaffoldMessengerState messengerState) async {
+  Future<void> displayPrediction(
+      Prediction? p, ScaffoldMessengerState messengerState) async {
     if (p == null) {
       return;
     }
@@ -129,7 +138,8 @@ class _SignUpHostPage extends State<SignUpHostPage> {
         key: scaffoldKey,
         body: Theme(
           data: Theme.of(context).copyWith(
-            colorScheme: ColorScheme.light(primary: Colors.green.shade800, background: Colors.white),
+            colorScheme: ColorScheme.light(
+                primary: Colors.green.shade800, background: Colors.white),
           ),
           child: SingleChildScrollView(
             child: Column(
@@ -143,7 +153,8 @@ class _SignUpHostPage extends State<SignUpHostPage> {
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        icon: Icon(Icons.arrow_back, color: Colors.green.shade800),
+                        icon: Icon(Icons.arrow_back,
+                            color: Colors.green.shade800),
                       ),
                     ],
                   ),
@@ -170,7 +181,7 @@ class _SignUpHostPage extends State<SignUpHostPage> {
                       if (!isLastStep) {
                         setState(() => cstep++);
                       } else {
-                        save();
+                        save(newImages);
                       }
                     }
                   },
@@ -181,22 +192,29 @@ class _SignUpHostPage extends State<SignUpHostPage> {
                     }
                   },
                   controlsBuilder: (BuildContext context,
-                      {VoidCallback? onStepContinue, VoidCallback? onStepCancel}) {
+                      {VoidCallback? onStepContinue,
+                      VoidCallback? onStepCancel}) {
                     final isLastStep = cstep == getSteps().length - 1;
 
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         if (cstep != 0)
-                          ElevatedButton(
-                            onPressed: onStepCancel,
-                            child: const Text('Voltar'),
+                          SizedBox(
+                            width: 100,
+                            child: ElevatedButton(
+                              onPressed: onStepCancel,
+                              child: const Text('Voltar'),
+                              style: elevatedButton,
+                            ),
+                          ),
+                        SizedBox(
+                          width: 100,
+                          child: ElevatedButton(
+                            onPressed: onStepContinue,
+                            child: Text(isLastStep ? 'Confirmar' : 'Próximo'),
                             style: elevatedButton,
                           ),
-                        ElevatedButton(
-                          onPressed: onStepContinue,
-                          child: Text(isLastStep ? 'Confirmar' : 'Próximo'),
-                          style: elevatedButton,
                         ),
                       ],
                     );
@@ -207,6 +225,9 @@ class _SignUpHostPage extends State<SignUpHostPage> {
           ),
         ),
       );
+
+  List<File> newImages = [];
+
   List<Step> getSteps() => [
         Step(
           state: cstep > 0 ? StepState.complete : StepState.disabled,
@@ -219,25 +240,30 @@ class _SignUpHostPage extends State<SignUpHostPage> {
                 TextFormField(
                   controller: name,
                   validator: (name) => Validators.validateName(name!),
-                  decoration: inputDecorationSignUp('Nome Completo', const Icon(Icons.person)),
+                  decoration: inputDecorationSignUp(
+                      'Nome Completo', const Icon(Icons.person)),
                 ),
                 TextFormField(
                   controller: email,
                   validator: (email) => Validators.validateEmail(email!),
-                  decoration: inputDecorationSignUp('Email', const Icon(Icons.email)),
+                  decoration:
+                      inputDecorationSignUp('Email', const Icon(Icons.email)),
                   keyboardType: TextInputType.emailAddress,
                 ),
                 TextFormField(
                   controller: passwd,
                   obscureText: true,
                   validator: (passwd) => Validators.validatePassword(passwd!),
-                  decoration: inputDecorationSignUp('Senha', const Icon(Icons.password)),
+                  decoration: inputDecorationSignUp(
+                      'Senha', const Icon(Icons.password)),
                 ),
                 TextFormField(
                   controller: cpasswd,
                   obscureText: true,
-                  validator: (cpasswd) => Validators.comparePassword(passwd.text, cpasswd!),
-                  decoration: inputDecorationSignUp('Confirmar Senha', const Icon(Icons.password_sharp)),
+                  validator: (cpasswd) =>
+                      Validators.comparePassword(passwd.text, cpasswd!),
+                  decoration: inputDecorationSignUp(
+                      'Confirmar Senha', const Icon(Icons.password_sharp)),
                 ),
               ],
             ),
@@ -254,14 +280,34 @@ class _SignUpHostPage extends State<SignUpHostPage> {
                 TextFormField(
                   controller: nameHotel,
                   validator: (name) => Validators.validateName(name!),
-                  decoration: inputDecorationSignUp('Nome Hotel', const Icon(Icons.business)),
+                  decoration: inputDecorationSignUp(
+                      'Nome Hotel', const Icon(Icons.business)),
                   keyboardType: TextInputType.name,
                 ),
                 TextFormField(
                   controller: phone,
                   validator: (phone) => Validators.validatePhone(phone!),
-                  decoration: inputDecorationSignUp('Fone', const Icon(Icons.call)),
+                  decoration:
+                      inputDecorationSignUp('Fone', const Icon(Icons.call)),
                   keyboardType: TextInputType.number,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Material(
+                    child: IconButton(
+                      icon: const Icon(Icons.add_a_photo),
+                      color: Theme.of(context).primaryColor,
+                      iconSize: 50,
+                      onPressed: () async {
+                        await showModalBottomSheet(
+                          context: context,
+                          builder: (_) => ImageSourceSheet(
+                            onImagesSelected: onImagesSelected,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -334,7 +380,8 @@ class _SignUpHostPage extends State<SignUpHostPage> {
                         Radius.circular(10),
                       ),
                       color: Colors.white70,
-                      border: Border.all(color: Colors.green.shade800, width: 2),
+                      border:
+                          Border.all(color: Colors.green.shade800, width: 2),
                     ),
                     disabledDropdownDecoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(
@@ -362,20 +409,23 @@ class _SignUpHostPage extends State<SignUpHostPage> {
                     },
                   ),
                 ),
-                const Text('\n\nPor favor, especifique ao máximo seu endereço\n'),
+                const Text(
+                    '\n\nPor favor, especifique ao máximo seu endereço\n'),
                 TextFormField(
                   controller: address,
                   enabled: city == null ? false : true,
                   readOnly: true,
                   onTap: _handlePressButton,
                   validator: (address) => Validators.validateText(address!),
-                  decoration: inputDecorationSignUp('Endereço', const Icon(Icons.password)),
+                  decoration: inputDecorationSignUp(
+                      'Endereço', const Icon(Icons.password)),
                 ),
                 TextFormField(
                   controller: number,
                   enabled: city == null ? false : true,
                   validator: (number) => Validators.validateText(number!),
-                  decoration: inputDecorationSignUp('Número', const Icon(Icons.markunread_mailbox)),
+                  decoration: inputDecorationSignUp(
+                      'Número', const Icon(Icons.markunread_mailbox)),
                   keyboardType: TextInputType.number,
                 ),
               ],
@@ -383,4 +433,11 @@ class _SignUpHostPage extends State<SignUpHostPage> {
           ),
         ),
       ];
+
+  void onImagesSelected(List<File> files) {
+    for (var i = 0; i < files.length; i++) {
+      newImages.add(files[i]);
+    }
+    Navigator.pop(context);
+  }
 }

@@ -51,13 +51,13 @@ class RoomListTile extends StatelessWidget {
                               maxLines: 1,
                               softWrap: false,
                               style: GoogleFonts.montserrat(
-                                textStyle: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                                textStyle: const TextStyle(
+                                    fontSize: 25, fontWeight: FontWeight.bold),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      
                     ],
                   ),
                 ),
@@ -80,7 +80,11 @@ class RoomListTile extends StatelessWidget {
                               },
                             );
                           }
-                          return Image.network(room.images.first);
+                          return Image.network(
+                            room.images.first,
+                            width: 50,
+                            height: 40,
+                          );
                         },
                       ),
                     ),
@@ -91,7 +95,7 @@ class RoomListTile extends StatelessWidget {
                           Expanded(
                             child: Card(
                               elevation: 0,
-                              child: Padding(
+                              child: SingleChildScrollView(
                                 padding: const EdgeInsets.all(3),
                                 child: Column(
                                   children: [
@@ -104,7 +108,9 @@ class RoomListTile extends StatelessWidget {
                                       maxLines: 2,
                                       softWrap: true,
                                       style: GoogleFonts.montserrat(
-                                        textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                                        textStyle: const TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w500),
                                       ),
                                     ),
                                   ],
@@ -119,52 +125,66 @@ class RoomListTile extends StatelessWidget {
                                 Card(
                                   elevation: 5,
                                   shape: RoundedRectangleBorder(
-                                  side: BorderSide(color: Colors.green.shade800, width: 2),
-                                  borderRadius: BorderRadius.circular(5),
+                                    side: BorderSide(
+                                        color: Colors.green.shade800, width: 2),
+                                    borderRadius: BorderRadius.circular(5),
                                   ),
-                                  color: room.status == true 
-                                    ? Colors.green.shade50 
-                                    : Colors.red.shade100,
-                                  child: 
-                                  Padding(padding: const EdgeInsets.all(10),
-                                  child: host
-                                      ? Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          (room.status == true)
-                                          ? Text(
-                                              'Ativo',
-                                              style: GoogleFonts.montserrat(
-                                                textStyle: TextStyle(
-                                                    color: Colors.green.shade900,
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.bold),
-                                              ),
+                                  color: room.status == true
+                                      ? Colors.green.shade50
+                                      : Colors.red.shade100,
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(10),
+                                      child: host
+                                          ? Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                (room.status == true)
+                                                    ? Text(
+                                                        'Ativo',
+                                                        style: GoogleFonts
+                                                            .montserrat(
+                                                          textStyle: TextStyle(
+                                                              color: Colors
+                                                                  .green
+                                                                  .shade900,
+                                                              fontSize: 20,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                      )
+                                                    : Text(
+                                                        'Inativo',
+                                                        style: GoogleFonts
+                                                            .montserrat(
+                                                          textStyle: TextStyle(
+                                                              color: Colors
+                                                                  .red.shade900,
+                                                              fontSize: 20,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                      ),
+                                              ],
                                             )
-                                          : Text(
-                                              'Inativo',
-                                              style: GoogleFonts.montserrat(
-                                                textStyle: TextStyle(
-                                                    color: Colors.red.shade900,
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.bold),
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      : null),
-                                      ),
+                                          : null),
+                                ),
                                 Card(
                                   elevation: 3,
                                   shape: RoundedRectangleBorder(
-                                    side: BorderSide(color: Colors.green.shade800, width: 2),
+                                    side: BorderSide(
+                                        color: Colors.green.shade800, width: 2),
                                     borderRadius: BorderRadius.circular(5),
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(5),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         Text(
                                           'R\$ ${room.price!.toStringAsFixed(2)}',
@@ -173,8 +193,8 @@ class RoomListTile extends StatelessWidget {
                                           softWrap: false,
                                           style: GoogleFonts.montserrat(
                                             textStyle: TextStyle(
-                                                fontSize: 20, 
-                                                fontWeight: FontWeight.bold, 
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
                                                 color: Colors.green.shade800),
                                           ),
                                         ),

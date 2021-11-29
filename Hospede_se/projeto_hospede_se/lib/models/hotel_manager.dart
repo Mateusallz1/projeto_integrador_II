@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print
 
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,11 +17,12 @@ class HotelManager extends ChangeNotifier {
 
   Hotel? _hotel;
 
-  Future<void> signUpHotel(Hotel _hotel) async {
+  Future<void> signUpHotel(Hotel _hotel, List<File> images) async {
     try {
       final hotelRef = FirebaseFirestore.instance.collection('hotel').doc();
       final hotelId = hotelRef.id;
       _hotel.id = hotelId;
+      _hotel.storageImages(images);
       _hotel.saveData();
     } on FirebaseException catch (e) {
       throw SignUpHotelException(e.message!);
@@ -28,16 +31,22 @@ class HotelManager extends ChangeNotifier {
 
   Future<void> loadHotel(userId) async {
     String hotelId = '';
-    await firestore.collection('hotel').where('user', isEqualTo: userId).get().then((QuerySnapshot query) {
+    await firestore
+        .collection('hotel')
+        .where('user', isEqualTo: userId)
+        .get()
+        .then((QuerySnapshot query) {
       for (var doc in query.docs) {
         hotelId = doc.id;
       }
     });
-    DocumentSnapshot snapshotdoc = await FirebaseFirestore.instance.collection('hotel').doc(hotelId).get();
+    DocumentSnapshot snapshotdoc =
+        await FirebaseFirestore.instance.collection('hotel').doc(hotelId).get();
     _hotel = Hotel.fromDocument(snapshotdoc);
   }
 
-  static Future<QuerySnapshot> getFilteredHotels(int limit, String searchkey, int searchtype,
+  static Future<QuerySnapshot> getFilteredHotels(
+      int limit, String searchkey, int searchtype,
       {DocumentSnapshot? startAfter}) async {
     if (searchtype == 1 && searchkey.isNotEmpty) {
       final QuerySnapshot snapHotels;
@@ -49,12 +58,16 @@ class HotelManager extends ChangeNotifier {
       return snapHotels;
     } else {
       final QuerySnapshot snapHotels;
-      snapHotels = await FirebaseFirestore.instance.collection('hotel').limit(limit).get();
+      snapHotels = await FirebaseFirestore.instance
+          .collection('hotel')
+          .limit(limit)
+          .get();
       return snapHotels;
     }
   }
 
-  static Future<QuerySnapshot> getBookingHotels(int limit, Map booking, {DocumentSnapshot? startAfter}) async {
+  static Future<QuerySnapshot> getBookingHotels(int limit, Map booking,
+      {DocumentSnapshot? startAfter}) async {
     String flongname = booking['flongname'].toString();
     String fshortname = booking['fshortname'].toString();
     String slongname = booking['slongname'].toString();
@@ -69,13 +82,15 @@ class HotelManager extends ChangeNotifier {
     if (snapHotels.size == 0) {
       snapHotels = await firestore
           .collection('hotel')
-          .where('state', whereIn: [flongname, fshortname, slongname, sshortname])
+          .where('state',
+              whereIn: [flongname, fshortname, slongname, sshortname])
           .limit(limit)
           .get();
       if (snapHotels.size == 0) {
         snapHotels = await firestore
             .collection('hotel')
-            .where('country', whereIn: [flongname, fshortname, slongname, sshortname])
+            .where('country',
+                whereIn: [flongname, fshortname, slongname, sshortname])
             .limit(limit)
             .get();
       }
@@ -84,7 +99,10 @@ class HotelManager extends ChangeNotifier {
   }
 
   static Future<bool> hotelHaveRooms(String hotelId) async {
-    QuerySnapshot snapHotels = await firestore.collection('rooms').where('hotel_id', isEqualTo: hotelId).get();
+    QuerySnapshot snapHotels = await firestore
+        .collection('rooms')
+        .where('hotel_id', isEqualTo: hotelId)
+        .get();
 
     if (snapHotels.size == 0) {
       return false;

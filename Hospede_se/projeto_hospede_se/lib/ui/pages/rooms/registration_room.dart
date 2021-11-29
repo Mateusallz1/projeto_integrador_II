@@ -98,21 +98,28 @@ class _RoomPageState extends State<RoomPage> {
                   setState(() => cstep--);
                 }
               },
-              controlsBuilder: (BuildContext context, {VoidCallback? onStepContinue, VoidCallback? onStepCancel}) {
+              controlsBuilder: (BuildContext context,
+                  {VoidCallback? onStepContinue, VoidCallback? onStepCancel}) {
                 final isLastStep = cstep == getSteps().length - 1;
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     if (cstep != 0)
-                      ElevatedButton(
-                        onPressed: onStepCancel,
-                        child: const Text('Voltar'),
+                      SizedBox(
+                        width: 100,
+                        child: ElevatedButton(
+                          onPressed: onStepCancel,
+                          child: const Text('Voltar'),
+                          style: elevatedButton,
+                        ),
+                      ),
+                    SizedBox(
+                      width: 100,
+                      child: ElevatedButton(
+                        onPressed: onStepContinue,
+                        child: Text(isLastStep ? 'Confirmar' : 'Próximo'),
                         style: elevatedButton,
                       ),
-                    ElevatedButton(
-                      onPressed: onStepContinue,
-                      child: Text(isLastStep ? 'Confirmar' : 'Próximo'),
-                      style: elevatedButton,
                     ),
                   ],
                 );
@@ -133,17 +140,20 @@ class _RoomPageState extends State<RoomPage> {
             TextFormField(
               controller: title,
               validator: (title) => Validators.validateText(title!),
-              decoration: inputDecorationSignUp('Título', const Icon(Icons.create)),
+              decoration:
+                  inputDecorationSignUp('Título', const Icon(Icons.create)),
             ),
             TextFormField(
               controller: description,
               validator: (description) => Validators.validateText(description!),
-              decoration: inputDecorationSignUp('Descrição', const Icon(Icons.title)),
+              decoration:
+                  inputDecorationSignUp('Descrição', const Icon(Icons.title)),
             ),
             TextFormField(
               controller: number,
               validator: (number) => Validators.validateText(number!),
-              decoration: inputDecorationSignUp('Número', const Icon(Icons.short_text)),
+              decoration:
+                  inputDecorationSignUp('Número', const Icon(Icons.short_text)),
               keyboardType: TextInputType.number,
             ),
           ]),
@@ -156,13 +166,15 @@ class _RoomPageState extends State<RoomPage> {
             TextFormField(
               controller: quantity,
               validator: (quantity) => Validators.validateNumber(quantity!),
-              decoration: inputDecorationSignUp('Quantidade', const Icon(Icons.add)),
+              decoration:
+                  inputDecorationSignUp('Quantidade', const Icon(Icons.add)),
               keyboardType: TextInputType.number,
             ),
             TextFormField(
               controller: price,
               validator: (price) => Validators.validateNumber(price!),
-              decoration: inputDecorationSignUp('Preço', const Icon(Icons.attach_money)),
+              decoration: inputDecorationSignUp(
+                  'Preço', const Icon(Icons.attach_money)),
               keyboardType: TextInputType.number,
             ),
           ]),
@@ -175,7 +187,8 @@ class _RoomPageState extends State<RoomPage> {
             TextFormField(
               controller: guestCount,
               validator: (guestCount) => Validators.validateNumber(guestCount!),
-              decoration: inputDecorationSignUp('Capacidade', const Icon(Icons.add)),
+              decoration:
+                  inputDecorationSignUp('Capacidade', const Icon(Icons.add)),
               keyboardType: TextInputType.number,
             ),
             TextFormField(
@@ -187,7 +200,8 @@ class _RoomPageState extends State<RoomPage> {
             TextFormField(
               controller: bathCount,
               validator: (bathCount) => Validators.validateNumber(bathCount!),
-              decoration: inputDecorationSignUp('Banheiros', const Icon(Icons.add)),
+              decoration:
+                  inputDecorationSignUp('Banheiros', const Icon(Icons.add)),
               keyboardType: TextInputType.number,
             ),
           ]),
@@ -207,7 +221,6 @@ class _RoomPageState extends State<RoomPage> {
                     await showModalBottomSheet(
                       context: context,
                       builder: (_) => ImageSourceSheet(
-                        onImageSelected: onImageSelected,
                         onImagesSelected: onImagesSelected,
                       ),
                     );
@@ -218,11 +231,6 @@ class _RoomPageState extends State<RoomPage> {
           ),
         ),
       ];
-
-  void onImageSelected(File file) {
-    newImages.add(file);
-    Navigator.pop(context);
-  }
 
   void onImagesSelected(List<File> files) {
     for (var i = 0; i < files.length; i++) {

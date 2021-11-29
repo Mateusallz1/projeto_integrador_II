@@ -4,7 +4,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:projeto_hospede_se/models/room.dart';
+import 'package:projeto_hospede_se/services/auth_service.dart';
+import 'package:projeto_hospede_se/ui/pages/rooms/edit_room.dart';
 import 'package:projeto_hospede_se/ui/styles/style.dart';
+import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class RoomScreen extends StatefulWidget {
@@ -21,47 +24,71 @@ class RoomPageState extends State<RoomScreen> {
 
   @override
   Widget build(BuildContext context) {
+    AuthService auth = Provider.of<AuthService>(context);
+    bool? host = auth.getUser().host!;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green.shade800,
         title: Text(widget.room.title.toString()),
         centerTitle: true,
+        actions: <Widget>[
+          Builder(
+            builder: (context) {
+              if (host) {
+                return IconButton(
+                  icon: const Icon(Icons.edit),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EditRoomPage(
+                                  room: widget.room,
+                                )));
+                  },
+                );
+              } else {
+                return Container();
+              }
+            },
+          )
+        ],
       ),
       body: ListView(
         children: [
           CarouselSlider(
-              items: widget.room.images
-                  .map((e) => ClipRRect(
-                        borderRadius: BorderRadius.circular(6),
-                        child: Stack(
-                          fit: StackFit.expand,
-                          children: <Widget>[
-                            if (e is String)
-                              Image.network(
-                                e,
-                                width: 650,
-                                height: 350,
-                                fit: BoxFit.cover,
-                              )
-                            else
-                              Image.file(
-                                e as File,
-                                fit: BoxFit.cover,
-                              ),
-                          ],
-                        ),
-                      ))
-                  .toList(),
-              options: CarouselOptions(
-                initialPage: 0,
-                autoPlay: true,
-                enableInfiniteScroll: false,
-                disableCenter: true,
-                aspectRatio: 16 / 9,
-                autoPlayCurve: Curves.fastOutSlowIn,
-                onPageChanged: (index, reason) => setState(() => activeIndex = index),
-              )),
-              
+            items: widget.room.images
+                .map((e) => ClipRRect(
+                      borderRadius: BorderRadius.circular(6),
+                      child: Stack(
+                        fit: StackFit.expand,
+                        children: <Widget>[
+                          if (e is String)
+                            Image.network(
+                              e,
+                              width: 650,
+                              height: 350,
+                              fit: BoxFit.cover,
+                            )
+                          else
+                            Image.file(
+                              e as File,
+                              fit: BoxFit.cover,
+                            ),
+                        ],
+                      ),
+                    ))
+                .toList(),
+            options: CarouselOptions(
+              initialPage: 0,
+              autoPlay: true,
+              enableInfiniteScroll: false,
+              disableCenter: true,
+              aspectRatio: 16 / 9,
+              autoPlayCurve: Curves.fastOutSlowIn,
+              onPageChanged: (index, reason) =>
+                  setState(() => activeIndex = index),
+            ),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -71,7 +98,6 @@ class RoomPageState extends State<RoomScreen> {
               ),
             ],
           ),
-
           Padding(
             padding: const EdgeInsets.only(top: 15),
             child: Column(
@@ -81,29 +107,28 @@ class RoomPageState extends State<RoomScreen> {
                   widget.room.title.toString(),
                   style: GoogleFonts.montserrat(
                       textStyle: const TextStyle(
-                        fontSize: 35, 
-                        fontWeight: FontWeight.bold)),
+                          fontSize: 35, fontWeight: FontWeight.bold)),
                 ),
                 Container(
                   margin: const EdgeInsets.all(10),
                   child: Text(
                     widget.room.description.toString(),
                     style: GoogleFonts.montserrat(
-                      textStyle: const TextStyle(
-                        fontSize: 20)),
+                        textStyle: const TextStyle(fontSize: 20)),
                   ),
                 ),
                 Container(
-                  margin:  const EdgeInsets.all(10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      iconCard(Icons.person_outlined, widget.room.quantity.toString()),
-                      iconCard(Icons.bed, widget.room.bedCount.toString()),
-                      iconCard(Icons.bathtub_outlined, widget.room.bathCount.toString()),
-                    ],
-                  )
-                )
+                    margin: const EdgeInsets.all(10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        iconCard(Icons.person_outlined,
+                            widget.room.guestCount.toString()),
+                        iconCard(Icons.bed, widget.room.bedCount.toString()),
+                        iconCard(Icons.bathtub_outlined,
+                            widget.room.bathCount.toString()),
+                      ],
+                    ))
               ],
             ),
           )
@@ -116,9 +141,9 @@ class RoomPageState extends State<RoomScreen> {
         activeIndex: activeIndex,
         count: widget.room.images.length,
         effect: WormEffect(
-            dotColor: Colors.green.shade800, 
-            activeDotColor: Colors.green.shade300, 
-            dotWidth: 15, 
+            dotColor: Colors.green.shade800,
+            activeDotColor: Colors.green.shade300,
+            dotWidth: 15,
             dotHeight: 15),
       );
 }

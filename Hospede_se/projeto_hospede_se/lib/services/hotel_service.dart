@@ -27,7 +27,6 @@ class HotelsProvider extends ChangeNotifier {
 
   set booking(Map value) {
     _booking = value;
-    notifyListeners();
   }
 
   set search(String value) {
@@ -36,19 +35,20 @@ class HotelsProvider extends ChangeNotifier {
   }
 
   List<Hotel> getHotels() {
-    List<Hotel> hotels = _hotelsSnapshot.map((snap) => Hotel.fromDocument(snap)).toList();
+    List<Hotel> hotels =
+        _hotelsSnapshot.map((snap) => Hotel.fromDocument(snap)).toList();
     List<Hotel> filteredhotels = [];
-    filteredhotels.addAll(hotels.where((h) => h.name!.toLowerCase().contains(search.toLowerCase())));
+    filteredhotels.addAll(hotels
+        .where((h) => h.name!.toLowerCase().contains(search.toLowerCase())));
     if (search.isNotEmpty) {
       final ids = filteredhotels.map((h) => h.id).toSet();
       filteredhotels.retainWhere((h) => ids.remove(h.id));
     }
-    //sleep(const Duration(seconds: 3));
+    notifyListeners();
     return filteredhotels;
   }
 
   Future fetchNextHotels(int type) async {
-    notifyListeners();
     if (_isFetchingHotels) return;
 
     _errorMessage = '';
@@ -66,7 +66,8 @@ class HotelsProvider extends ChangeNotifier {
         _hotelsSnapshot.addAll(snap.docs);
       } else if (type == 2) {
         _hotelsSnapshot.clear();
-        final snap = await HotelManager.getBookingHotels(documentLimit, booking);
+        final snap =
+            await HotelManager.getBookingHotels(documentLimit, booking);
         _hotelsSnapshot.addAll(snap.docs);
         // ignore: avoid_function_literals_in_foreach_calls
         _hotelsSnapshot.forEach((h) async {

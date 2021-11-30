@@ -54,4 +54,11 @@ class Validators {
     }
     return null;
   }
+
+  static String? validateImage(List<dynamic> images) {
+    if (images.isEmpty) {
+      return 'Insira pelo menos uma Imagem';
+    }
+    return null;
+  }
 }

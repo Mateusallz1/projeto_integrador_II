@@ -106,15 +106,17 @@ class RoomPageState extends State<RoomScreen> {
                 Text(
                   widget.room.title.toString(),
                   style: GoogleFonts.montserrat(
-                      textStyle: const TextStyle(
-                          fontSize: 35, fontWeight: FontWeight.bold)),
+                    textStyle: const TextStyle(
+                        fontSize: 35, fontWeight: FontWeight.bold),
+                  ),
                 ),
                 Container(
                   margin: const EdgeInsets.all(10),
                   child: Text(
                     widget.room.description.toString(),
                     style: GoogleFonts.montserrat(
-                        textStyle: const TextStyle(fontSize: 20)),
+                      textStyle: const TextStyle(fontSize: 20),
+                    ),
                   ),
                 ),
                 Container(

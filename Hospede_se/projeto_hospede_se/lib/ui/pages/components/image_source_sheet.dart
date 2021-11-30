@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:cross_file/cross_file.dart';
 
 class ImageSourceSheet extends StatelessWidget {
@@ -12,6 +13,26 @@ class ImageSourceSheet extends StatelessWidget {
   final Function onImagesSelected;
 
   final ImagePicker picker = ImagePicker();
+
+  Future<void> editImage(List<File> path, BuildContext context) async {
+    List<File> listCroppedsFiles = [];
+
+    for (var i = 0; i < path.length; i++) {
+      final File? croppedFile = await ImageCropper.cropImage(
+        sourcePath: path[i].path,
+        aspectRatio: const CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
+        androidUiSettings: AndroidUiSettings(
+          toolbarTitle: 'Editar Imagem',
+          toolbarColor: Colors.green.shade800,
+          toolbarWidgetColor: Colors.white,
+          backgroundColor: Colors.white,
+        ),
+      );
+      listCroppedsFiles.add(croppedFile!);
+    }
+
+    onImagesSelected(listCroppedsFiles);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +53,7 @@ class ImageSourceSheet extends StatelessWidget {
               for (var i = 0; i < images!.length; i++) {
                 listImages.add(File(images[i].path));
               }
-              onImagesSelected(listImages);
+              editImage(listImages, context);
             },
             child: Row(
               children: const [

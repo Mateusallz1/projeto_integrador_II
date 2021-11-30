@@ -58,6 +58,7 @@ dependencies:
   number_selection: ^1.0.0
   package_info_plus_web: ^1.0.4
   image_picker: ^0.8.4+4
+  image_cropper: ^1.4.1
   cross_file: ^0.3.2
   uuid: ^3.0.5
   firebase_app_check: ^0.0.3

@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:projeto_hospede_se/helpers/validators.dart';
 import 'package:projeto_hospede_se/models/room.dart';
 import 'package:projeto_hospede_se/ui/pages/components/images_form.dart';
-import 'package:projeto_hospede_se/ui/styles/style.dart';
 
 class EditRoomPage extends StatefulWidget {
   EditRoomPage({Key? key, required this.room}) : super(key: key);
@@ -40,7 +39,6 @@ class _EditRoomPageState extends State<EditRoomPage> {
                     initialValue: widget.room.title,
                     decoration: const InputDecoration(
                       hintText: 'Título',
-                      border: InputBorder.none,
                     ),
                     style: GoogleFonts.montserrat(
                       textStyle: const TextStyle(
@@ -53,9 +51,7 @@ class _EditRoomPageState extends State<EditRoomPage> {
                     maxLines: 4,
                     validator: (description) =>
                         Validators.validateText(description!),
-                    decoration: const InputDecoration(
-                      border: InputBorder.none,
-                    ),
+                    decoration: const InputDecoration(),
                     style: GoogleFonts.montserrat(
                       textStyle: const TextStyle(fontSize: 20),
                     ),
@@ -72,7 +68,6 @@ class _EditRoomPageState extends State<EditRoomPage> {
                     validator: (number) => Validators.validateText(number!),
                     decoration: const InputDecoration(
                       hintText: 'Número',
-                      border: InputBorder.none,
                     ),
                     keyboardType: TextInputType.number,
                     style: GoogleFonts.montserrat(
@@ -84,7 +79,6 @@ class _EditRoomPageState extends State<EditRoomPage> {
                     validator: (guestCount) =>
                         Validators.validateNumber(guestCount!),
                     decoration: const InputDecoration(
-                      border: InputBorder.none,
                       icon: Icon(
                         Icons.person_outline,
                         size: 40,
@@ -97,16 +91,26 @@ class _EditRoomPageState extends State<EditRoomPage> {
                     initialValue: widget.room.bedCount.toString(),
                     validator: (bedCount) =>
                         Validators.validateNumber(bedCount!),
-                    decoration:
-                        inputDecorationSignUp('Camas', const Icon(Icons.add)),
+                    decoration: const InputDecoration(
+                      icon: Icon(
+                        Icons.bed,
+                        size: 40,
+                        color: Colors.green,
+                      ),
+                    ),
                     keyboardType: TextInputType.number,
                   ),
                   TextFormField(
                     initialValue: widget.room.bathCount.toString(),
                     validator: (bathCount) =>
                         Validators.validateNumber(bathCount!),
-                    decoration: inputDecorationSignUp(
-                        'Banheiros', const Icon(Icons.add)),
+                    decoration: const InputDecoration(
+                      icon: Icon(
+                        Icons.bathtub_outlined,
+                        size: 40,
+                        color: Colors.green,
+                      ),
+                    ),
                     keyboardType: TextInputType.number,
                   ),
                   ElevatedButton(

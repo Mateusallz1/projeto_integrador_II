@@ -60,7 +60,7 @@ class _ImagesFormState extends State<ImagesForm> {
                                   state.value!.remove(e);
                                   state.didChange(state.value);
                                 },
-                                icon: const Icon(Icons.remove_circle_sharp),
+                                icon: const Icon(Icons.delete),
                                 color: Colors.red.shade600,
                                 iconSize: 40,
                               ),

@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'dart:io';
 
 import 'package:uuid/uuid.dart';
@@ -19,6 +17,8 @@ class Room {
   int? bedCount;
   int? bathCount;
   List<String> images = [];
+
+  List<dynamic>? newImages;
 
   Room(
       {required this.hotelId,
@@ -64,7 +64,51 @@ class Room {
     await firestoreRef.set(toMap());
   }
 
+  Future<void> updateRoom() async {
+    final Map<String, dynamic> data = {
+      'title': title,
+      'description': description,
+      'number': number,
+      'guest_count': guestCount,
+      'bed_count': bedCount,
+      'bath_count': bathCount,
+    };
+    firestoreRef.update(data);
+    storageUpdateImages();
+  }
+
   final List<String> updateImages = [];
+
+  Future<void> storageUpdateImages() async {
+    firebase_storage.Reference storagerefence = firebase_storage
+        .FirebaseStorage.instance
+        .ref()
+        .child('rooms')
+        .child(id!);
+
+    for (final newImage in newImages!) {
+      if (images.contains(newImage)) {
+        updateImages.add(newImage as String);
+      } else {
+        firebase_storage.Reference reference =
+            storagerefence.child(const Uuid().v1());
+        firebase_storage.TaskSnapshot snapshot =
+            await reference.putFile(newImage as File);
+        final String url = await snapshot.ref.getDownloadURL();
+        updateImages.add(url);
+      }
+    }
+
+    for (final image in images) {
+      if (!newImages!.contains(image)) {
+        // ignore: await_only_futures
+        final ref = await storage.refFromURL(image);
+        await ref.delete();
+      }
+    }
+
+    await firestoreRef.update({'images': updateImages});
+  }
 
   Future<void> storageImages(List<File> newImages) async {
     firebase_storage.Reference storagerefence = firebase_storage
@@ -87,6 +131,21 @@ class Room {
       }
     }
     await firestoreRef.update({'images': updateImages});
+  }
+
+  Room clone() {
+    return Room(
+        bathCount: bathCount,
+        bedCount: bedCount,
+        description: description,
+        guestCount: guestCount,
+        hotelId: hotelId,
+        images: List.from(images),
+        number: number,
+        price: price,
+        quantity: quantity,
+        status: status,
+        title: title);
   }
 
   Map<String, dynamic> toMap() {

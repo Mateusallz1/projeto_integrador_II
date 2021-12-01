@@ -5,7 +5,23 @@ import 'package:projeto_hospede_se/models/room.dart';
 import 'package:projeto_hospede_se/ui/pages/components/images_form.dart';
 
 class EditRoomPage extends StatefulWidget {
-  EditRoomPage({Key? key, required this.room}) : super(key: key);
+  // ignore: unnecessary_null_comparison
+  EditRoomPage({Key? key, required Room r})
+      : room = r != null
+            ? r.clone()
+            : Room(
+                bathCount: null,
+                bedCount: null,
+                description: '',
+                guestCount: null,
+                hotelId: '',
+                images: [],
+                number: null,
+                price: null,
+                quantity: null,
+                status: null,
+                title: ''),
+        super(key: key);
 
   final Room room;
 
@@ -45,6 +61,7 @@ class _EditRoomPageState extends State<EditRoomPage> {
                           fontSize: 25, fontWeight: FontWeight.bold),
                     ),
                     validator: (title) => Validators.validateText(title!),
+                    onSaved: (title) => widget.room.title = title,
                   ),
                   TextFormField(
                     initialValue: widget.room.description,
@@ -55,6 +72,8 @@ class _EditRoomPageState extends State<EditRoomPage> {
                     style: GoogleFonts.montserrat(
                       textStyle: const TextStyle(fontSize: 20),
                     ),
+                    onSaved: (description) =>
+                        widget.room.description = description,
                   ),
                   Text(
                     'Número',
@@ -65,7 +84,7 @@ class _EditRoomPageState extends State<EditRoomPage> {
                   ),
                   TextFormField(
                     initialValue: widget.room.number.toString(),
-                    validator: (number) => Validators.validateText(number!),
+                    validator: (number) => Validators.validateNumber(number!),
                     decoration: const InputDecoration(
                       hintText: 'Número',
                     ),
@@ -73,6 +92,7 @@ class _EditRoomPageState extends State<EditRoomPage> {
                     style: GoogleFonts.montserrat(
                       textStyle: const TextStyle(fontSize: 20),
                     ),
+                    onSaved: (number) => widget.room.number = number as int?,
                   ),
                   TextFormField(
                     initialValue: widget.room.guestCount.toString(),
@@ -86,6 +106,8 @@ class _EditRoomPageState extends State<EditRoomPage> {
                       ),
                     ),
                     keyboardType: TextInputType.number,
+                    onSaved: (guestCount) =>
+                        widget.room.guestCount = guestCount as int?,
                   ),
                   TextFormField(
                     initialValue: widget.room.bedCount.toString(),
@@ -99,6 +121,8 @@ class _EditRoomPageState extends State<EditRoomPage> {
                       ),
                     ),
                     keyboardType: TextInputType.number,
+                    onSaved: (bedCount) =>
+                        widget.room.bedCount = bedCount as int?,
                   ),
                   TextFormField(
                     initialValue: widget.room.bathCount.toString(),
@@ -112,16 +136,27 @@ class _EditRoomPageState extends State<EditRoomPage> {
                       ),
                     ),
                     keyboardType: TextInputType.number,
+                    onSaved: (bathCount) =>
+                        widget.room.bathCount = bathCount as int?,
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (widget.formKey.currentState!.validate()) {
-                        print('válido!');
-                      }
-                    },
-                    child: const Text('Salvar'),
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.green.shade800,
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    height: 44,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (widget.formKey.currentState!.validate()) {
+                          widget.formKey.currentState!.save();
+                          widget.room.updateRoom();
+                        }
+                      },
+                      child: const Text('Salvar'),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.green.shade800,
+                        textStyle: GoogleFonts.montserrat(
+                          textStyle: const TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w700),
+                        ),
+                      ),
                     ),
                   )
                 ],

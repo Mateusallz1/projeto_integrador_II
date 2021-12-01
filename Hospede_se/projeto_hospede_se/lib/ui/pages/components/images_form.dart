@@ -22,8 +22,9 @@ class _ImagesFormState extends State<ImagesForm> {
   @override
   Widget build(BuildContext context) {
     return FormField<List<dynamic>>(
-      initialValue: widget.room.images,
+      initialValue: List.from(widget.room.images),
       validator: (images) => Validators.validateImage(images!),
+      onSaved: (images) => widget.room.newImages = images,
       builder: (state) {
         void onImagesSelected(File file) {
           state.value!.add(file);

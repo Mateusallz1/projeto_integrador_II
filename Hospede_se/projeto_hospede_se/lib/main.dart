@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_hospede_se/app.dart';
+import 'package:projeto_hospede_se/models/booking_manager.dart';
 import 'package:projeto_hospede_se/models/hotel_manager.dart';
 import 'package:projeto_hospede_se/models/room_manager.dart';
 import 'package:projeto_hospede_se/services/auth_service.dart';
@@ -28,6 +29,10 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (context) => RoomManager(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider(
+          create: (context) => BookingManager(),
           lazy: false,
         ),
         ChangeNotifierProvider(

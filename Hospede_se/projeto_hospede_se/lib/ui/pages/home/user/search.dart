@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
@@ -8,6 +9,10 @@ import 'package:projeto_hospede_se/environment/environment.dart';
 import 'package:projeto_hospede_se/helpers/map_address.dart';
 import 'package:projeto_hospede_se/helpers/validators.dart';
 import 'package:number_selection/number_selection.dart';
+import 'package:projeto_hospede_se/models/booking.dart';
+import 'package:projeto_hospede_se/models/booking_manager.dart';
+import 'package:projeto_hospede_se/models/enum_booking.dart';
+import 'package:projeto_hospede_se/services/auth_service.dart';
 import 'package:projeto_hospede_se/ui/pages/home/user/booking_page.dart';
 import 'package:projeto_hospede_se/services/hotel_service.dart';
 import 'package:projeto_hospede_se/ui/styles/style.dart';
@@ -21,13 +26,13 @@ class SearchUserPage extends StatefulWidget {
 }
 
 class _SearchUserPage extends State<SearchUserPage> {
-  Map _booking = {};
+  //Map _booking = {};
   Map _searchAddress = {};
   Map _date = {};
   final _searchkey = TextEditingController();
   final _firstdate = TextEditingController();
   final _lastdate = TextEditingController();
-  final _quantity = TextEditingController();
+  int _quantity = 1;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -100,18 +105,23 @@ class _SearchUserPage extends State<SearchUserPage> {
   }
 
   bookingSearch(HotelsProvider hotelsProvider) async {
-    _booking = {
-      'description': _searchAddress['description'],
-      'flongname': _searchAddress['flongname'],
-      'fshortname': _searchAddress['flongname'],
-      'llongname': _searchAddress['llongname'],
-      'lshortname': _searchAddress['lshortname'],
-      'startdate': _date['start'],
-      'enddate': _date['end'],
-      'quantity': _quantity
-    };
+    // _booking = {
+    //   'description': _searchAddress['description'],
+    //   'flongname': _searchAddress['flongname'],
+    //   'fshortname': _searchAddress['flongname'],
+    //   'llongname': _searchAddress['llongname'],
+    //   'lshortname': _searchAddress['lshortname'],
+    //   'startdate': _date['start'],
+    //   'enddate': _date['end'],
+    //   'quantity': _quantity
+    // };
+    final userId = context.read<AuthService>().getUser().id;
 
-    Navigator.push(context, MaterialPageRoute(builder: (context) => BookingPage(booking: _booking)));
+    BookingManager().booking =
+        Booking(userId: userId, startdate: _date['start'], enddate: _date['end'], quantity: _quantity);
+
+    BookingManager.addBooking();
+    //Navigator.push(context, MaterialPageRoute(builder: (context) => BookingPage(booking: _booking)));
   }
 
   @override
@@ -202,7 +212,7 @@ class _SearchUserPage extends State<SearchUserPage> {
                                       direction: Axis.horizontal,
                                       withSpring: true,
                                       onChanged: (value) => {
-                                        _quantity.text = value.toString(),
+                                        _quantity = value,
                                       },
                                       enableOnOutOfConstraintsAnimation: false,
                                     ),
@@ -221,6 +231,7 @@ class _SearchUserPage extends State<SearchUserPage> {
                                   onPressed: () {
                                     if (formKey.currentState!.validate()) {
                                       formKey.currentState!.save();
+
                                       bookingSearch(hotelsProvider);
                                     }
                                   },

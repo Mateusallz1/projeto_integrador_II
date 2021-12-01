@@ -177,10 +177,10 @@ Icon star() {
   );
 }
 
-Card iconCard(icon, String) {
+Card iconCard(IconData icon, String txt) {
   return Card(
     elevation: 0,
-    //color: Colors.green.shade800,
+    color: Colors.grey.shade50,
     child: Column(
       children: [
         Icon(
@@ -188,12 +188,13 @@ Card iconCard(icon, String) {
           size: 50,
           color: Colors.green.shade800,
         ),
-        Text(String,
-        style: TextStyle(
-          fontSize: 18,
-          color: Colors.green.shade800,
-          fontWeight: FontWeight.bold,
-        ),)
+        Text(
+          txt,
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        )
       ],
     ),
   );

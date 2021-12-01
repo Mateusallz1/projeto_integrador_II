@@ -39,11 +39,13 @@ class RoomPageState extends State<RoomScreen> {
                   icon: const Icon(Icons.edit),
                   onPressed: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => EditRoomPage(
-                                  room: widget.room,
-                                )));
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditRoomPage(
+                          room: widget.room,
+                        ),
+                      ),
+                    );
                   },
                 );
               } else {
@@ -85,8 +87,7 @@ class RoomPageState extends State<RoomScreen> {
               disableCenter: true,
               aspectRatio: 16 / 9,
               autoPlayCurve: Curves.fastOutSlowIn,
-              onPageChanged: (index, reason) =>
-                  setState(() => activeIndex = index),
+              onPageChanged: (index, reason) => setState(() => activeIndex = index),
             ),
           ),
           Row(
@@ -106,8 +107,7 @@ class RoomPageState extends State<RoomScreen> {
                 Text(
                   widget.room.title.toString(),
                   style: GoogleFonts.montserrat(
-                    textStyle: const TextStyle(
-                        fontSize: 35, fontWeight: FontWeight.bold),
+                    textStyle: const TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Container(
@@ -120,20 +120,30 @@ class RoomPageState extends State<RoomScreen> {
                   ),
                 ),
                 Container(
-                    margin: const EdgeInsets.all(10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        iconCard(Icons.person_outlined,
-                            widget.room.guestCount.toString()),
-                        iconCard(Icons.bed, widget.room.bedCount.toString()),
-                        iconCard(Icons.bathtub_outlined,
-                            widget.room.bathCount.toString()),
-                      ],
-                    ))
+                  margin: const EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      iconCard(Icons.person_outlined, widget.room.guestCount.toString()),
+                      iconCard(Icons.bed, widget.room.bedCount.toString()),
+                      iconCard(Icons.bathtub_outlined, widget.room.bathCount.toString()),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 27),
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: ElevatedButton(
+                      child: const Text(
+                        'Reservar',
+                        style: TextStyle(fontSize: 20, color: Colors.white),
+                      ),
+                      onPressed: () {},
+                      style: elevatedButtonConfirm),
+                ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
@@ -143,9 +153,6 @@ class RoomPageState extends State<RoomScreen> {
         activeIndex: activeIndex,
         count: widget.room.images.length,
         effect: WormEffect(
-            dotColor: Colors.green.shade800,
-            activeDotColor: Colors.green.shade300,
-            dotWidth: 15,
-            dotHeight: 15),
+            dotColor: Colors.green.shade800, activeDotColor: Colors.green.shade300, dotWidth: 15, dotHeight: 15),
       );
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 var titleTextBlack = const TextStyle(
   fontSize: 30,
@@ -151,15 +152,15 @@ InputDecoration inputDecorationSignUp(txt, icon) {
   );
 }
 
-Row starsRating(int qtd, double sizeicon) {
-  var starAmber = Icon(
+Row starsRating(qtd) {
+  var starAmber = const Icon(
     Icons.star,
-    size: sizeicon,
+    size: 25,
     color: Colors.amber,
   );
-  var starGrey = Icon(
+  var starGrey = const Icon(
     Icons.star,
-    size: sizeicon,
+    size: 25,
     color: Colors.grey,
   );
   return Row(
@@ -197,5 +198,81 @@ Card iconCard(IconData icon, String txt) {
         )
       ],
     ),
+  );
+}
+
+Card cardBookin(String txt) {
+  return Card(
+    elevation: 3,
+    shape: RoundedRectangleBorder(
+      side: BorderSide(
+          color: Colors.green.shade800, width: 2),
+      borderRadius: BorderRadius.circular(5),
+    ),
+    child: Padding(
+      padding: const EdgeInsets.all(5),
+      child: Column(
+        mainAxisAlignment:
+            MainAxisAlignment.center,
+        crossAxisAlignment:
+            CrossAxisAlignment.center,
+        children: [
+          Text(
+            'R\$ ${txt}',
+            overflow: TextOverflow.fade,
+            maxLines: 1,
+            softWrap: false,
+            style: GoogleFonts.montserrat(
+              textStyle: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green.shade800),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+Card cardStatus(bool status, bool host) {
+  return Card(
+    elevation: 5,
+    shape: RoundedRectangleBorder(
+      side: BorderSide(
+          color: Colors.green.shade800, width: 2),
+      borderRadius: BorderRadius.circular(5),
+    ),
+    color: status == true
+        ? Colors.green.shade50
+        : Colors.red.shade100,
+    child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: host
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  (status == true)
+                  ? Text(
+                      'Ativo',
+                      style: GoogleFonts.montserrat(
+                        textStyle: TextStyle(
+                            color: Colors.green.shade900,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    )
+                  : Text(
+                      'Inativo',
+                      style: GoogleFonts.montserrat(
+                        textStyle: TextStyle(
+                            color: Colors.red.shade900,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                ],
+              )
+            : null),
   );
 }

@@ -92,7 +92,7 @@ class _StartPageState extends State<StartPage> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: 5, bottom: 5),
-                        child: starsRating(hotel.rating!.toInt(), 35),
+                        child: starsRating(hotel.rating!.toInt(), /* 35 */),
                       ),
                     ],
                   ),

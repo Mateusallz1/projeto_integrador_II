@@ -4,6 +4,7 @@ import 'package:projeto_hospede_se/models/room.dart';
 import 'package:projeto_hospede_se/models/room_manager.dart';
 import 'package:projeto_hospede_se/ui/pages/rooms/room_detail.dart';
 import 'package:projeto_hospede_se/services/auth_service.dart';
+import 'package:projeto_hospede_se/ui/styles/style.dart';
 import 'package:provider/provider.dart';
 
 class RoomListTile extends StatelessWidget {
@@ -116,93 +117,26 @@ class RoomListTile extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Card(
-                                  elevation: 5,
-                                  shape: RoundedRectangleBorder(
-                                    side: BorderSide(
-                                        color: Colors.green.shade800, width: 2),
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  color: room.status == true
-                                      ? Colors.green.shade50
-                                      : Colors.red.shade100,
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(10),
-                                      child: host
-                                          ? Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                (room.status == true)
-                                                    ? Text(
-                                                        'Ativo',
-                                                        style: GoogleFonts
-                                                            .montserrat(
-                                                          textStyle: TextStyle(
-                                                              color: Colors
-                                                                  .green
-                                                                  .shade900,
-                                                              fontSize: 20,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        ),
-                                                      )
-                                                    : Text(
-                                                        'Inativo',
-                                                        style: GoogleFonts
-                                                            .montserrat(
-                                                          textStyle: TextStyle(
-                                                              color: Colors
-                                                                  .red.shade900,
-                                                              fontSize: 20,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        ),
-                                                      ),
-                                              ],
-                                            )
-                                          : null),
-                                ),
-                                Card(
-                                  elevation: 3,
-                                  shape: RoundedRectangleBorder(
-                                    side: BorderSide(
-                                        color: Colors.green.shade800, width: 2),
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(5),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          'R\$ ${room.price!.toStringAsFixed(2)}',
-                                          overflow: TextOverflow.fade,
-                                          maxLines: 1,
-                                          softWrap: false,
-                                          style: GoogleFonts.montserrat(
-                                            textStyle: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.green.shade800),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
+                          if (host)
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  cardStatus(room.status!, host),
+                                  cardBookin(room.price!.toStringAsFixed(2))
+                                ],
+                              ),
                             ),
-                          ),
+                            
+                          if (!host)
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  cardBookin(room.price!.toStringAsFixed(2))
+                                ],
+                              ),
+                            ),
                         ],
                       ),
                     ),

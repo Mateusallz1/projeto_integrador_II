@@ -58,7 +58,8 @@ class HotelPageState extends State<HotelScreen> {
                 disableCenter: true,
                 aspectRatio: 16 / 9,
                 autoPlayCurve: Curves.fastOutSlowIn,
-                onPageChanged: (index, reason) => setState(() => activeIndex = index),
+                onPageChanged: (index, reason) =>
+                    setState(() => activeIndex = index),
               ),
             ),
             Row(
@@ -72,7 +73,7 @@ class HotelPageState extends State<HotelScreen> {
             ),
             SizedBox(
               width: MediaQuery.of(context).size.height * 1,
-              height: MediaQuery.of(context).size.height * 0.55,
+              height: MediaQuery.of(context).size.height * 0.35,
               child: Padding(
                 padding: const EdgeInsets.only(top: 15),
                 child: Column(
@@ -80,13 +81,15 @@ class HotelPageState extends State<HotelScreen> {
                     Text(
                       widget.hotel.name.toString(),
                       style: GoogleFonts.montserrat(
-                          textStyle: const TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
+                          textStyle: const TextStyle(
+                              fontSize: 35, fontWeight: FontWeight.bold)),
                     ),
                     Container(
                       margin: const EdgeInsets.all(10),
                       child: Text(
                         widget.hotel.address.toString(),
-                        style: GoogleFonts.montserrat(textStyle: const TextStyle(fontSize: 20)),
+                        style: GoogleFonts.montserrat(
+                            textStyle: const TextStyle(fontSize: 20)),
                       ),
                     ),
                   ],
@@ -101,7 +104,8 @@ class HotelPageState extends State<HotelScreen> {
                   child: Text(
                     'Quartos Disponíveis',
                     style: GoogleFonts.montserrat(
-                        textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                        textStyle: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold)),
                   ),
                 ),
               ],
@@ -117,6 +121,9 @@ class HotelPageState extends State<HotelScreen> {
         activeIndex: activeIndex,
         count: widget.hotel.images.length,
         effect: WormEffect(
-            dotColor: Colors.green.shade800, activeDotColor: Colors.green.shade300, dotWidth: 15, dotHeight: 15),
+            dotColor: Colors.green.shade800,
+            activeDotColor: Colors.green.shade300,
+            dotWidth: 15,
+            dotHeight: 15),
       );
 }

@@ -31,8 +31,9 @@ class ImageSourceSheet extends StatelessWidget {
       listCroppedsFiles.add(croppedFile!);
     }
     for (var i = 0; i < listCroppedsFiles.length; i++) {
-      onImagesSelected(listCroppedsFiles[i]);
+      await onImagesSelected(listCroppedsFiles[i]);
     }
+    Navigator.pop(context);
   }
 
   @override

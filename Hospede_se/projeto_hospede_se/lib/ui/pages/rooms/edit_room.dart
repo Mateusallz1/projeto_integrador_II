@@ -52,7 +52,9 @@ class _EditRoomPageState extends State<EditRoomPage> {
           key: widget.formKey,
           child: ListView(
             children: <Widget>[
-              ImagesForm(room: widget.room),
+              ImagesForm(
+                room: widget.room,
+              ),
               Padding(
                 padding: const EdgeInsets.only(
                     left: 16, right: 16, bottom: 8, top: 8),

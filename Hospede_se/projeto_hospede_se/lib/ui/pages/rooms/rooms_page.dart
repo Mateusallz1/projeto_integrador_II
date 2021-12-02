@@ -38,7 +38,8 @@ class _RoomsPageState extends State<RoomsPage> {
           IconButton(
             icon: const Icon(Icons.search),
             onPressed: () async {
-              final search = await showDialog<String>(context: context, builder: (_) => const SearchDialogg());
+              final search = await showDialog<String>(
+                  context: context, builder: (_) => const SearchDialogg());
 
               if (search != null) {
                 context.read<RoomManager>().search = search;

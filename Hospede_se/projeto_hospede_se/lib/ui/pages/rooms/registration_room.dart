@@ -5,6 +5,7 @@ import 'package:projeto_hospede_se/helpers/validators.dart';
 import 'package:projeto_hospede_se/models/hotel_manager.dart';
 import 'package:projeto_hospede_se/models/room.dart';
 import 'package:projeto_hospede_se/models/room_manager.dart';
+import 'package:projeto_hospede_se/ui/pages/rooms/rooms_page.dart';
 import 'package:projeto_hospede_se/ui/styles/style.dart';
 import 'package:provider/provider.dart';
 import 'package:projeto_hospede_se/ui/pages/components/image_source_sheet.dart';
@@ -51,7 +52,7 @@ class _RoomPageState extends State<RoomPage> {
               images: listImages),
           images);
       // CARREGAR NOVAMENTE A LISTA DE QUARTOS
-      Navigator.pop(context);
+      Navigator.of(context).pop();
     } on SignUpRoomException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(e.message),
@@ -232,10 +233,7 @@ class _RoomPageState extends State<RoomPage> {
         ),
       ];
 
-  void onImagesSelected(List<File> files) {
-    for (var i = 0; i < files.length; i++) {
-      newImages.add(files[i]);
-    }
-    Navigator.pop(context);
+  void onImagesSelected(File file) {
+    newImages.add(file);
   }
 }

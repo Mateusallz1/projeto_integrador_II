@@ -7,11 +7,16 @@ import 'package:projeto_hospede_se/services/auth_service.dart';
 import 'package:projeto_hospede_se/ui/styles/style.dart';
 import 'package:provider/provider.dart';
 
-class RoomListTile extends StatelessWidget {
+class RoomListTile extends StatefulWidget {
   // ignore: use_key_in_widget_constructors
   const RoomListTile(this.room);
   final Room room;
 
+  @override
+  State<RoomListTile> createState() => _RoomListTileState();
+}
+
+class _RoomListTileState extends State<RoomListTile> {
   @override
   Widget build(BuildContext context) {
     AuthService auth = Provider.of<AuthService>(context);
@@ -21,7 +26,7 @@ class RoomListTile extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => RoomScreen(room)),
+          MaterialPageRoute(builder: (context) => RoomScreen(widget.room)),
         );
       },
       child: Card(
@@ -47,7 +52,7 @@ class RoomListTile extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              room.title!,
+                              widget.room.title!,
                               overflow: TextOverflow.fade,
                               maxLines: 1,
                               softWrap: false,
@@ -69,23 +74,7 @@ class RoomListTile extends StatelessWidget {
                   children: [
                     AspectRatio(
                       aspectRatio: 1,
-                      child: Consumer<RoomManager>(
-                        builder: (_, roomManager, __) {
-                          if (room.images.isEmpty) {
-                            List<Room> listRooms = roomManager.filteredRooms;
-                            listRooms.forEach(
-                              (element) {
-                                if (element.id == room.id) {
-                                  room.images = element.images;
-                                }
-                              },
-                            );
-                          }
-                          return Image.network(
-                            room.images.first,
-                          );
-                        },
-                      ),
+                      child: Image.network(widget.room.images.first),
                     ),
                     Expanded(
                       child: Column(
@@ -100,9 +89,9 @@ class RoomListTile extends StatelessWidget {
                                   children: [
                                     Text(
                                       host
-                                          ? 'Quantidade: ${room.quantity}\n'
-                                              'Capacidade: ${room.guestCount}'
-                                          : 'Capacidade: ${room.guestCount}',
+                                          ? 'Quantidade: ${widget.room.quantity}\n'
+                                              'Capacidade: ${widget.room.guestCount}'
+                                          : 'Capacidade: ${widget.room.guestCount}',
                                       overflow: TextOverflow.fade,
                                       maxLines: 2,
                                       softWrap: true,
@@ -120,20 +109,22 @@ class RoomListTile extends StatelessWidget {
                           if (host)
                             Expanded(
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  cardStatus(room.status!, host),
-                                  cardBookin(room.price!.toStringAsFixed(2))
+                                  cardStatus(widget.room.status!, host),
+                                  cardBookin(
+                                      widget.room.price!.toStringAsFixed(2))
                                 ],
                               ),
                             ),
-                            
                           if (!host)
                             Expanded(
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  cardBookin(room.price!.toStringAsFixed(2))
+                                  cardBookin(
+                                      widget.room.price!.toStringAsFixed(2))
                                 ],
                               ),
                             ),

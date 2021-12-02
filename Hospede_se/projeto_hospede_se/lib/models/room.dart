@@ -1,10 +1,11 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:uuid/uuid.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
-class Room {
+class Room extends ChangeNotifier {
   String? id;
   String? hotelId;
   int? number;
@@ -19,6 +20,13 @@ class Room {
   List<String> images = [];
 
   List<dynamic>? newImages;
+
+  bool _loading = false;
+  bool get loading => _loading;
+  set loading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
 
   Room(
       {required this.hotelId,
@@ -65,6 +73,8 @@ class Room {
   }
 
   Future<void> updateRoom() async {
+    loading = true;
+
     final Map<String, dynamic> data = {
       'title': title,
       'description': description,
@@ -108,6 +118,10 @@ class Room {
     }
 
     await firestoreRef.update({'images': updateImages});
+
+    images = updateImages;
+
+    loading = false;
   }
 
   Future<void> storageImages(List<File> newImages) async {

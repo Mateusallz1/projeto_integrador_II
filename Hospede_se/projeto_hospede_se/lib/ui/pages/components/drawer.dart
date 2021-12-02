@@ -16,15 +16,16 @@ class CustomDrawer extends StatelessWidget {
             title: 'Início',
             page: 0,
           ),
+          DrawerTile(icondata: Icons.hotel, title: 'Seu Hotel', page: 1),
           DrawerTile(
             icondata: Icons.list,
             title: 'Quartos',
-            page: 1,
+            page: 2,
           ),
           DrawerTile(
             icondata: Icons.playlist_add_check,
             title: 'Estadias',
-            page: 2,
+            page: 3,
           ),
         ],
       ),

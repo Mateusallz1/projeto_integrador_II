@@ -43,6 +43,7 @@ class RoomPageState extends State<RoomScreen> {
                       MaterialPageRoute(
                         builder: (context) => EditRoomPage(
                           r: widget.room,
+                          id: widget.room.id,
                         ),
                       ),
                     );

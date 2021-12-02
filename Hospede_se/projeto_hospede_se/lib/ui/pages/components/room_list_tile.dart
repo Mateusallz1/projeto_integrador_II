@@ -82,8 +82,6 @@ class RoomListTile extends StatelessWidget {
                           }
                           return Image.network(
                             room.images.first,
-                            width: 50,
-                            height: 40,
                           );
                         },
                       ),

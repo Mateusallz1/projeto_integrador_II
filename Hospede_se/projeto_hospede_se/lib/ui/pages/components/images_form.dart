@@ -26,9 +26,11 @@ class _ImagesFormState extends State<ImagesForm> {
       validator: (images) => Validators.validateImage(images!),
       onSaved: (images) => widget.room.newImages = images,
       builder: (state) {
-        void onImagesSelected(File file) {
-          state.value!.add(file);
-          state.didChange(state.value);
+        void onImagesSelected(List<File> file) {
+          for (var i = 0; i < file.length; i++) {
+            state.value!.add(file[i]);
+            state.didChange(state.value);
+          }
           Navigator.of(context).pop();
         }
 

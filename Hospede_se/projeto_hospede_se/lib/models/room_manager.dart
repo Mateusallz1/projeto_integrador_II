@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -30,7 +31,8 @@ class RoomManager extends ChangeNotifier {
     if (search.isEmpty) {
       filteredRooms.addAll(hotelRooms);
     } else {
-      filteredRooms.addAll(hotelRooms.where((p) => p.title!.toLowerCase().contains(search.toLowerCase())));
+      filteredRooms.addAll(hotelRooms
+          .where((p) => p.title!.toLowerCase().contains(search.toLowerCase())));
     }
     return filteredRooms;
   }
@@ -49,12 +51,11 @@ class RoomManager extends ChangeNotifier {
 
   Future<void> loadRooms(hotelId) async {
     //
-    final QuerySnapshot snapshotdocs =
-        await firestore.collection('rooms').where('hotel_id', isEqualTo: hotelId).get();
+    final QuerySnapshot snapshotdocs = await firestore
+        .collection('rooms')
+        .where('hotel_id', isEqualTo: hotelId)
+        .get();
     hotelRooms = snapshotdocs.docs.map((d) => Room.fromDocument(d)).toList();
-    hotelRooms.forEach((element) {
-      print(element.title);
-    });
     notifyListeners();
   }
 }

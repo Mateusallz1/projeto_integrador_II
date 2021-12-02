@@ -80,7 +80,7 @@ class HotelListTile extends StatelessWidget {
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.start,
                                           crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [starsRating(hotel.rating)],
+                                          children: [starsRating(hotel.rating!.toInt(), 25)],
                                         ),
                                       ),
                                       Row(

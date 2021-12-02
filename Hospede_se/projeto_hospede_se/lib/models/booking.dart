@@ -7,14 +7,14 @@ class Booking {
   DateTime? startdate;
   DateTime? enddate;
   int? quantity;
-  //Enum? bookingtype;
+  String? bookingtype;
 
   Booking({
     required this.userId,
     required this.startdate,
     required this.enddate,
     required this.quantity,
-    //required this.bookingtype,
+    required this.bookingtype,
   });
 
   Booking.fromDocument(DocumentSnapshot document) {
@@ -24,7 +24,7 @@ class Booking {
     startdate = document['startdate'] as DateTime;
     enddate = document['enddate'] as DateTime;
     quantity = document['quantity'] as int;
-    //bookingtype = document['bookingtype'] as Enum;
+    bookingtype = document['bookingtype'] as String;
   }
 
   DocumentReference get firestoreRef => FirebaseFirestore.instance.doc('booking/$id');
@@ -41,7 +41,7 @@ class Booking {
       'startdate': startdate,
       'enddate': enddate,
       'quantity': quantity,
-      //'booking': bookingtype
+      'booking': bookingtype
     };
   }
 }

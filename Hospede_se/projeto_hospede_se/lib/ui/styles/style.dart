@@ -151,15 +151,15 @@ InputDecoration inputDecorationSignUp(txt, icon) {
   );
 }
 
-Row starsRating(qtd) {
-  var starAmber = const Icon(
+Row starsRating(int qtd, double sizeicon) {
+  var starAmber = Icon(
     Icons.star,
-    size: 25,
+    size: sizeicon,
     color: Colors.amber,
   );
-  var starGrey = const Icon(
+  var starGrey = Icon(
     Icons.star,
-    size: 25,
+    size: sizeicon,
     color: Colors.grey,
   );
   return Row(

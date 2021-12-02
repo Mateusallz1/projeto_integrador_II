@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:projeto_hospede_se/models/hotel_manager.dart';
+import 'package:projeto_hospede_se/models/room_manager.dart';
 import 'package:projeto_hospede_se/models/user.dart';
 import 'package:projeto_hospede_se/services/auth_service.dart';
 import 'package:projeto_hospede_se/ui/styles/style.dart';
@@ -41,7 +45,8 @@ class _LoginPageState extends State<LoginPage> {
   void signIn() async {
     setState(() => _loading = true);
     try {
-      await context.read<AuthService>().signIn(UserLogin(email: email, password: passwd));
+      AuthService auth = context.read<AuthService>();
+      await auth.signIn(UserLogin(email: email, password: passwd));
       Navigator.pop(context);
     } on AuthException catch (e) {
       setState(() => _loading = false);

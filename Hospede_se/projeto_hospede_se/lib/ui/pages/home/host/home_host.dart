@@ -23,23 +23,13 @@ class _HomeHostPageState extends State<HomeHostPage> {
   Widget build(BuildContext context) {
     String userId = context.read<AuthService>().getUser().id.toString();
     context.read<HotelManager>().loadHotel(userId);
-    context
-        .read<RoomManager>()
-        .loadRooms(context.read<HotelManager>().loadHotel(userId));
+    context.read<RoomManager>().loadRooms(context.read<HotelManager>().loadHotel(userId));
     return Provider(
       create: (_) => PageManager(pageController),
       child: PageView(
         controller: pageController,
         physics: const NeverScrollableScrollPhysics(),
         children: [
-          Scaffold(
-            backgroundColor: Colors.green.shade100,
-            drawer: const CustomDrawer(),
-            appBar: AppBar(
-              backgroundColor: Colors.green.shade800,
-              title: const Text('Início'),
-            ),
-          ),
           const StartPage(),
           const RoomsPage(),
           Scaffold(

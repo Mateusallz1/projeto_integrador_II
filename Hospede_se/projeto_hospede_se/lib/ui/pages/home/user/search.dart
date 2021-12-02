@@ -11,7 +11,7 @@ import 'package:projeto_hospede_se/helpers/validators.dart';
 import 'package:number_selection/number_selection.dart';
 import 'package:projeto_hospede_se/models/booking.dart';
 import 'package:projeto_hospede_se/models/booking_manager.dart';
-import 'package:projeto_hospede_se/models/enum_booking.dart';
+import 'package:projeto_hospede_se/models/booking_type.dart';
 import 'package:projeto_hospede_se/services/auth_service.dart';
 import 'package:projeto_hospede_se/ui/pages/home/user/booking_page.dart';
 import 'package:projeto_hospede_se/services/hotel_service.dart';
@@ -105,23 +105,23 @@ class _SearchUserPage extends State<SearchUserPage> {
   }
 
   bookingSearch(HotelsProvider hotelsProvider) async {
-    // _booking = {
-    //   'description': _searchAddress['description'],
-    //   'flongname': _searchAddress['flongname'],
-    //   'fshortname': _searchAddress['flongname'],
-    //   'llongname': _searchAddress['llongname'],
-    //   'lshortname': _searchAddress['lshortname'],
-    //   'startdate': _date['start'],
-    //   'enddate': _date['end'],
-    //   'quantity': _quantity
-    // };
+    Map _booking = {
+      'description': _searchAddress['description'],
+      'flongname': _searchAddress['flongname'],
+      'fshortname': _searchAddress['flongname'],
+      'llongname': _searchAddress['llongname'],
+      'lshortname': _searchAddress['lshortname'],
+      'startdate': _date['start'],
+      'enddate': _date['end'],
+      'quantity': _quantity
+    };
+
     final userId = context.read<AuthService>().getUser().id;
 
-    BookingManager().booking =
-        Booking(userId: userId, startdate: _date['start'], enddate: _date['end'], quantity: _quantity);
+    BookingManager().booking = Booking(
+        userId: userId, startdate: _date['start'], enddate: _date['end'], quantity: _quantity, bookingtype: '');
 
-    BookingManager.addBooking();
-    //Navigator.push(context, MaterialPageRoute(builder: (context) => BookingPage(booking: _booking)));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => BookingPage(booking: _booking)));
   }
 
   @override

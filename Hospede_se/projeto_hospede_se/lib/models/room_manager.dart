@@ -58,4 +58,10 @@ class RoomManager extends ChangeNotifier {
     hotelRooms = snapshotdocs.docs.map((d) => Room.fromDocument(d)).toList();
     notifyListeners();
   }
+
+  Future<void> update(Room room) async {
+    hotelRooms.removeWhere((e) => e.id == room.id);
+    hotelRooms.add(room);
+    notifyListeners();
+  }
 }

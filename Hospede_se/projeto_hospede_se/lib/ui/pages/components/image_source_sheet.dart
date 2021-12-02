@@ -14,12 +14,12 @@ class ImageSourceSheet extends StatelessWidget {
 
   final ImagePicker picker = ImagePicker();
 
-  Future<void> editImage(List<File> path, BuildContext context) async {
+  Future<void> editImage(List<String> path, BuildContext context) async {
     List<File> listCroppedsFiles = [];
 
     for (var i = 0; i < path.length; i++) {
       final File? croppedFile = await ImageCropper.cropImage(
-        sourcePath: path[i].path,
+        sourcePath: path[i],
         aspectRatio: const CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
         androidUiSettings: AndroidUiSettings(
           toolbarTitle: 'Editar Imagem',
@@ -30,8 +30,9 @@ class ImageSourceSheet extends StatelessWidget {
       );
       listCroppedsFiles.add(croppedFile!);
     }
-
-    onImagesSelected(listCroppedsFiles);
+    for (var i = 0; i < listCroppedsFiles.length; i++) {
+      onImagesSelected(listCroppedsFiles[i]);
+    }
   }
 
   @override
@@ -49,9 +50,9 @@ class ImageSourceSheet extends StatelessWidget {
             ),
             onPressed: () async {
               final List<XFile>? images = await picker.pickMultiImage();
-              List<File> listImages = [];
+              List<String> listImages = [];
               for (var i = 0; i < images!.length; i++) {
-                listImages.add(File(images[i].path));
+                listImages.add(images[i].path);
               }
               editImage(listImages, context);
             },

@@ -160,11 +160,19 @@ class _EditRoomPageState extends State<EditRoomPage> {
                                         .validate()) {
                                       widget.formKey.currentState!.save();
                                       await widget.room.updateRoom();
+                                      await context
+                                          .read<RoomManager>()
+                                          .update(room);
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) =>
-                                              RoomScreen(widget.room),
+                                          builder: (context) => RoomScreen(
+                                            context
+                                                .read<RoomManager>()
+                                                .hotelRooms
+                                                .firstWhere(
+                                                    (e) => e.id == room.id),
+                                          ),
                                         ),
                                       );
                                     }

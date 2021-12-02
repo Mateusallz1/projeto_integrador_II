@@ -26,11 +26,9 @@ class _ImagesFormState extends State<ImagesForm> {
       validator: (images) => Validators.validateImage(images!),
       onSaved: (images) => widget.room.newImages = images,
       builder: (state) {
-        void onImagesSelected(List<File> file) {
-          for (var i = 0; i < file.length; i++) {
-            state.value!.add(file[i]);
-            state.didChange(state.value);
-          }
+        void onImagesSelected(File file) {
+          state.value!.add(file);
+          state.didChange(state.value);
           Navigator.of(context).pop();
         }
 
@@ -39,56 +37,55 @@ class _ImagesFormState extends State<ImagesForm> {
             AspectRatio(
               aspectRatio: 1,
               child: CarouselSlider(
-                items: List.from(widget.room.images)
-                    .map(
-                      (e) => ClipRRect(
-                        borderRadius: BorderRadius.circular(6),
-                        child: Stack(
-                          fit: StackFit.expand,
-                          children: <Widget>[
-                            if (e is String)
-                              Image.network(
-                                e,
-                                fit: BoxFit.cover,
-                              )
-                            else
-                              Image.file(
-                                e as File,
-                                fit: BoxFit.cover,
-                              ),
-                            Align(
-                              alignment: Alignment.topLeft,
-                              child: IconButton(
-                                onPressed: () {
-                                  state.value!.remove(e);
-                                  state.didChange(state.value);
-                                },
-                                icon: const Icon(Icons.delete),
-                                color: Colors.red.shade600,
-                                iconSize: 40,
-                              ),
+                items: state.value!.map((e) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Stack(
+                        fit: StackFit.expand,
+                        children: <Widget>[
+                          if (e is String)
+                            Image.network(
+                              e,
+                              fit: BoxFit.cover,
+                            )
+                          else
+                            Image.file(
+                              e as File,
+                              fit: BoxFit.cover,
                             ),
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: IconButton(
-                                onPressed: () {
-                                  showModalBottomSheet(
-                                    context: context,
-                                    builder: (_) => ImageSourceSheet(
-                                      onImagesSelected: onImagesSelected,
-                                    ),
-                                  );
-                                },
-                                icon: const Icon(Icons.add_sharp),
-                                color: Colors.greenAccent.shade400,
-                                iconSize: 40,
-                              ),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: IconButton(
+                              onPressed: () {
+                                state.value!.remove(e);
+                                state.didChange(state.value);
+                              },
+                              icon: const Icon(Icons.delete),
+                              color: Colors.redAccent.shade700,
+                              iconSize: 40,
                             ),
-                          ],
-                        ),
-                      ),
-                    )
-                    .toList(),
+                          ),
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: IconButton(
+                              onPressed: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (_) => ImageSourceSheet(
+                                    onImagesSelected: onImagesSelected,
+                                  ),
+                                );
+                              },
+                              icon: const Icon(Icons.add_sharp),
+                              color: Colors.greenAccent.shade400,
+                              iconSize: 40,
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }).toList(),
                 options: CarouselOptions(
                   initialPage: 0,
                   autoPlay: true,
@@ -101,12 +98,24 @@ class _ImagesFormState extends State<ImagesForm> {
                 ),
               ),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: buildIndicator(state.value!.length),
+                ),
+              ],
+            ),
             if (state.hasError)
-              Text(
-                state.errorText.toString(),
-                style: const TextStyle(
-                  fontSize: 35,
-                  fontWeight: FontWeight.bold,
+              Container(
+                child: Text(
+                  state.errorText.toString(),
+                  style: const TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.red,
+                  ),
                 ),
               ),
           ],
@@ -115,9 +124,9 @@ class _ImagesFormState extends State<ImagesForm> {
     );
   }
 
-  Widget buildIndicator() => AnimatedSmoothIndicator(
+  Widget buildIndicator(int lenGth) => AnimatedSmoothIndicator(
         activeIndex: activeIndex,
-        count: widget.room.images.length,
+        count: lenGth,
         effect: WormEffect(
             dotColor: Colors.green.shade800,
             activeDotColor: Colors.green.shade300,

@@ -85,6 +85,8 @@ class Room extends ChangeNotifier {
     };
     firestoreRef.update(data);
     storageUpdateImages();
+    loading = false;
+    notifyListeners();
   }
 
   final List<String> updateImages = [];
@@ -120,8 +122,6 @@ class Room extends ChangeNotifier {
     await firestoreRef.update({'images': updateImages});
 
     images = updateImages;
-
-    loading = false;
   }
 
   Future<void> storageImages(List<File> newImages) async {

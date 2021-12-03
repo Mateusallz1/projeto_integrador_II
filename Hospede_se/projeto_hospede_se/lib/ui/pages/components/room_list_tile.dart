@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:projeto_hospede_se/models/hotel_manager.dart';
 import 'package:projeto_hospede_se/models/room.dart';
 import 'package:projeto_hospede_se/models/room_manager.dart';
 import 'package:projeto_hospede_se/ui/pages/rooms/room_detail.dart';
@@ -20,6 +21,8 @@ class _RoomListTileState extends State<RoomListTile> {
   @override
   Widget build(BuildContext context) {
     AuthService auth = Provider.of<AuthService>(context);
+    HotelManager hotelManager = context.read<HotelManager>();
+    hotelManager.loadHotel(auth.getUser().id);
     bool? host = auth.getUser().host!;
 
     return GestureDetector(
@@ -74,7 +77,24 @@ class _RoomListTileState extends State<RoomListTile> {
                   children: [
                     AspectRatio(
                       aspectRatio: 1,
-                      child: Image.network(widget.room.images.first),
+                      child: Consumer<RoomManager>(
+                        builder: (_, roomManager, __) {
+                          roomManager.loadRooms(hotelManager.getHotel().id);
+                          if (widget.room.images.isEmpty) {
+                            List<Room> listRooms = roomManager.hotelRooms;
+                            listRooms.forEach(
+                              (element) {
+                                if (element.id == widget.room.id) {
+                                  widget.room.images = element.images;
+                                }
+                              },
+                            );
+                          }
+                          return Image.network(
+                            widget.room.images.first,
+                          );
+                        },
+                      ),
                     ),
                     Expanded(
                       child: Column(

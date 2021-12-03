@@ -5,6 +5,7 @@ import 'package:projeto_hospede_se/models/hotel_manager.dart';
 import 'package:projeto_hospede_se/models/room_manager.dart';
 import 'package:projeto_hospede_se/models/user.dart';
 import 'package:projeto_hospede_se/services/auth_service.dart';
+import 'package:projeto_hospede_se/ui/pages/signup/signup.dart';
 import 'package:projeto_hospede_se/ui/styles/style.dart';
 import 'package:projeto_hospede_se/helpers/validators.dart';
 import 'package:provider/provider.dart';
@@ -106,7 +107,8 @@ class _LoginPageState extends State<LoginPage> {
                           decoration: inputDecorationRadius('Senha'),
                           autocorrect: false,
                           obscureText: true,
-                          validator: (password) => Validators.validatePassword(password!),
+                          validator: (password) =>
+                              Validators.validatePassword(password!),
                           onFieldSubmitted: (passwd) {
                             fnpasswd.unfocus();
                             FocusScope.of(context).requestFocus(fnsubmit);
@@ -174,9 +176,18 @@ class _LoginPageState extends State<LoginPage> {
                           GestureDetector(
                             child: const Text(
                               'Registre-se',
-                              style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold, fontSize: 20),
+                              style: TextStyle(
+                                  color: Colors.green,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20),
                             ),
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const SignUpPage()));
+                            },
                           ),
                         ],
                       )

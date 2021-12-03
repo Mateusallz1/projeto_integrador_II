@@ -434,10 +434,7 @@ class _SignUpHostPage extends State<SignUpHostPage> {
         ),
       ];
 
-  void onImagesSelected(List<File> files) {
-    for (var i = 0; i < files.length; i++) {
-      newImages.add(files[i]);
-    }
-    Navigator.pop(context);
+  void onImagesSelected(File file) {
+    newImages.add(file);
   }
 }

@@ -12,6 +12,7 @@ import 'package:projeto_hospede_se/services/auth_service.dart';
 import 'package:projeto_hospede_se/ui/pages/components/drawer.dart';
 import 'package:projeto_hospede_se/ui/styles/style.dart';
 import 'package:provider/src/provider.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({Key? key}) : super(key: key);
@@ -23,7 +24,8 @@ class StartPage extends StatefulWidget {
 class _StartPageState extends State<StartPage> {
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> scaffoldKeyAbode = GlobalKey<ScaffoldState>();
+    final GlobalKey<ScaffoldState> scaffoldKeyAbode =
+        GlobalKey<ScaffoldState>();
     final PageController pageController = PageController();
 
     String? qtd;
@@ -35,17 +37,31 @@ class _StartPageState extends State<StartPage> {
       await hotelManager.loadHotel(auth.getUser().id);
       await roomManager.loadRooms(hotelManager.getHotel().id);
       Hotel hotel = hotelManager.getHotel();
-      await hotelManager.loadHotel(auth.getUser().id);
       qtd = roomManager.hotelRooms.length.toString();
+      while (hotel.images.isEmpty) {
+        await hotelManager.loadHotel(auth.getUser().id);
+        hotel = hotelManager.getHotel();
+      }
       return hotel;
     }
+
+    Widget buildIndicator(int activeIndex, Hotel hotel) =>
+        AnimatedSmoothIndicator(
+          activeIndex: activeIndex,
+          count: hotel.images.length,
+          effect: WormEffect(
+              dotColor: Colors.green.shade800,
+              activeDotColor: Colors.green.shade300,
+              dotWidth: 15,
+              dotHeight: 15),
+        );
 
     buildContainer() {
       return FutureBuilder(
           future: getFutureData(),
           builder: (context, AsyncSnapshot<Hotel> snapshot) {
             int activeIndex = 0;
-            if (snapshot.hasData) {
+            if (snapshot.hasData && snapshot.data!.images.isNotEmpty) {
               Hotel? hotel = snapshot.data;
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -83,7 +99,8 @@ class _StartPageState extends State<StartPage> {
                         disableCenter: true,
                         aspectRatio: 16 / 9,
                         autoPlayCurve: Curves.fastOutSlowIn,
-                        onPageChanged: (index, reason) => setState(() => activeIndex = index),
+                        onPageChanged: (index, reason) =>
+                            setState(() => activeIndex = index),
                       ),
                     ),
                   ),
@@ -91,8 +108,19 @@ class _StartPageState extends State<StartPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: buildIndicator(activeIndex, hotel),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
                         padding: const EdgeInsets.only(left: 5, bottom: 5),
-                        child: starsRating(hotel.rating!.toInt(), /* 35 */),
+                        child: starsRating(
+                          hotel.rating!.toInt(), /* 35 */
+                        ),
                       ),
                     ],
                   ),
@@ -104,16 +132,19 @@ class _StartPageState extends State<StartPage> {
                     maxLines: 1,
                     softWrap: true,
                     style: GoogleFonts.montserrat(
-                        textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
+                        textStyle: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w600)),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 45, right: 45, top: 5, bottom: 10),
+                    padding: const EdgeInsets.only(
+                        left: 45, right: 45, top: 5, bottom: 10),
                     child: Text(
                       '${hotel.address}',
                       overflow: TextOverflow.fade,
                       maxLines: 2,
                       softWrap: true,
-                      style: GoogleFonts.montserrat(textStyle: const TextStyle(fontSize: 15)),
+                      style: GoogleFonts.montserrat(
+                          textStyle: const TextStyle(fontSize: 15)),
                     ),
                   ),
                   Text(
@@ -122,7 +153,8 @@ class _StartPageState extends State<StartPage> {
                     maxLines: 1,
                     softWrap: true,
                     style: GoogleFonts.montserrat(
-                        textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
+                        textStyle: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w600)),
                   ),
                 ],
               );

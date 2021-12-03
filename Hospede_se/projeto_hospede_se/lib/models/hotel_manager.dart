@@ -35,11 +35,13 @@ class HotelManager extends ChangeNotifier {
         .collection('hotel')
         .where('user', isEqualTo: userId)
         .get()
-        .then((QuerySnapshot query) {
-      for (var doc in query.docs) {
-        hotelId = doc.id;
-      }
-    });
+        .then(
+      (QuerySnapshot query) {
+        for (var doc in query.docs) {
+          hotelId = doc.id;
+        }
+      },
+    );
     DocumentSnapshot snapshotdoc =
         await FirebaseFirestore.instance.collection('hotel').doc(hotelId).get();
     _hotel = Hotel.fromDocument(snapshotdoc);

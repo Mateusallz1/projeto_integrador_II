@@ -79,9 +79,9 @@ class _RoomListTileState extends State<RoomListTile> {
                       aspectRatio: 1,
                       child: Consumer<RoomManager>(
                         builder: (_, roomManager, __) {
-                          roomManager.loadRooms(hotelManager.getHotel().id);
                           if (widget.room.images.isEmpty) {
                             List<Room> listRooms = roomManager.hotelRooms;
+                            roomManager.loadRooms(hotelManager.getHotel().id);
                             listRooms.forEach(
                               (element) {
                                 if (element.id == widget.room.id) {

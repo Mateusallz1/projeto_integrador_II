@@ -15,52 +15,56 @@ class CustomDrawerHeader extends StatelessWidget {
       height: 180,
       child: Consumer<AuthService>(
         builder: (_, auth, __) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Text(
-                '${hotelManager.getHotel().name}',
-                style: const TextStyle(
-                  fontSize: 34,
-                  fontWeight: FontWeight.bold,
+          return SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  '${hotelManager.getHotel().name}',
+                  style: const TextStyle(
+                    fontSize: 34,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              Text(
-                'Olá, ${auth.getUser().name}',
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                Text(
+                  'Olá, ${auth.getUser().name}',
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  if (auth.isLogged()) {
-                    auth.signOut();
-                    hotelManager.removeHotel();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const AuthCheck()),
-                    );
-                  } else {
-                    MaterialPageRoute(builder: (context) => const AuthCheck());
-                  }
-                },
-                child: Container(
-                  margin: const EdgeInsets.only(bottom: 30),
-                  child: Text(
-                    'Sair',
-                    style: TextStyle(
-                      color: Colors.green.shade800,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                GestureDetector(
+                  onTap: () {
+                    if (auth.isLogged()) {
+                      auth.signOut();
+                      hotelManager.removeHotel();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AuthCheck()),
+                      );
+                    } else {
+                      MaterialPageRoute(
+                          builder: (context) => const AuthCheck());
+                    }
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(bottom: 30),
+                    child: Text(
+                      'Sair',
+                      style: TextStyle(
+                        color: Colors.green.shade800,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         },
       ),

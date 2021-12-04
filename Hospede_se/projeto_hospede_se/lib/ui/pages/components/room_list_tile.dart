@@ -61,7 +61,8 @@ class _RoomListTileState extends State<RoomListTile> {
                               softWrap: false,
                               style: GoogleFonts.montserrat(
                                 textStyle: const TextStyle(
-                                    fontSize: 25, fontWeight: FontWeight.bold),
+                                fontSize: 25, 
+                                fontWeight: FontWeight.bold),
                               ),
                             ),
                           ],

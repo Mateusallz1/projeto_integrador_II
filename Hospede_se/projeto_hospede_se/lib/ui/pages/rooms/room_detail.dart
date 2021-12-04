@@ -138,21 +138,22 @@ class RoomPageState extends State<RoomScreen> {
                     ],
                   ),
                 ),
-                Container(
-                  margin: const EdgeInsets.only(top: 27),
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: ElevatedButton(
-                      child: const Text(
-                        'Reservar',
-                        style: TextStyle(fontSize: 20, color: Colors.white),
-                      ),
-                      onPressed: () {
-                        BookingManager().booking.roomId = widget.room.id;
-                        BookingManager().booking.bookingtype = bookingType(0);
-                        BookingManager.addBooking();
-                      },
-                      style: elevatedButtonConfirm),
-                ),
+                !host ? 
+                  Container(
+                    margin: const EdgeInsets.only(top: 27),
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: ElevatedButton(
+                        child: const Text(
+                          'Reservar',
+                          style: TextStyle(fontSize: 20, color: Colors.white),
+                        ),
+                        onPressed: () {
+                          BookingManager().booking.roomId = widget.room.id;
+                          BookingManager().booking.bookingtype = bookingType(0);
+                          BookingManager.addBooking();
+                        },
+                        style: elevatedButtonConfirm),
+                  ) : Container(),
               ],
             ),
           ),

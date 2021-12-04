@@ -26,15 +26,41 @@ class _ProfileUserPage extends State<ProfileUserPage> {
                 padding: const EdgeInsets.all(10),
                 child: ElevatedButton(
                   onPressed: () {
-                    if (auth.isLogged()) {
-                      auth.signOut();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const AuthCheck()),
-                      );
-                    } else {
-                      MaterialPageRoute(builder: (context) => const AuthCheck());
-                    }
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Deseja Sair?'),
+                        content: const Text('Tem certeza?'),
+                        actions: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              ElevatedButton(
+                                style: elevatedButton,
+                                onPressed: () {
+                                  if (auth.isLogged()) {
+                                    auth.signOut();
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => const AuthCheck()),
+                                    );
+                                  } else {
+                                    MaterialPageRoute(builder: (context) => const AuthCheck());
+                                  } 
+                                }, 
+                                child: const Text('Sim'),
+                              ),
+                              ElevatedButton(
+                                style: elevatedButton,
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                }, 
+                                child: const Text('Não')),
+                            ],
+                          )
+                        ],
+                      )
+                    );
                   },
                   child: const Text('Sair'),
                   style: elevatedButton,

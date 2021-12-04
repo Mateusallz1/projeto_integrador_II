@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_hospede_se/models/hotel_manager.dart';
 import 'package:projeto_hospede_se/services/auth_service.dart';
+import 'package:projeto_hospede_se/ui/styles/style.dart';
 import 'package:projeto_hospede_se/widgets/auth_check.dart';
 import 'package:provider/provider.dart';
 
@@ -38,18 +39,43 @@ class CustomDrawerHeader extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    if (auth.isLogged()) {
-                      auth.signOut();
-                      hotelManager.removeHotel();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const AuthCheck()),
-                      );
-                    } else {
-                      MaterialPageRoute(
-                          builder: (context) => const AuthCheck());
-                    }
+                    showDialog(
+                      context: context, 
+                      builder: (context) => AlertDialog(
+                        title: const Text('Deseja Sair?'),
+                        content: const Text('Tem certeza?'),
+                        actions: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              ElevatedButton(
+                                style: elevatedButton,
+                                onPressed: () {
+                                  if (auth.isLogged()) {
+                                    auth.signOut();
+                                    hotelManager.removeHotel();
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => const AuthCheck()),
+                                    );
+                                  } else {
+                                    MaterialPageRoute(
+                                        builder: (context) => const AuthCheck());
+                                  }
+                                }, 
+                              child: const Text('Sim')),
+                              ElevatedButton(
+                                style: elevatedButton,
+                                onPressed: () {
+                                  Navigator.pop(context);
+                              }, 
+                              child: const Text('Não'))
+                            ],
+                          )
+                        ],
+                      ),
+                    );
                   },
                   child: Container(
                     margin: const EdgeInsets.only(bottom: 30),

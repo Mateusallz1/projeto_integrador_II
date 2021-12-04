@@ -37,6 +37,20 @@ class EditRoomPage extends StatefulWidget {
 }
 
 class _EditRoomPageState extends State<EditRoomPage> {
+  /* Future<void> updateRoom(Room room) async {
+    await widget.room.updateRoom();
+    await context.read<RoomManager>().update(room);
+    Navigator.push(
+      context, MaterialPageRoute(
+        builder: (context) => RoomScreen(
+          context.read<RoomManager>()
+          .hotelRooms
+          .firstWhere((e) => e.id == room.id),
+        ),
+      ),
+    );
+  } */
+
   @override
   Widget build(BuildContext context) {
     widget.room.id = widget.id;
@@ -207,3 +221,35 @@ class _EditRoomPageState extends State<EditRoomPage> {
     );
   }
 }
+
+
+/* showDialog(
+  context: context, 
+  builder: (context) =>
+    AlertDialog(
+      title: const Text('Confirmar Edição'),
+      content: Text('Editar ${room.title}?',
+          overflow: TextOverflow.fade,
+          maxLines: 1,
+          softWrap: false,
+        ),
+      actions: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ElevatedButton(
+              style: elevatedButton,
+              onPressed: () {
+                updateRoom(room);
+              }, 
+            child: const Text('Sim')),
+            ElevatedButton(
+              style: elevatedButton,
+              onPressed: () {
+                Navigator.pop(context);
+              }, 
+              child: const Text('Não')),
+          ],
+        )
+      ],
+    ); */

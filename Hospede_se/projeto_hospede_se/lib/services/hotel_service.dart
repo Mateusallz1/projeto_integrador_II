@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:projeto_hospede_se/models/hotel.dart';
 import 'package:projeto_hospede_se/models/hotel_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:projeto_hospede_se/models/room_manager.dart';
 
 class HotelsProvider extends ChangeNotifier {
   final _hotelsSnapshot = <DocumentSnapshot>[];
@@ -35,11 +36,9 @@ class HotelsProvider extends ChangeNotifier {
   }
 
   List<Hotel> getHotels() {
-    List<Hotel> hotels =
-        _hotelsSnapshot.map((snap) => Hotel.fromDocument(snap)).toList();
+    List<Hotel> hotels = _hotelsSnapshot.map((snap) => Hotel.fromDocument(snap)).toList();
     List<Hotel> filteredhotels = [];
-    filteredhotels.addAll(hotels
-        .where((h) => h.name!.toLowerCase().contains(search.toLowerCase())));
+    filteredhotels.addAll(hotels.where((h) => h.name!.toLowerCase().contains(search.toLowerCase())));
     if (search.isNotEmpty) {
       final ids = filteredhotels.map((h) => h.id).toSet();
       filteredhotels.retainWhere((h) => ids.remove(h.id));
@@ -66,12 +65,12 @@ class HotelsProvider extends ChangeNotifier {
         _hotelsSnapshot.addAll(snap.docs);
       } else if (type == 2) {
         _hotelsSnapshot.clear();
-        final snap =
-            await HotelManager.getBookingHotels(documentLimit, booking);
+        final snap = await HotelManager.getBookingHotels(documentLimit, booking);
         _hotelsSnapshot.addAll(snap.docs);
         // ignore: avoid_function_literals_in_foreach_calls
+        await RoomManager.getUnavaibleRooms(booking);
         _hotelsSnapshot.forEach((h) async {
-          if (!await HotelManager.hotelHaveRooms(h.id)) {
+          if (!await RoomManager.hotelHaveRoomsBooking(h.id, booking)) {
             _hotelsSnapshot.remove(h);
             notifyListeners();
           }

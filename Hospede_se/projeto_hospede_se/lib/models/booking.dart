@@ -21,8 +21,8 @@ class Booking {
     id = document.id;
     userId = document['userId'] as String;
     roomId = document['roomId'] as String;
-    startdate = document['startdate'] as DateTime;
-    enddate = document['enddate'] as DateTime;
+    startdate = (document['startdate'] as Timestamp).toDate();
+    enddate = (document['enddate'] as Timestamp).toDate();
     quantity = document['quantity'] as int;
     bookingtype = document['bookingtype'] as String;
   }
@@ -30,7 +30,6 @@ class Booking {
   DocumentReference get firestoreRef => FirebaseFirestore.instance.doc('booking/$id');
 
   void saveData() async {
-    print('sdaodaisjdaiodjaioaoisdjadnaioyudbgaiuydgastuygatdgatdgasydtasytd');
     await firestoreRef.set(toMap());
   }
 

@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:projeto_hospede_se/models/booking.dart';
-import 'package:projeto_hospede_se/models/room.dart';
 
 FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -80,4 +79,10 @@ Future<List<String>> getListUnavaibleRooms(List<String> list) async {
     quantity == map[key] ? roomsIds.add(key.toString()) : null;
   }
   return roomsIds;
+}
+
+int daysBetween(DateTime from, DateTime to) {
+  from = DateTime(from.year, from.month, from.day);
+  to = DateTime(to.year, to.month, to.day);
+  return (to.difference(from).inHours / 24).round();
 }

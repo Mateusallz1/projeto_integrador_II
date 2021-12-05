@@ -24,7 +24,6 @@ class _ListViewHotelWidgetState extends State<ListViewHotelWidget> {
     super.initState();
     scrollController.addListener(scrollListener);
     widget.hotelsProvider.fetchNextHotels(widget.typesearch);
-    //widget.hotelsProvider.removeHotels();
   }
 
   @override

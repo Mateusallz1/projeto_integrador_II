@@ -83,6 +83,12 @@ class HotelManager extends ChangeNotifier {
     return snapHotels;
   }
 
+  static Future<Hotel> getHotelFromFireBase(String hotelId) async {
+    DocumentSnapshot doc = await firestore.collection('hotel').doc(hotelId).get();
+    Hotel hotel = Hotel.fromDocument(doc);
+    return hotel;
+  }
+
   Hotel getHotel() {
     return _hotel!;
   }

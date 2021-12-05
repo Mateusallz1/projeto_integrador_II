@@ -24,8 +24,7 @@ class StartPage extends StatefulWidget {
 class _StartPageState extends State<StartPage> {
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> scaffoldKeyAbode =
-        GlobalKey<ScaffoldState>();
+    final GlobalKey<ScaffoldState> scaffoldKeyAbode = GlobalKey<ScaffoldState>();
     final PageController pageController = PageController();
 
     String? qtd;
@@ -45,15 +44,11 @@ class _StartPageState extends State<StartPage> {
       return hotel;
     }
 
-    Widget buildIndicator(int activeIndex, Hotel hotel) =>
-        AnimatedSmoothIndicator(
+    Widget buildIndicator(int activeIndex, Hotel hotel) => AnimatedSmoothIndicator(
           activeIndex: activeIndex,
           count: hotel.images.length,
           effect: WormEffect(
-              dotColor: Colors.green.shade800,
-              activeDotColor: Colors.green.shade300,
-              dotWidth: 15,
-              dotHeight: 15),
+              dotColor: Colors.green.shade800, activeDotColor: Colors.green.shade300, dotWidth: 15, dotHeight: 15),
         );
 
     buildContainer() {
@@ -99,8 +94,7 @@ class _StartPageState extends State<StartPage> {
                         disableCenter: true,
                         aspectRatio: 16 / 9,
                         autoPlayCurve: Curves.fastOutSlowIn,
-                        onPageChanged: (index, reason) =>
-                            setState(() => activeIndex = index),
+                        onPageChanged: (index, reason) => setState(() => activeIndex = index),
                       ),
                     ),
                   ),
@@ -132,19 +126,16 @@ class _StartPageState extends State<StartPage> {
                     maxLines: 1,
                     softWrap: true,
                     style: GoogleFonts.montserrat(
-                        textStyle: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w600)),
+                        textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(
-                        left: 45, right: 45, top: 5, bottom: 10),
+                    padding: const EdgeInsets.only(left: 45, right: 45, top: 5, bottom: 10),
                     child: Text(
                       '${hotel.address}',
                       overflow: TextOverflow.fade,
                       maxLines: 2,
                       softWrap: true,
-                      style: GoogleFonts.montserrat(
-                          textStyle: const TextStyle(fontSize: 15)),
+                      style: GoogleFonts.montserrat(textStyle: const TextStyle(fontSize: 15)),
                     ),
                   ),
                   Text(
@@ -153,8 +144,7 @@ class _StartPageState extends State<StartPage> {
                     maxLines: 1,
                     softWrap: true,
                     style: GoogleFonts.montserrat(
-                        textStyle: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w600)),
+                        textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
                   ),
                 ],
               );

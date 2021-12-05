@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:projeto_hospede_se/helpers/utils.dart';
 import 'package:projeto_hospede_se/models/booking_manager.dart';
 import 'package:projeto_hospede_se/models/booking_type.dart';
 import 'package:projeto_hospede_se/models/room.dart';
@@ -91,8 +92,7 @@ class RoomPageState extends State<RoomScreen> {
               disableCenter: true,
               aspectRatio: 16 / 9,
               autoPlayCurve: Curves.fastOutSlowIn,
-              onPageChanged: (index, reason) =>
-                  setState(() => activeIndex = index),
+              onPageChanged: (index, reason) => setState(() => activeIndex = index),
             ),
           ),
           Row(
@@ -112,8 +112,7 @@ class RoomPageState extends State<RoomScreen> {
                 Text(
                   widget.room.title.toString(),
                   style: GoogleFonts.montserrat(
-                    textStyle: const TextStyle(
-                        fontSize: 35, fontWeight: FontWeight.bold),
+                    textStyle: const TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Container(
@@ -130,30 +129,34 @@ class RoomPageState extends State<RoomScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      iconCard(Icons.person_outlined,
-                          widget.room.guestCount.toString()),
+                      iconCard(Icons.person_outlined, widget.room.guestCount.toString()),
                       iconCard(Icons.bed, widget.room.bedCount.toString()),
-                      iconCard(Icons.bathtub_outlined,
-                          widget.room.bathCount.toString()),
+                      iconCard(Icons.bathtub_outlined, widget.room.bathCount.toString()),
                     ],
                   ),
                 ),
-                !host ? 
-                  Container(
-                    margin: const EdgeInsets.only(top: 27),
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    child: ElevatedButton(
-                        child: const Text(
-                          'Reservar',
-                          style: TextStyle(fontSize: 20, color: Colors.white),
-                        ),
-                        onPressed: () {
-                          BookingManager().booking.roomId = widget.room.id;
-                          BookingManager().booking.bookingtype = bookingType(0);
-                          BookingManager.addBooking();
-                        },
-                        style: elevatedButtonConfirm),
-                  ) : Container(),
+                !host
+                    ? Container(
+                        margin: const EdgeInsets.only(top: 27),
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        child: ElevatedButton(
+                            child: const Text(
+                              'Reservar',
+                              style: TextStyle(fontSize: 20, color: Colors.white),
+                            ),
+                            onPressed: () {
+                              BookingManager().booking.roomId = widget.room.id;
+                              BookingManager().booking.roomName = widget.room.title;
+                              BookingManager().booking.roomPrice = widget.room.price;
+                              BookingManager().booking.bookingPrice = widget.room.price! *
+                                  daysBetween(
+                                      BookingManager().booking.startdate!, BookingManager().booking.enddate!);
+                              BookingManager().booking.bookingtype = bookingType(0);
+                              BookingManager.addBooking();
+                            },
+                            style: elevatedButtonConfirm),
+                      )
+                    : Container(),
               ],
             ),
           ),
@@ -166,9 +169,6 @@ class RoomPageState extends State<RoomScreen> {
         activeIndex: activeIndex,
         count: widget.room.images.length,
         effect: WormEffect(
-            dotColor: Colors.green.shade800,
-            activeDotColor: Colors.green.shade300,
-            dotWidth: 15,
-            dotHeight: 15),
+            dotColor: Colors.green.shade800, activeDotColor: Colors.green.shade300, dotWidth: 15, dotHeight: 15),
       );
 }
